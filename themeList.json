@@ -1,0 +1,16 @@
+[
+  {
+    "author": "erane",
+    "version": "1.0.0",
+    "description": "小清新美化",
+    "remark": "小清新美化",
+    "css_url": "./theme1.css"
+  },
+  {
+    "author": "ee",
+    "version": "1.0.0.2",
+    "description": "默认主题",
+    "remark": "默认主题",
+    "css_url": "./style.css"
+  }
+]

@@ -1,669 +1,604 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
-
-
-
-
-
-
-<meta property="og:type" content="website">
-<meta property="og:title" content="Eran">
-<meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Eran">
-<meta property="og:locale" content="en">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Eran">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"remove","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/"/>
-
-
-
-
-
-  <title>Eran</title>
-  
-
-
-
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?716a23a4be7050158f1489e12c772558";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>EPhone</title>
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+<!--    <link rel="stylesheet"  href="./baseStyle.css">-->
+    <link rel="stylesheet"  href="https://fastly.jsdelivr.net/gh/mxw13579/phone@release-v1.0.0.7/myPhone/baseStyle.css">
+    <link rel="stylesheet" id="main-stylesheet" href="https://fastly.jsdelivr.net/gh/mxw13579/phone@release-v1.0.0.7/myPhone/beautifyStyle.css">
+<!--    <link rel="stylesheet" href="./theme1.css">-->
+<!--    <link rel="stylesheet" id="main-stylesheet" href="./beautifyStyle.css">-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?95a870260e9246d70af33963cc4ded39";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 </head>
+<body>
+<div id="phone-frame">
+    <div class="notch"></div>
+    <div id="phone-screen">
+        <div id="status-bar">
+            <span id="status-bar-time">12:00</span>
+            <div id="status-bar-battery" class="battery-container">
+                <span class="battery-text">--%</span>
+                <div class="battery-icon">
+                    <div class="battery-level"></div>
+                </div>
+            </div>
+        </div>
+        <div id="notification-bar"><img id="notification-avatar" src="">
+            <div id="notification-content">
+                <div class="name"></div>
+                <div class="message"></div>
+            </div>
+        </div>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left 
-   page-home 
- ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Eran</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-            Home
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-  <section id="posts" class="posts-expand">
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/12/upload/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Eran">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Eran">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/12/upload/" itemprop="url">使用FileReader预览本地上传图片</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-12T01:20:14+08:00">
-                2017-08-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+        <div id="home-screen" class="screen active">
+            <div id="clock-container">
+                <div id="main-time">12:00</div>
+                <div id="main-date">星期一, 1月1日</div>
+            </div>
+            <div id="app-grid">
+                <div class="app-row">
+                    <div class="app-icon" onclick="showScreen('world-book-screen')">
+                        <div class="icon-bg"><img src="https://i.postimg.cc/htP74QkL/1.jpg" alt="世界书"></div>
+                        <span class="label">世界书</span></div>
+                    <div class="app-icon" onclick="showScreen('preset-list-screen')">
+                        <div class="icon-bg"><img src="https://i.postimg.cc/MKfTfsmq/1.png" alt="预设设置"></div>
+                        <span class="label">预设设置</span></div>
+                </div>
+                <div class="app-row">
+                    <div class="app-icon" onclick="showScreen('chat-list-screen')">
+                        <div class="icon-bg"><img src="https://i.postimg.cc/gr2ndvPL/QQ.jpg" alt="QQ"></div>
+                        <span class="label">QQ</span></div>
+                    <div class="app-icon" onclick="showScreen('api-settings-screen')">
+                        <div class="icon-bg"><img src="https://i.postimg.cc/wy631NyP/settings.jpg" alt="API设置"></div>
+                        <span class="label">API设置</span></div>
+                    <div class="app-icon" onclick="showScreen('wallpaper-screen')">
+                        <div class="icon-bg"><img src="https://i.postimg.cc/q6qRLdGx/photo.jpg" alt="壁纸"></div>
+                        <span class="label">壁纸</span></div>
+                </div>
+            </div>
 
         </div>
-      </header>
-    
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+        <div id="world-book-screen" class="screen">
+            <div class="header"><span class="back-btn"
+                                      onclick="showScreen('home-screen')">‹</span><span>世界书</span><span
+                    class="action-btn" id="add-world-book-btn">+</span></div>
+            <div id="world-book-list"></div>
+        </div>
+        <div id="world-book-editor-screen" class="screen">
+            <div class="header">
+                <span class="back-btn" onclick="showScreen('world-book-screen')">‹</span>
+                <span id="world-book-editor-title">编辑世界书</span>
+                <span class="save-btn" id="save-world-book-btn">保存</span>
+            </div>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="world-book-name-input">书名</label>
+                    <input type="text" id="world-book-name-input" placeholder="请输入世界书的名称...">
+                </div>
+                <div class="form-group" style="height: 100%;">
+                    <label for="world-book-content-input">内容</label>
+                    <textarea id="world-book-content-input" placeholder="在此处输入详细的世界观设定..."></textarea>
+                </div>
+            </div>
+        </div>
 
-      
-      
+        <div id="api-settings-screen" class="screen">
+            <div class="header"><span class="back-btn" onclick="showScreen('home-screen')">‹</span><span>API 设置</span><span
+                    style="width: 30px;"></span></div>
+            <div class="form-container">
+                <p style="font-size: 14px; color: #666; background-color: #f0f0f0; padding: 10px; border-radius: 8px;">
+                    提示: 若要使用“发送图片”功能, 请务必选择支持Vision(视觉)的模型, 如<code
+                        style="background-color: #e0e0e0; padding: 2px 4px; border-radius: 4px;">gpt-4o</code>或<code
+                        style="background-color: #e0e0e0; padding: 2px 4px; border-radius: 4px;">gpt-4-vision-preview</code>。
+                </p>
+                <div class="form-group"><label for="proxy-url">反代地址 (不需要添加/v1噢~)</label><input type="text"
+                                                                                                         id="proxy-url"
+                                                                                                         placeholder="例如: https://api.openai.com">
+                </div>
+                <div class="form-group"><label for="api-key">密钥 (API Key)</label><input type="password" id="api-key"
+                                                                                          placeholder="sk-..."></div>
+                <div class="form-group"><label for="model-select">模型</label><select id="model-select"></select></div>
+                <button class="form-button" id="fetch-models-btn">拉取模型</button>
+                <button class="form-button" id="save-api-settings-btn">保存设置</button>
+                <hr class="settings-divider">
+                <div class="form-group toggle-switch-group">
+                    <label for="geolocation-toggle">开启IP地理定位</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="geolocation-toggle">
+                        <label for="geolocation-toggle" class="slider"></label>
+                    </div>
+                    <p class="form-group-description">开启后，AI将能获取您的大致地理位置 (如城市)，以提供更具情景感的对话。位置信息仅在本地处理。</p>
+                </div>
+                <hr class="settings-divider">
+                <h3 class="data-management-title">主题与外观</h3>
+                <p class="data-management-desc">通过内置主题库、远程主题库或直接的URL来自定义应用外观。所有主题设置都会被保存。</p>
 
-      
-        
-          <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
-<p><strong>FileReader</strong>对象允许Web应用程序异步读取存储在用户计算机上的文件（或原始数据缓冲区）的内容，使用 File 或 Blob 对象指定要读取的文件或数据。  </p>
-<p>其中File对象可以是来自用户在一个input元素上选择文件后返回的FileList对象,也可以来自拖放操作生成的 DataTransfer对象,还可以是来自在一个HTMLCanvasElement上执行mozGetAsFile()方法后返回结果.</p>
-</blockquote>
-<p>老规矩,先看代码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--顺便说句,如果accept指定为image/*,谷歌浏览器会非常非常非常的卡,具体原因知乎上有相关文章--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">multiple</span> <span class="attr">accept</span>=<span class="string">"image/gif, image/jpeg"</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> input = <span class="built_in">document</span>.querySelector(<span class="string">'input'</span>);</div><div class="line"></div><div class="line">input.onchange = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(e.target.files);<span class="comment">// 本次选中的图片数组</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="http://ouj8zhrzu.bkt.clouddn.com/files.png"><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/12/upload/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
+                <!-- 内置主题和重置按钮 -->
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <button class="form-button form-button-secondary" id="open-builtin-themes-btn" style="flex: 1;">选择内置主题</button>
+                    <button class="form-button form-button-secondary" id="reset-remote-theme-btn" style="flex: 1;">重置为默认</button>
+                </div>
+                <!-- 远程主题库 -->
+                <div class="form-group">
+                    <label for="remote-theme-library-url">远程主题库 URL (JSON)</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="remote-theme-library-url" placeholder="https://.../themeList.json" style="flex-grow: 1; margin-bottom: 0;">
+                        <button class="form-button form-button-secondary" id="load-remote-library-btn" style="flex-shrink: 0; width: auto; padding: 0 15px; margin-top: 0;">加载</button>
+                    </div>
+                    <p class="form-group-description">模式一：输入一个远程主题库(JSON文件)的URL，加载后选择主题。</p>
+                </div>
 
-    
+                <!-- 远程单主题 -->
+                <div class="form-group">
+                    <label for="remote-theme-url">远程主题 CSS URL</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="remote-theme-url" placeholder="https://.../theme.css" style="flex-grow: 1; margin-bottom: 0;">
+                        <button class="form-button form-button-secondary" id="apply-remote-theme-btn" style="flex-shrink: 0; width: auto; padding: 0 15px; margin-top: 0;">应用</button>
+                    </div>
+                    <p class="form-group-description">模式二：直接输入单个CSS文件的URL来立即替换样式。</p>
+                </div>
+                <hr class="settings-divider">
+                <div class="data-management-section">
+                    <h3 class="data-management-title">数据管理</h3>
+                    <p class="data-management-desc">
+                        您可以导出所有聊天记录、设置和素材为单个文件进行备份，或从备份文件恢复数据。</p>
+                    <button class="form-button form-button-secondary" id="export-data-btn">导出数据</button>
+                    <button class="form-button form-button-secondary" id="import-data-trigger-btn">导入数据</button>
+                    <input type="file" id="import-data-input" accept=".phone" style="display: none;">
+                </div>
+            </div>
+        </div>
+        <div id="preset-editor-screen" class="screen">
+            <div class="header">
+                <span class="back-btn" onclick="showScreen('preset-list-screen')">‹</span>
+                <span id="preset-editor-title">编辑预设</span>
+                <span class="save-btn" id="save-preset-btn">保存</span>
+            </div>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="preset-name-input">预设名称</label>
+                    <input type="text" id="preset-name-input" placeholder="例如：默认AI, 写作助手...">
+                </div>
+                <div class="form-group">
+                    <label for="preset-remark-input">预设备注</label>
+                    <textarea id="preset-remark-input" rows="2" placeholder="简单描述这个预设的用途..."></textarea>
+                </div>
+                <hr class="settings-divider">
+                <div class="form-group">
+                    <label for="prompt-image-input">发送图片提示词</label>
+                    <textarea id="prompt-image-input" rows="5" placeholder="定义AI如何发送'描述性图片'..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prompt-voice-input">发送语音提示词</label>
+                    <textarea id="prompt-voice-input" rows="4" placeholder="定义AI如何发送'模拟语音'..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prompt-transfer-input">转账提示词</label>
+                    <textarea id="prompt-transfer-input" rows="5" placeholder="定义AI如何进行'转账'..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prompt-single-input">单聊预设 (System Prompt)</label>
+                    <textarea id="prompt-single-input" rows="12"
+                              placeholder="定义单聊时AI的核心角色和规则..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prompt-group-input">群聊预设 (System Prompt)</label>
+                    <textarea id="prompt-group-input" rows="12"
+                              placeholder="定义群聊时AI的核心角色和规则..."></textarea>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="form-button form-button-secondary" id="restore-preset-defaults-btn">恢复为默认值</button>
+                    <button class="form-button form-button-secondary" id="delete-preset-btn" style="background-color: #ffdddd; color: #d9534f;">删除此预设</button>
+                </div>
+            </div>
+        </div>
+        <div id="preset-list-screen" class="screen">
+            <div class="header">
+                <span class="back-btn" onclick="showScreen('home-screen')">‹</span>
+                <span>预设管理</span>
+                <span class="action-btn" id="add-preset-btn">+</span>
+            </div>
+            <div id="preset-list" class="list-container" style="padding:0;">
+                <!-- 预设列表将由JS动态生成 -->
+            </div>
+        </div>
+        <div id="chat-list-screen" class="screen">
+            <div class="header"><span class="back-btn" onclick="showScreen('home-screen')">‹</span><span>消息</span>
+                <div class="header-actions"><span class="action-btn" id="add-group-chat-btn" title="创建群聊"><svg
+                        width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path
+                        d="M17.5 17.5C19.1569 17.5 20.5 16.1569 20.5 14.5C20.5 12.8431 19.1569 11.5 17.5 11.5C15.8431 11.5 14.5 12.8431 14.5 14.5C14.5 16.1569 15.8431 17.5 17.5 17.5Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path
+                        d="M21 21L19 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"/><path
+                        d="M8.5 11.5C10.1569 11.5 11.5 10.1569 11.5 8.5C11.5 6.84315 10.1569 5.5 8.5 5.5C6.84315 5.5 5.5 6.84315 5.5 8.5C5.5 10.1569 6.84315 11.5 8.5 11.5Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path
+                        d="M12.5 14.5H4.5C3.39543 14.5 2.5 15.3954 2.5 16.5V18.5H12.5" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span
+                        class="action-btn" id="add-chat-btn">+</span></div>
+            </div>
+            <div id="chat-list"></div>
+        </div>
 
-    
+        <div id="chat-interface-screen" class="screen">
+            <div class="header">
+                <div class="default-controls">
+                    <span class="back-btn" id="back-to-list-btn">‹</span>
+                    <span id="chat-header-title">聊天对象</span>
+                    <div class="header-actions">
+                        <span class="action-btn" id="edit-messages-btn" title="编辑消息"><img
+                                src="https://i.postimg.cc/V60TWbGr/image.png" alt="编辑"></span>
 
-    
+                        <span class="action-btn" id="listen-together-btn" title="一起听"><img
+                                src="https://i.postimg.cc/8kYShvrJ/90-UI-2.png" alt="一起听"></span>
+                        <span class="action-btn" id="chat-settings-btn" title="聊天设置"><img
+                                src="https://i.postimg.cc/wRDhh491/image.png" alt="设置"></span>
+                    </div>
+                </div>
+                <div class="selection-controls">
+                    <span id="selection-cancel-btn">取消</span>
+                    <span id="selection-count"></span>
+                    <span id="selection-delete-btn">删除</span>
+                </div>
+            </div>
+            <div id="chat-messages">
+                <div id="typing-indicator">对方正在输入...</div>
+            </div>
 
-    <footer class="post-footer">
-      
+            <div id="chat-input-area">
+                <div id="chat-input-actions-top">
+                    <button id="open-sticker-panel-btn" class="chat-action-icon-btn action-button" title="表情面板">+
+                    </button>
+                    <button id="send-photo-btn" class="chat-action-icon-btn action-button" title="发送照片">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                    </button>
+                    <button id="upload-image-btn" class="chat-action-icon-btn action-button" title="上传图片">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                             style="color: var(--text-primary);">
+                            <path d="M21 3.5H3C2.44772 3.5 2 3.94772 2 4.5V19.5C2 20.0523 2.44772 20.5 3 20.5H21C21.5523 20.5 22 20.0523 22 19.5V4.5C22 3.94772 21.5523 3.5 21 3.5Z"
+                                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M16.5 13.5C17.6046 13.5 18.5 12.6046 18.5 11.5C18.5 10.3954 17.6046 9.5 16.5 9.5C15.3954 9.5 14.5 10.3954 14.5 11.5C14.5 12.6046 15.3954 13.5 16.5 13.5Z"
+                                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M22 14.5L18 10.5L10.3333 18.5M12.5 16L9 12.5L2 19.5" stroke="currentColor"
+                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button id="transfer-btn" class="chat-action-icon-btn action-button" title="转账">￥</button>
+                    <button id="voice-message-btn" class="chat-action-icon-btn action-button" title="发送语音">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            <path d="M12 19v4"/>
+                            <path d="M8 23h8"/>
+                        </svg>
+                    </button>
+                </div>
+                <div id="chat-input-main-row">
+                    <textarea id="chat-input" rows="1" placeholder="输入消息..."></textarea>
+                    <div id="input-actions-wrapper">
+                        <button id="wait-reply-btn" title="等待回复"><img src="https://i.postimg.cc/qzdckrGy/image.png"
+                                                                          alt="等待回复"></button>
+                        <button id="send-btn" class="action-button">发送</button>
+                    </div>
+                </div>
+            </div>
 
-      
+            <div id="sticker-panel">
+                <div id="sticker-panel-header">
+                    <span class="panel-btn" id="close-sticker-panel-btn">取消</span>
+                    <span class="title">我的表情</span>
+                    <div style="display: flex; gap: 10px;">
+                        <span class="panel-btn" id="add-sticker-btn">添加</span>
+                        <span class="panel-btn" id="upload-sticker-btn">上传</span>
+                    </div>
+                </div>
+                <div id="sticker-grid"></div>
+            </div>
+            <input type="file" id="sticker-upload-input" accept="image/*" style="display: none;">
+            <input type="file" id="image-upload-input" accept="image/*" style="display: none;">
 
-      
+            <div id="music-player-overlay">
+                <div class="music-player-window">
+                    <span id="music-playlist-btn">☰</span>
+                    <div id="music-time-counter">已经一起听了0.0小时</div>
+                    <div id="music-player-song-title">请添加歌曲</div>
+                    <div id="music-player-artist">...</div>
+                    <div class="music-controls">
+                        <button id="music-prev-btn">◀</button>
+                        <button id="music-play-pause-btn" class="play-pause-btn">▶</button>
+                        <button id="music-next-btn">▶</button>
+                        <button id="music-mode-btn">顺序</button>
+                    </div>
+                    <div class="music-bottom-actions">
+                        <button id="music-exit-btn">退出一起听</button>
+                        <button id="music-return-btn">返回聊天</button>
+                    </div>
+                </div>
+            </div>
 
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/12/loading/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Eran">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Eran">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/12/loading/" itemprop="url">使用原生js实现图片及音频预加载功能</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-12T00:26:44+08:00">
-                2017-08-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+            <div id="music-playlist-panel">
+                <div class="playlist-header">
+                    <span class="panel-btn" id="close-playlist-btn">返回</span>
+                    <span>播放列表</span>
+                    <div>
+                        <span class="panel-btn" id="add-song-local-btn">本地</span>
+                        <span class="panel-btn" id="add-song-url-btn">URL</span>
+                    </div>
+                </div>
+                <div class="playlist-body" id="playlist-body"></div>
+            </div>
+            <input type="file" id="local-song-upload-input" accept="audio/*" multiple style="display: none;">
 
         </div>
-      </header>
-    
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="图片加载"><a href="#图片加载" class="headerlink" title="图片加载"></a>图片加载</h3><p> 先来看下核心代码</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> img = <span class="keyword">new</span> Image();</div><div class="line">img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'图片加载完毕'</span>)</div><div class="line">&#125;;</div><div class="line">img.src = <span class="string">'./images/1.jpg'</span></div></pre></td></tr></table></figure>
-<p>非常简单,当图片加载完毕后会调用onload方法。<br>那么我们接下来批量图片加载思路就很简单了,无非是在onload里面判断是否所有图片都加载完毕。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/12/loading/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
-
-
-          </div>
-          
-
-
-          
-
+        <div id="wallpaper-screen" class="screen">
+            <div class="header"><span class="back-btn" onclick="showScreen('home-screen')">‹</span><span>壁纸设置</span><span
+                    style="width: 30px;"></span></div>
+            <div class="form-container">
+                <div id="wallpaper-preview">点击下方上传</div>
+                <button class="form-button" onclick="document.getElementById('wallpaper-upload-input').click();">
+                    上传壁纸
+                </button>
+                <input type="file" id="wallpaper-upload-input" accept="image/*">
+                <button class="form-button" id="save-wallpaper-btn">保存并应用</button>
+            </div>
         </div>
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Eran</span>
+    </div>
 </div>
 
+<div id="chat-settings-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><span>聊天设置</span></div>
+        <div class="modal-body">
+            <div class="form-group" id="chat-name-group"><label for="chat-name-input">备注名 / 群名</label><input
+                    type="text" id="chat-name-input"></div>
+            <div class="form-group" id="my-group-nickname-group"><label for="my-group-nickname-input">我的群昵称</label><input
+                    type="text" id="my-group-nickname-input"></div>
+            <div class="form-group" id="group-avatar-group"><label>群头像</label>
+                <div class="avatar-upload"><img id="group-avatar-preview">
+                    <button onclick="document.getElementById('group-avatar-input').click()">上传群头像</button>
+                    <input type="file" id="group-avatar-input" accept="image/*"></div>
+            </div>
+            <div class="form-group" id="world-book-link-group">
+                <label>关联世界书 (可多选)</label>
+                <div class="custom-multiselect">
+                    <div class="select-box">
+                        <span class="selected-options-text">-- 点击选择 --</span>
+                        <span class="arrow-down">▼</span>
+                    </div>
+                    <div id="world-book-checkboxes-container" class="checkboxes-container">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" id="ai-persona-group">
+                <label for="ai-persona">对方人设 (AI Persona)</label>
+                <textarea id="ai-persona" rows="3"></textarea>
+                <div class="form-group" style="margin-top: 15px; margin-bottom: 0;">
+                    <label for="ai-pat-suffix-input">拍一拍后缀</label>
+                    <input type="text" id="ai-pat-suffix-input" placeholder="例如：的脑袋瓜">
+                </div>
+            </div>
 
-<div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+            <div class="form-group" id="ai-avatar-group"><label>对方头像</label>
+                <div class="avatar-upload"><img id="ai-avatar-preview">
+                    <button onclick="document.getElementById('ai-avatar-input').click()">上传对方头像</button>
+                    <input type="file" id="ai-avatar-input" accept="image/*"></div>
+            </div>
+            <div class="form-group" id="my-persona-group">
+                <label for="my-persona">我的人设 (My Persona)</label>
+                <textarea id="my-persona" rows="3"></textarea>
+                <div class="form-group" style="margin-top: 15px; margin-bottom: 0;">
+                    <label for="my-pat-suffix-input">拍一拍后缀</label>
+                    <input type="text" id="my-pat-suffix-input" placeholder="例如：的肩膀">
+                </div>
+            </div>
+
+            <div class="form-group" id="my-avatar-group"><label>我的头像</label>
+                <div class="avatar-upload"><img id="my-avatar-preview">
+                    <button onclick="document.getElementById('my-avatar-input').click()">上传我的头像</button>
+                    <button id="open-persona-library-btn">预设</button>
+                    <input type="file" id="my-avatar-input" accept="image/*"></div>
+            </div>
+            <div class="form-group" id="group-members-group">
+                <label>群成员人设</label>
+                <div id="group-members-settings"></div>
+                <button id="add-group-member-btn" class="form-button form-button-secondary" style="margin-top: 10px; width: auto; padding: 8px 15px;">新增成员</button>
+            </div>
+
+            <div class="form-group"><label for="max-memory">上下文记忆条数</label><input type="number" id="max-memory"
+                                                                                         value="10"></div>
+            <div class="form-group"><label>聊天气泡主题
+                <button id="reset-theme-btn" type="button">重置</button>
+            </label>
+                <div class="theme-selector"><label><input type="radio" name="theme-select" value="default"
+                                                          id="theme-default"> 默认</label><label><input type="radio"
+                                                                                                        name="theme-select"
+                                                                                                        value="pink_blue">
+                    粉蓝</label><label><input type="radio" name="theme-select" value="blue_white">
+                    蓝白</label><label><input type="radio" name="theme-select" value="purple_yellow">
+                    紫黄</label><label><input type="radio" name="theme-select" value="black_white">
+                    黑白</label><label><input type="radio" name="theme-select" value="yellow_white"> 黄白</label><label><input
+                        type="radio" name="theme-select" value="red_black"> 红黑</label><label><input type="radio"
+                                                                                                      name="theme-select"
+                                                                                                      value="blue_yellow">
+                    蓝黄</label><label><input type="radio" name="theme-select" value="pink_yellow">
+                    粉黄</label><label><input type="radio" name="theme-select" value="pink_purple">
+                    粉紫</label><label><input type="radio" name="theme-select" value="gray_white">
+                    灰白</label><label><input type="radio" name="theme-select" value="blue_green">
+                    蓝绿</label><label><input type="radio" name="theme-select" value="pink_white">
+                    粉白</label><label><input type="radio" name="theme-select" value="pink_black">
+                    粉黑</label><label><input type="radio" name="theme-select" value="pink_green">
+                    粉绿</label><label><input type="radio" name="theme-select" value="green_black"> 绿黑</label></div>
+            </div>
+            <div class="form-group">
+                <label>聊天背景</label>
+                <div class="bg-upload-container">
+                    <button type="button" class="form-button-secondary"
+                            style="width: auto; padding: 8px 12px; margin-top: 0;"
+                            onclick="document.getElementById('bg-input').click()">上传背景图
+                    </button>
+                    <button type="button" id="remove-bg-btn">移除背景</button>
+                </div>
+                <img id="bg-preview" class="bg-preview-img">
+                <input type="file" id="bg-input" accept="image/*" style="display: none;">
+            </div>
+            <hr style="margin: 25px 0; border: none; border-top: 1px solid #eee;">
+            <button class="form-button form-button-secondary" id="clear-chat-btn">清空聊天记录</button>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel" id="cancel-chat-settings-btn">取消</button>
+            <button class="save" id="save-chat-settings-btn">保存</button>
+        </div>
+    </div>
 </div>
 
-<div class="theme-info">
-  Theme -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
+<div id="persona-library-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><span>我的人设库</span>
+            <button id="add-persona-preset-btn" class="action-button">添加</button>
+        </div>
+        <div class="modal-body">
+            <div id="persona-library-grid"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel" id="close-persona-library-btn">关闭</button>
+        </div>
+    </div>
 </div>
 
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
-
-
-
-  
-  
-
-  
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
-
-  
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
+<div id="persona-editor-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><span id="persona-editor-title">添加人设预设</span></div>
+        <div class="modal-body">
+            <div class="form-group"><label>预设头像</label>
+                <div class="avatar-upload"><img id="preset-avatar-preview">
+                    <button onclick="document.getElementById('preset-avatar-input').click()">上传头像</button>
+                    <input type="file" id="preset-avatar-input" accept="image/*"></div>
+            </div>
+            <div class="form-group"><label for="preset-persona-input">预设人设</label><textarea
+                    id="preset-persona-input" rows="4" placeholder="在此输入这个人设的详细设定..."></textarea></div>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel" id="cancel-persona-editor-btn">取消</button>
+            <button class="save" id="save-persona-preset-btn">保存</button>
+        </div>
+    </div>
+</div>
+
+<div id="member-settings-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><span>编辑群成员</span></div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="member-name-input">名字</label>
+                <input type="text" id="member-name-input">
+            </div>
+            <div class="form-group">
+                <label for="member-persona-input">人设</label>
+                <textarea id="member-persona-input" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="member-pat-suffix-input">拍一拍后缀</label>
+                <input type="text" id="member-pat-suffix-input" placeholder="例如：的后背">
+            </div>
+            <div class="form-group">
+                <label>头像</label>
+                <div class="avatar-upload">
+                    <img id="member-avatar-preview">
+                    <button onclick="document.getElementById('member-avatar-input').click()">上传头像</button>
+                    <input type="file" id="member-avatar-input" accept="image/*">
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="cancel" id="cancel-member-settings-btn">取消</button>
+            <button class="save" id="save-member-settings-btn">保存</button>
+        </div>
+    </div>
+</div>
+
+<div id="theme-list-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><span id="theme-list-modal-title">选择主题</span></div>
+        <div class="modal-body" id="theme-list-container">
+            <!-- Theme items will be injected here by JavaScript -->
+        </div>
+        <div class="modal-footer">
+            <button class="cancel" id="cancel-theme-selection-btn">取消</button>
+            <button class="save" id="confirm-theme-selection-btn">确认</button>
+        </div>
+    </div>
+</div>
+
+<div id="custom-modal-overlay">
+    <div id="custom-modal">
+        <div class="custom-modal-header" id="custom-modal-title"></div>
+        <div class="custom-modal-body" id="custom-modal-body"></div>
+        <div class="custom-modal-footer">
+            <button id="custom-modal-cancel">取消</button>
+            <button id="custom-modal-confirm" class="confirm-btn">确定</button>
+        </div>
+    </div>
+</div>
+
+<div id="preset-actions-modal" class="modal">
+    <div id="custom-modal" style="width: 250px;">
+        <div class="custom-modal-footer">
+            <button id="preset-action-edit">编辑预设</button>
+            <button id="preset-action-delete" class="btn-danger">删除预设</button>
+            <button id="preset-action-cancel" style="margin-top: 8px; border-radius: 8px; background-color: #f0f0f0;">
+                取消
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="transfer-modal">
+    <div class="transfer-content">
+        <div class="transfer-header">给Ta一个惊喜！</div>
+        <div class="transfer-input-group">
+            <label for="transfer-amount">转账金额</label>
+            <input type="number" id="transfer-amount" placeholder="0.00" min="0" max="9999" step="0.01">
+        </div>
+        <div class="transfer-input-group">
+            <label for="transfer-note">备注 (可选)</label>
+            <input type="text" id="transfer-note" placeholder="留下你的小心思~" maxlength="20">
+        </div>
+        <div class="transfer-actions">
+            <button id="transfer-cancel-btn">取消</button>
+            <button id="transfer-confirm-btn">确认转账</button>
+        </div>
+    </div>
+</div>
+
+<div id="battery-alert-modal">
+    <div class="battery-alert-content">
+        <img id="battery-alert-image" src="">
+        <p id="battery-alert-text"></p>
+    </div>
+</div>
+
+<audio id="audio-player" style="display:none;"></audio>
+
+<script src="./script.js"></script>
+<!--<script src="./script.js"></script>-->
 </body>
 </html>
