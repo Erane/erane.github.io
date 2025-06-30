@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
     <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
-        <link rel="stylesheet"  href="./baseStyle.css">
-        <link rel="stylesheet"  href="./resources/moment.css">
-        <link rel="stylesheet" id="main-stylesheet"  href="./beautifyStyle.css">
+        <link rel="stylesheet"  href="baseStyle.css">
+        <link rel="stylesheet"  href="resources/moment.css">
+        <link rel="stylesheet" id="main-stylesheet"  href="beautifyStyle.css">
 <!--    <link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/mxw13579/phone@release-v1.0.0.7/myPhone/baseStyle.css">-->
 <!--    <link rel="stylesheet" id="main-stylesheet"-->
 <!--          href="https://fastly.jsdelivr.net/gh/mxw13579/phone@release-v1.0.0.7/myPhone/beautifyStyle.css">-->
@@ -33,13 +33,13 @@
 <div id="phone-frame">
     <div class="notch"></div>
     <div id="phone-screen">
-        <div class="tips-wrap " data-update="1.0.13">
-            <div class="tips-title">版本更新提示(2025-06-30)</div>
+        <div class="tips-wrap " data-update="1.0.8">
+            <div class="tips-title">版本更新提示(2025-06-27)</div>
             <div class="tips-content">
                 <div class="tips-content">
-                    <p>修复了这个问题</p>
+                    <p>现在群聊已支持朋友圈互动</p>
+                    <p>因为是每个人独立事件, 所以如果你群聊有4-5个人, 可能一次性就消耗你3次额外的请求, 所以群聊的时候建议减少群聊人数, 或者关闭自动互动的按钮</p>
                 </div>
-                <img src="https://i.postimg.cc/m2FydBtt/1.png">
             </div>
             <div class="more-info">
                 如果你在使用中遇到适配问题请在DC联系: toufu_17568
@@ -137,18 +137,6 @@
                 <div class="form-group"><label for="model-select">模型</label><select id="model-select"></select></div>
                 <button class="form-button" id="fetch-models-btn">拉取模型</button>
                 <button class="form-button" id="save-api-settings-btn">保存设置</button>
-                <hr class="settings-divider">
-                <div class="form-group"><label for="model-select">生图模型</label><select id="image-model-select"></select></div>
-                <button class="form-button" id="fetch-image-models-btn">拉取模型</button>
-                <hr class="settings-divider">
-                <div class="form-group toggle-switch-group">
-                    <label for="autoPhoto-toggle">自动生图</label>
-                    <div class="toggle-switch">
-                        <input type="checkbox" id="autoPhoto-toggle">
-                        <label for="autoPhoto-toggle" class="slider"></label>
-                    </div>
-                    <p class="form-group-description">开启后，AI将根据概率触发生图。</p>
-                </div>
                 <hr class="settings-divider">
                 <div class="form-group toggle-switch-group">
                     <label for="geolocation-toggle">开启IP地理定位</label>
@@ -839,8 +827,7 @@
 
 <audio id="audio-player" style="display:none;"></audio>
 
-<script src="./script.js"></script>
-<script src="./js/pollinationsAI.js"></script>
+<script src="script.js"></script>
 <!--<script src="./script.js"></script>-->
 </body>
 </html>
