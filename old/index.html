@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
     <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
-        <link rel="stylesheet"  href="./baseStyle.css">
-        <link rel="stylesheet"  href="./resources/moment.css">
-        <link rel="stylesheet" id="main-stylesheet"  href="./beautifyStyle.css">
+        <link rel="stylesheet"  href="baseStyle.css">
+        <link rel="stylesheet"  href="resources/moment.css">
+        <link rel="stylesheet" id="main-stylesheet"  href="beautifyStyle.css">
 <!--    <link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/mxw13579/phone@release-v1.0.0.7/myPhone/baseStyle.css">-->
 <!--    <link rel="stylesheet" id="main-stylesheet"-->
 <!--          href="https://fastly.jsdelivr.net/gh/mxw13579/phone@release-v1.0.0.7/myPhone/beautifyStyle.css">-->
@@ -33,31 +33,12 @@
 <div id="phone-frame">
     <div class="notch"></div>
     <div id="phone-screen">
-        <div class="tips-wrap" data-update="1.0.17">
-            <div class="tips-title">更新提示(2025-07-08)</div>
+        <div class="tips-wrap " data-update="1.0.8">
+            <div class="tips-title">版本更新提示(2025-06-27)</div>
             <div class="tips-content">
-                <p style="color: red;font-weight: bold">api切换忘记把代码注释回来, 现在应该可以正常新增api了</p>
-                <p>
-                    1.现在你可以保存多个API了, 再也不用复制来复制去了(≧∇≦)ﾉ;
-                </p>
-                <p>
-                    2.聊天修复部分bug导致显示不全的问题
-                </p>
-                <p>
-                    3.为部分海外用户增加了直连GEMINI的功能(只测试了一半, 然后被谷歌ban了我ip 😭, 但理论上应该是正常使用的)
-                </p>
-
-                <p>
-                    --------一些碎碎念(不看也没关系)----------
-                </p>
-                <div class="tips-content-desc">
-                    <p>很多人问我近期会不会有一些功能上的更新, 其实已经单独回复过很多次了, 现在在这里统一回复一下:</p>
-                    <p>时间精力有限： 我本职是程序员，近期还接了一份兼职，每天工作繁忙，周末也需要陪伴家人，实在难以抽出时间为小手机开发新功能。</p>
-                    <p>代码重构必要： 当前小手机的代码结构并非标准项目形式，且采用的编码方式已相对过时。在此基础之上进行功能增删，需要耗费巨大精力。</p>
-                    <p>全新项目构想： 我一直希望能从头构建一个全新的小手机项目。核心目标之一是为美化提供强大接口，支持精细化设置各项样式。每个人都有自己的审美偏好，且已有许多优秀的主题作品。未来计划实现美化方案分享功能：用户可以将自己的美化配置分享出来（通过文件或链接），其他人一键即可应用，大幅降低美化门槛。</p>
-                    <p>未来功能展望： 规划中的方向包括但不限于：NPC日记、语音聊天、线下互动、单聊/群聊间的记忆互通等。</p>
-                    <p>衷心感谢： 非常感谢大家对我二创小手机的喜爱，也感激各位反馈的Bug和功能建议。待我忙完手头事务，定会为大家带来一个体验更优的小手机！</p>
-                    <p>最后祝大家永远快乐!</p>
+                <div class="tips-content">
+                    <p>现在群聊已支持朋友圈互动</p>
+                    <p>因为是每个人独立事件, 所以如果你群聊有4-5个人, 可能一次性就消耗你3次额外的请求, 所以群聊的时候建议减少群聊人数, 或者关闭自动互动的按钮</p>
                 </div>
             </div>
             <div class="more-info">
@@ -147,45 +128,15 @@
                         style="background-color: #e0e0e0; padding: 2px 4px; border-radius: 4px;">gpt-4o</code>或<code
                         style="background-color: #e0e0e0; padding: 2px 4px; border-radius: 4px;">gpt-4-vision-preview</code>。
                 </p>
-                <div class="form-group"><label for="api-name-select">API名称(切换API不需要点保存)</label>
-
-                  <div class="api-name-select">
-                      <select id="api-name-select">
-                          <option selected value="default">默认</option>
-                      </select>
-                      <span class="update-new-api-name" >改名</span>
-                      <span class="create-new-api-name" >新增</span>
-                  </div>
-<!--                    <input type="text" id="proxy-url" placeholder="例如: https://api.openai.com">-->
-                </div>
-<!--                <p class="api-tips">新增的时候请先填写完下面的信息,再点新增,再点保存</p>-->
-                <div class="form-group"><label for="api-type-select">api类型</label>
-                    <select id="api-type-select">
-                        <option value="api" >标准API</option>
-                        <option value="gemini">gemini官方直连</option>
-                    </select>
-                </div>
                 <div class="form-group"><label for="proxy-url">反代地址 (不需要添加/v1噢~)</label><input type="text"
                                                                                                          id="proxy-url"
                                                                                                          placeholder="例如: https://api.openai.com">
                 </div>
                 <div class="form-group"><label for="api-key">密钥 (API Key)</label><input type="password" id="api-key"
-                                                                                          placeholder="sk-...(部分反代不需要sk-)"></div>
+                                                                                          placeholder="sk-..."></div>
                 <div class="form-group"><label for="model-select">模型</label><select id="model-select"></select></div>
                 <button class="form-button" id="fetch-models-btn">拉取模型</button>
                 <button class="form-button" id="save-api-settings-btn">保存设置</button>
-                <hr class="settings-divider">
-                <div class="form-group"><label for="model-select">生图模型</label><select id="image-model-select"></select></div>
-                <button class="form-button" id="fetch-image-models-btn">拉取模型</button>
-                <hr class="settings-divider">
-                <div class="form-group toggle-switch-group">
-                    <label for="autoPhoto-toggle">自动生图</label>
-                    <div class="toggle-switch">
-                        <input type="checkbox" id="autoPhoto-toggle">
-                        <label for="autoPhoto-toggle" class="slider"></label>
-                    </div>
-                    <p class="form-group-description">开启后，AI将根据概率触发生图。</p>
-                </div>
                 <hr class="settings-divider">
                 <div class="form-group toggle-switch-group">
                     <label for="geolocation-toggle">开启IP地理定位</label>
@@ -876,8 +827,7 @@
 
 <audio id="audio-player" style="display:none;"></audio>
 
-<script src="./script.js"></script>
-<script src="./js/pollinationsAI.js"></script>
+<script src="script.js"></script>
 <!--<script src="./script.js"></script>-->
 </body>
 </html>
