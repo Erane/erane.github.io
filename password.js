@@ -1,0 +1,1 @@
+const PASSWORD = 'e303d3429b1c8b2c62e4';
