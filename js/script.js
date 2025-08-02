@@ -202,6 +202,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const defaultGroupAvatar = 'https://i.postimg.cc/gc3QYCDy/1-NINE7-Five.jpg';
     let notificationTimeout;
     const STICKER_REGEX = /^(https:\/\/i\.postimg\.cc\/.+|data:image)/;
+    const regex = /^https:.*\.(jpg|jpeg|png|gif)$/i;
+
+    function isSticker(content) {
+        return regex.test(content);
+    }
 
     const MESSAGE_RENDER_WINDOW = 50;
     let currentRenderedCount = 0;
@@ -897,7 +902,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 lastMsgDisplay = '[照片]';
             } else if (lastMsgObj.type === 'voice_message') {
                 lastMsgDisplay = '[语音]';
-            } else if (typeof lastMsgObj.content === 'string' && STICKER_REGEX.test(lastMsgObj.content)) {
+            } else if (typeof lastMsgObj.content === 'string' && isSticker(lastMsgObj.content)) {
                 lastMsgDisplay = lastMsgObj.meaning ? `[表情: ${lastMsgObj.meaning}]` : '[表情]';
             } else if (Array.isArray(lastMsgObj.content)) {
                 lastMsgDisplay = `[图片]`;
@@ -998,7 +1003,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (url && url.trim() !== '') {
                 stylesheet.href = url + '?v=' + Date.now();
             } else {
-                stylesheet.href = './style.css';
+                stylesheet.href = './resources/style.css';
             }
         }
     }
@@ -1155,7 +1160,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const titleText = isUser ? '转账给Ta' : '收到一笔转账';
             const heartIcon = `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="vertical-align: middle;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>`;
             contentHtml = `<div class="transfer-card"><div class="transfer-title">${heartIcon} ${titleText}</div><div class="transfer-amount">¥ ${Number(msg.amount).toFixed(2)}</div><div class="transfer-note">${msg.note || '对方没有留下备注哦~'}</div></div>`;
-        } else if (typeof msg.content === 'string' && STICKER_REGEX.test(msg.content)) {
+        } else if (typeof msg.content === 'string' && isSticker(msg.content)) {
             bubble.classList.add('is-sticker');
             contentHtml = `<img src="${msg.content}" alt="${msg.meaning || 'Sticker'}" class="sticker-image">`;
         } else if (Array.isArray(msg.content) && msg.content[0]?.type === 'image_url') {
@@ -1619,7 +1624,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                     if (!isViewingThisChat && !notificationShown) {
                         let notificationText;
-                        if (aiMessage.type === 'transfer') notificationText = `[收到一笔转账]`; else if (aiMessage.type === 'recall') notificationText = `[撤回]`; else if (aiMessage.type === 'ai_image') notificationText = `[图片]`; else if (aiMessage.type === 'voice_message') notificationText = `[语音]`; else notificationText = STICKER_REGEX.test(aiMessage.content) ? '[表情]' : String(aiMessage.content);
+                        if (aiMessage.type === 'transfer') notificationText = `[收到一笔转账]`; else if (aiMessage.type === 'recall') notificationText = `[撤回]`; else if (aiMessage.type === 'ai_image') notificationText = `[图片]`; else if (aiMessage.type === 'voice_message') notificationText = `[语音]`; else notificationText = isSticker(aiMessage.content) ? '[表情]' : String(aiMessage.content);
                         const finalNotifText = chat.isGroup ? `${aiMessage.senderName}: ${notificationText}` : notificationText;
                         showNotification(chatId, finalNotifText);
                         notificationShown = true;
