@@ -1,5 +1,18 @@
 let isMessageEditMode = false;
-let editingPresetId = null;
+// gemini如果是多个密钥, 那么随机获取一个
+function getRandomValue(str) {
+    // 检查字符串是否包含逗号
+    if (str.includes(',')) {
+        // 用逗号分隔字符串并移除多余空格
+        const arr = str.split(',').map(item => item.trim());
+        // 生成随机索引 (0 到 arr.length-1)
+        const randomIndex = Math.floor(Math.random() * arr.length);
+        // 返回随机元素
+        return arr[randomIndex];
+    }
+    // 没有逗号则直接返回原字符串
+    return str;
+}
 const URLBlacklist = ['api.pisces.ink']
 function showScreen(screenId) {
     if (isMessageEditMode && screenId !== 'chat-interface-screen') {
@@ -1465,7 +1478,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }
             let geminiConfig = {
-                url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+                url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${getRandomValue(apiKey)}`,
                 data:{
                     method: 'POST',
                     headers: {
@@ -3456,7 +3469,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                    }
                }
                let geminiConfig = {
-                   url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+                   url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${getRandomValue(apiKey)}`,
                    data:{
                        method: 'POST',
                        headers: {
