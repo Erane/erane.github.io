@@ -701,23 +701,30 @@ document.addEventListener('DOMContentLoaded', async () => {
                     .flatMap(jsonStr => JSON.parse(jsonStr));
             } catch (error) {
                 console.error("解析失败：", error);
+                return [error];
             }
         }
+
+
+        // 提取JSON内容（去除前后的```json标记）
+        const jsonString = content
+            .replace(/^```json/, '')  // 移除开头的```json
+            .replace(/```$/, '')      // 移除结尾的```
+            .trim();                  // 去除前后空白
+
+// 解析JSON字符串为JavaScript数组
         try {
-            const parsed = JSON.parse(content);
-            if (Array.isArray(parsed)) return parsed;
-        } catch (e) {
-        }
-        try {
-            const match = content.match(/\[(.*?)\]/s);
-            if (match && match[0]) {
-                const parsed = JSON.parse(match[0]);
-                if (Array.isArray(parsed)) return parsed;
+            const messagesArray = JSON.parse(jsonString);
+            console.log("转换后的数组：", messagesArray);
+            console.log("第一条消息：", messagesArray[0]);
+            if(messagesArray.length > 0){
+                return messagesArray
             }
-        } catch (e) {
+        } catch (error) {
+            console.error("解析JSON时出错：", error);
+            return [error];
         }
-        const lines = content.split('\n').map(l => l.trim()).filter(l => l.length > 0 && !l.startsWith('```'));
-        if (lines.length > 0) return lines;
+
         return [content];
     }
 
