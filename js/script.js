@@ -202,11 +202,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const defaultGroupAvatar = 'https://i.postimg.cc/gc3QYCDy/1-NINE7-Five.jpg';
     let notificationTimeout;
     const STICKER_REGEX = /^(https:\/\/i\.postimg\.cc\/.+|data:image)/;
-    const regex = /^https:.*\.(jpg|jpeg|png|gif)$/i;
+    const stickerRegex = /^(https:.*\.(jpg|jpeg|png|gif|webp)|data:image)/i;
 
     function isSticker(content) {
-        return regex.test(content);
+        return typeof content === 'string' && stickerRegex.test(content);
     }
+
 
     const MESSAGE_RENDER_WINDOW = 50;
     let currentRenderedCount = 0;
@@ -1072,7 +1073,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             item.className = 'sticker-item';
             item.style.backgroundImage = `url(${sticker.url})`;
             item.title = sticker.name;
-            item.addEventListener('click', () => sendSticker(sticker));
+            item.addEventListener('click', () => {
+                sendSticker(sticker)
+            });
             addLongPressListener(item, () => {
                 if (isSelectionMode) return;
                 const existingDeleteBtn = item.querySelector('.delete-btn');
