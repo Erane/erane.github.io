@@ -693,25 +693,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function parseAiResponse(content,isGemini) {
-        if(isGemini){
-            try {
-                return content
-                    .split('\n')
-                    .filter(line => line)
-                    .flatMap(jsonStr => JSON.parse(jsonStr));
-            } catch (error) {
-                console.error("解析失败：", error);
-                return [error];
-            }
-        }
-
-
         // 提取JSON内容（去除前后的```json标记）
         const jsonString = content
             .replace(/^```json/, '')  // 移除开头的```json
             .replace(/```$/, '')      // 移除结尾的```
             .trim();                  // 去除前后空白
-
 // 解析JSON字符串为JavaScript数组
         try {
             const messagesArray = JSON.parse(jsonString);
@@ -1515,7 +1501,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const errorData = await response.json();
                 throw new Error(`API Error: ${response.status} - ${errorData.error.message}`);
             }
-            const data = await response.json();
             messageTextContext.value = JSON.stringify(data);
             const aiResponseContent = isGemini? data.candidates[0].content.parts[0].text : data.choices[0].message.content;
             let messagesArray =  parseAiResponse(aiResponseContent,isGemini);
@@ -1612,13 +1597,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                         receiverName: receiverName,
                         timestamp: Date.now()
                     };
+                }else if (typeof msgData === 'object') {
+                    aiMessage = {
+                        role: 'assistant',
+                        timestamp: Date.now(),
+                        content:JSON.stringify(msgData)
+                    };
                 } else if (chat.isGroup) {
                     if (typeof msgData === 'object' && msgData.name && msgData.message) aiMessage = {
                         role: 'assistant',
                         senderName: msgData.name,
                         content: String(msgData.message),
                         timestamp: Date.now()
-                    }; else continue;
+                    }
                 } else {
                     aiMessage = {role: 'assistant', content: String(msgData), timestamp: Date.now()};
                 }
