@@ -1194,6 +1194,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    function filterHistoryUntilLastUser(historyArray) {
+        let lastUserIndex = -1;
+        for (let i = historyArray.length - 1; i >= 0; i--) {
+            if (historyArray[i] && historyArray[i].role === 'user') {
+                lastUserIndex = i;
+                break;
+            }
+        }
+
+
+        if (lastUserIndex !== -1) {
+
+            return historyArray.slice(0, lastUserIndex + 1);
+        }
+
+
+        return [];
+    }
     function openChat(chatId) {
         state.activeChatId = chatId;
         renderChatInterface(chatId);
@@ -1242,10 +1260,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     let messageTextContext = document.querySelector('.chat-error-message-content');
-    async function triggerAiResponse(autoSendChatId = undefined) {
-        if (!state.activeChatId && !autoSendChatId) return;
+    async function triggerAiResponse(reRoll = false) {
+        if (!state.activeChatId) return;
 
-        const chatId = state.activeChatId || autoSendChatId;
+        const chatId = state.activeChatId ;
         const chat = state.chats[chatId];
         if (state.activeChatId) {
             document.getElementById('typing-indicator').style.display = 'block';
@@ -1298,7 +1316,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         let systemPrompt, messagesPayload;
         const maxMemory = parseInt(chat.settings.maxMemory) || 10;
-        const historySlice = chat.history.slice(-maxMemory);
+        if(reRoll){
+            const originalHistoryLength = chat.history.length;
+            const newHistory = filterHistoryUntilLastUser(chat.history);
+            const removedCount = originalHistoryLength - newHistory.length;
+
+            if (removedCount > 0) {
+                const messagesContainer = document.getElementById('chat-messages');
+                const messageElements = messagesContainer.querySelectorAll('.message-wrapper, .system-message-container');
+
+                // 获取并移除最后的 N 个元素
+                const elementsToRemove = Array.from(messageElements).slice(-removedCount);
+                elementsToRemove.forEach(el => el.remove());
+            }
+
+            chat.history = newHistory;
+            await db.chats.put(chat);
+        }
+        let historySlice = chat.history.slice(-maxMemory);
+
+
         const activePreset = state.presets.find(p => p.id === state.globalSettings.activePresetId) || state.presets[0];
         const aiImageInstructions = activePreset?.promptImage || DEFAULT_PROMPT_IMAGE;
         const aiVoiceInstructions = activePreset?.promptVoice || DEFAULT_PROMPT_VOICE;
@@ -2508,16 +2545,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             chatInput.style.height = 'auto';
             chatInput.focus();
         });
-        document.getElementById('wait-reply-btn').addEventListener('click', () => {
-            triggerAiResponse();
-            // 点击后自动滚动到底部
-            setTimeout(() => {
-                const messagesContainer = document.getElementById('chat-messages');
-                if (messagesContainer) {
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                }
-            }, 50);
-        });
+
+        // document.getElementById('wait-reply-action-btn').addEventListener('click', () => {
+        //     triggerAiResponse();
+        //     // 点击后自动滚动到底部
+        //     setTimeout(() => {
+        //         const messagesContainer = document.getElementById('chat-messages');
+        //         if (messagesContainer) {
+        //             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        //         }
+        //     }, 50);
+        // });
         chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -4315,4 +4353,79 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelector('#get-messages-btn').addEventListener('click', (e)=>{
         document.querySelector('.chat-error-message-box').classList.add('show')
     })
+
+
+    function popoverHandleInit() {
+        const waitReplyBtn = document.getElementById('wait-reply-btn');
+        const popover = document.getElementById('wait-reply-popover');
+
+        if (!waitReplyBtn || !popover) {
+            console.error('Popover elements not found!');
+            return;
+        }
+
+        waitReplyBtn.addEventListener('click', (event) => {
+            event.stopPropagation(); // 防止 document 的点击事件立即关闭它
+
+            const isHidden = popover.style.display !== 'block';
+
+            if (isHidden) {
+                // 1. 先让 popover 可见，这样才能获取到正确的尺寸
+                popover.style.display = 'block';
+
+                // 2. 获取按钮和 popover 的尺寸及位置
+                const rect = waitReplyBtn.getBoundingClientRect();
+
+                // 3. 计算 popover 的位置，使其在按钮正上方并居中
+                const popoverLeft = rect.left + (rect.width / 2) - (popover.offsetWidth / 2);
+                const popoverTop = rect.top - popover.offsetHeight - 8; // 在按钮上方，并留出 8px 间隙
+
+                popover.style.left = `${popoverLeft}px`;
+                popover.style.top = `${popoverTop}px`;
+            } else {
+                // 如果 popover 已显示，则再次点击时隐藏它
+                popover.style.display = 'none';
+            }
+        });
+
+        // 当点击页面其他地方时，关闭 popover
+        document.addEventListener('click', (event) => {
+            if (popover.style.display === 'block' && !popover.contains(event.target) && event.target !== waitReplyBtn) {
+                popover.style.display = 'none';
+            }
+        });
+
+        // --- 为 popover 内的按钮添加功能 ---
+
+        document.getElementById('reroll-btn').addEventListener('click', () => {
+            console.log('Reroll action triggered!');
+            // TODO: 在这里添加你“重ROLL”的逻辑
+            triggerAiResponse(true);
+            // 点击后自动滚动到底部
+            setTimeout(() => {
+                const messagesContainer = document.getElementById('chat-messages');
+                if (messagesContainer) {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            }, 50);
+            popover.style.display = 'none'; // 操作后隐藏 popover
+        });
+
+        document.getElementById('wait-reply-action-btn').addEventListener('click', () => {
+            console.log('Wait for reply action triggered!');
+            // TODO: 在这里添加你“等待回复”的逻辑
+
+            triggerAiResponse();
+            // 点击后自动滚动到底部
+            setTimeout(() => {
+                const messagesContainer = document.getElementById('chat-messages');
+                if (messagesContainer) {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            }, 50);
+
+            popover.style.display = 'none'; // 操作后隐藏 popover
+        });
+    }
+    popoverHandleInit();
 });
