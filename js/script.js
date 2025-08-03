@@ -701,23 +701,30 @@ document.addEventListener('DOMContentLoaded', async () => {
                     .flatMap(jsonStr => JSON.parse(jsonStr));
             } catch (error) {
                 console.error("解析失败：", error);
+                return [error];
             }
         }
+
+
+        // 提取JSON内容（去除前后的```json标记）
+        const jsonString = content
+            .replace(/^```json/, '')  // 移除开头的```json
+            .replace(/```$/, '')      // 移除结尾的```
+            .trim();                  // 去除前后空白
+
+// 解析JSON字符串为JavaScript数组
         try {
-            const parsed = JSON.parse(content);
-            if (Array.isArray(parsed)) return parsed;
-        } catch (e) {
-        }
-        try {
-            const match = content.match(/\[(.*?)\]/s);
-            if (match && match[0]) {
-                const parsed = JSON.parse(match[0]);
-                if (Array.isArray(parsed)) return parsed;
+            const messagesArray = JSON.parse(jsonString);
+            console.log("转换后的数组：", messagesArray);
+            console.log("第一条消息：", messagesArray[0]);
+            if(messagesArray.length > 0){
+                return messagesArray
             }
-        } catch (e) {
+        } catch (error) {
+            console.error("解析JSON时出错：", error);
+            return [error];
         }
-        const lines = content.split('\n').map(l => l.trim()).filter(l => l.length > 0 && !l.startsWith('```'));
-        if (lines.length > 0) return lines;
+
         return [content];
     }
 
@@ -1659,7 +1666,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const random = Math.random(); // 生成 [0, 1) 之间的随机数
 
         if (random < 0.25) {
-           return 'post'
+            return 'post'
         } else if (random < 0.9) {
             return 'view'
         }
@@ -3346,48 +3353,48 @@ document.addEventListener('DOMContentLoaded', async () => {
         return results;
     }
     async function interactiveMoments({ aiPersona,myPersona,name,messagesPayload,linkedWorldBookIds},chat,isGroup = false,momentInteractionPrompt) {
-       return new Promise(async (resolve,reject)=>{
-           let dataMomentList = state.globalSettings.moment.list;
-           if(dataMomentList.length === 0){
-               return reject('暂无朋友圈')
-           }
-           const maxMemory = parseInt(chat.settings.maxMemory) || 10;
-           dataMomentList = dataMomentList.map(( item)=>{
-               return {
-                   appreciate:item.appreciate,
-                   comments:item.comments,
-                   content:item.content,
-                   momentId:item.id,
-                   imageDesc:item.imageDesc,
-                   name:item.name,
-                   role:item.role,
-               }
-           }).slice(-maxMemory)
-           const {proxyUrl: rawProxyUrl, apiKey, model, apiType} = state.apiConfig;
-           const isGemini = apiType === 'gemini';
-           if (!rawProxyUrl || !apiKey || !model) {
-               alert('请先在API设置中配置反代地址、密钥并选择模型。');
-               document.getElementById('typing-indicator').style.display = 'none';
-               return reject('请先在API设置中配置反代地址、密钥并选择模型。')
-           }
+        return new Promise(async (resolve,reject)=>{
+            let dataMomentList = state.globalSettings.moment.list;
+            if(dataMomentList.length === 0){
+                return reject('暂无朋友圈')
+            }
+            const maxMemory = parseInt(chat.settings.maxMemory) || 10;
+            dataMomentList = dataMomentList.map(( item)=>{
+                return {
+                    appreciate:item.appreciate,
+                    comments:item.comments,
+                    content:item.content,
+                    momentId:item.id,
+                    imageDesc:item.imageDesc,
+                    name:item.name,
+                    role:item.role,
+                }
+            }).slice(-maxMemory)
+            const {proxyUrl: rawProxyUrl, apiKey, model, apiType} = state.apiConfig;
+            const isGemini = apiType === 'gemini';
+            if (!rawProxyUrl || !apiKey || !model) {
+                alert('请先在API设置中配置反代地址、密钥并选择模型。');
+                document.getElementById('typing-indicator').style.display = 'none';
+                return reject('请先在API设置中配置反代地址、密钥并选择模型。')
+            }
 
-           // 处理/v1/v1问题
-           let proxyUrl = rawProxyUrl ? rawProxyUrl.trim() : '';
-           if (proxyUrl.endsWith('/')) {
-               proxyUrl = proxyUrl.slice(0, -1);
-           }
-           if (proxyUrl.endsWith('/v1')) {
-               proxyUrl = proxyUrl.slice(0, -3);
-           }
-           const banApi = URLBlacklist.some((api)=>{
-               return proxyUrl.indexOf(api) !== -1
-           })
-           if(banApi){
-               alert('此网址已加入黑名单，请勿使用')
-               return
-           }
-           let dataList = isGroup ? messagesPayload.map((item)=>{return {name:item.role === 'user' ? '我' : item.senderName, content:item.content,timestamp:item.timestamp, role:item.role}}) : messagesPayload
-           let systemPrompt = momentInteractionPrompt || `
+            // 处理/v1/v1问题
+            let proxyUrl = rawProxyUrl ? rawProxyUrl.trim() : '';
+            if (proxyUrl.endsWith('/')) {
+                proxyUrl = proxyUrl.slice(0, -1);
+            }
+            if (proxyUrl.endsWith('/v1')) {
+                proxyUrl = proxyUrl.slice(0, -3);
+            }
+            const banApi = URLBlacklist.some((api)=>{
+                return proxyUrl.indexOf(api) !== -1
+            })
+            if(banApi){
+                alert('此网址已加入黑名单，请勿使用')
+                return
+            }
+            let dataList = isGroup ? messagesPayload.map((item)=>{return {name:item.role === 'user' ? '我' : item.senderName, content:item.content,timestamp:item.timestamp, role:item.role}}) : messagesPayload
+            let systemPrompt = momentInteractionPrompt || `
                     **你将遵循以下互动原则：**
 
                 1.  **数据格式：**
@@ -3445,109 +3452,109 @@ document.addEventListener('DOMContentLoaded', async () => {
                 [{"id":"moment_id_1750787266901",appreciate": "false","comment": "完全同意！特别是忙碌了一天之后，这种放松感太重要了。"}]
                 现在，请根据以上设定，开始你的朋友圈互动吧。
         `
-           let otherPrompt = [
-               {
-                   role: isGemini ? 'model' :'assistant',
-                   content: `你正在扮演角色「${name}」，严格遵守人设：${aiPersona}`
-               },
-               {
-                   role: 'user',
-                   content: `我的人设:${myPersona}, 最近你(${name})跟我聊天的数据 - ${JSON.stringify(dataList)}`
-               },
-               {
-                   role: 'user',
-                   content: `这是我的朋友圈数据 - ${JSON.stringify(dataMomentList)}`
-               },
-           ]
-           try {
-               let baseConfig = {
-                   url: `${proxyUrl}/v1/chat/completions`,
-                   data:{
-                       method: 'POST',
-                       headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}`},
-                       body: JSON.stringify({
-                           model: model,
-                           messages: [{role: 'system', content: systemPrompt},...otherPrompt],
-                           temperature: 0.8,
-                           stream: false
-                       })
-                   }
-               }
-               let geminiConfig = {
-                   url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${getRandomValue(apiKey)}`,
-                   data:{
-                       method: 'POST',
-                       headers: {
-                           'Content-Type': 'application/json'
-                       },
-                       body: JSON.stringify({
-                           contents: otherPrompt,
-                           generationConfig: {
-                               temperature: 0.8,     // 创意度 (0-1)
-                           },
-                           "systemInstruction": {
-                               "parts": [{
-                                   "text": systemPrompt
-                               }]
-                           }
-                       })
-                   }
-               }
-               const response = await fetch(isGemini ? geminiConfig.url : baseConfig.url, isGemini ? geminiConfig.data : baseConfig.data);
-               if (!response.ok) {
-                   const errorData = await response.json();
-                   throw new Error(`API Error: ${response.status} - ${errorData.error.message}`);
-               }
-               const data = await response.json();
-               const aiResponseContent = isGemini? data.candidates[0].content.parts[0].text : data.choices[0].message.content;
-               let dataList = extractMomentData(aiResponseContent);
-               let chatName = isGroup ? name : chat.name;
-               if(Array.isArray(dataList)){
-                   state.globalSettings.moment.list = state.globalSettings.moment.list.map((item) => {
-                       let obj = item
-                       dataList.forEach((sub) => {
-                           if (item.id === sub.id) {
-                               if (sub.appreciate === 'true' && !obj.appreciate.includes(chatName)) {
-                                   let appreciate = {
-                                       role: 'assistant',
-                                       time: new Date().getTime(),
-                                       id: `appreciate_id_${Date.now()}`,
-                                       to: '',
-                                       content: chatName
-                                   }
-                                   if (Array.isArray(obj.appreciate)) {
-                                       obj.appreciate.push(appreciate)
-                                   } else {
-                                       obj.appreciate = [appreciate]
-                                   }
-                               }
-                               if (sub.comment) {
-                                   obj.comments.push({
-                                       role: 'assistant',
-                                       content: sub.comment,
-                                       time: new Date().getTime(),
-                                       id: `comment_id_${Date.now()}`,
-                                       to: '',
-                                       name: chatName
-                                   })
-                               }
-                           }
-                       })
-                       return obj
-                   });
-                   await db.globalSettings.put(state.globalSettings);
-                   updateMoment();
-                   resolve()
-               }
-           } catch (error) {
-               const errorContent = `[出错了: ${error.message}]`;
-               const errorMessage = {role: 'assistant', content: errorContent, timestamp: Date.now()};
-               console.error(error);
-               reject(errorMessage)
-           } finally {
-               resolve();
-           }
-       })
+            let otherPrompt = [
+                {
+                    role: isGemini ? 'model' :'assistant',
+                    content: `你正在扮演角色「${name}」，严格遵守人设：${aiPersona}`
+                },
+                {
+                    role: 'user',
+                    content: `我的人设:${myPersona}, 最近你(${name})跟我聊天的数据 - ${JSON.stringify(dataList)}`
+                },
+                {
+                    role: 'user',
+                    content: `这是我的朋友圈数据 - ${JSON.stringify(dataMomentList)}`
+                },
+            ]
+            try {
+                let baseConfig = {
+                    url: `${proxyUrl}/v1/chat/completions`,
+                    data:{
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}`},
+                        body: JSON.stringify({
+                            model: model,
+                            messages: [{role: 'system', content: systemPrompt},...otherPrompt],
+                            temperature: 0.8,
+                            stream: false
+                        })
+                    }
+                }
+                let geminiConfig = {
+                    url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${getRandomValue(apiKey)}`,
+                    data:{
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            contents: otherPrompt,
+                            generationConfig: {
+                                temperature: 0.8,     // 创意度 (0-1)
+                            },
+                            "systemInstruction": {
+                                "parts": [{
+                                    "text": systemPrompt
+                                }]
+                            }
+                        })
+                    }
+                }
+                const response = await fetch(isGemini ? geminiConfig.url : baseConfig.url, isGemini ? geminiConfig.data : baseConfig.data);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`API Error: ${response.status} - ${errorData.error.message}`);
+                }
+                const data = await response.json();
+                const aiResponseContent = isGemini? data.candidates[0].content.parts[0].text : data.choices[0].message.content;
+                let dataList = extractMomentData(aiResponseContent);
+                let chatName = isGroup ? name : chat.name;
+                if(Array.isArray(dataList)){
+                    state.globalSettings.moment.list = state.globalSettings.moment.list.map((item) => {
+                        let obj = item
+                        dataList.forEach((sub) => {
+                            if (item.id === sub.id) {
+                                if (sub.appreciate === 'true' && !obj.appreciate.includes(chatName)) {
+                                    let appreciate = {
+                                        role: 'assistant',
+                                        time: new Date().getTime(),
+                                        id: `appreciate_id_${Date.now()}`,
+                                        to: '',
+                                        content: chatName
+                                    }
+                                    if (Array.isArray(obj.appreciate)) {
+                                        obj.appreciate.push(appreciate)
+                                    } else {
+                                        obj.appreciate = [appreciate]
+                                    }
+                                }
+                                if (sub.comment) {
+                                    obj.comments.push({
+                                        role: 'assistant',
+                                        content: sub.comment,
+                                        time: new Date().getTime(),
+                                        id: `comment_id_${Date.now()}`,
+                                        to: '',
+                                        name: chatName
+                                    })
+                                }
+                            }
+                        })
+                        return obj
+                    });
+                    await db.globalSettings.put(state.globalSettings);
+                    updateMoment();
+                    resolve()
+                }
+            } catch (error) {
+                const errorContent = `[出错了: ${error.message}]`;
+                const errorMessage = {role: 'assistant', content: errorContent, timestamp: Date.now()};
+                console.error(error);
+                reject(errorMessage)
+            } finally {
+                resolve();
+            }
+        })
     }
     function extractMomentData(inputText) {
         // 尝试匹配代码块（带或不带json标记）
@@ -4048,7 +4055,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-   async function updateMoment() {
+    async function updateMoment() {
 
         state.globalSettings.moment.list = state.globalSettings.moment.list.filter((item)=>item);
         await db.globalSettings.put(state.globalSettings);
@@ -4202,12 +4209,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.querySelector('.moment-modal').classList.remove('show')
     })
     document.querySelector('.create-new-api-name').addEventListener('click', async (e)=>{
-       let name =  prompt('请输入API名称');
+        let name =  prompt('请输入API名称');
         let list = await db.apiConfigs.toArray();
-       if(!(name.trim())){
-           alert('请输入API名称')
-           return
-       }
+        if(!(name.trim())){
+            alert('请输入API名称')
+            return
+        }
         let n  = list.find((item)=>item.name === name);
         if(n){
             alert(name+' 已存在')
@@ -4287,14 +4294,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 select.append(option)
             })
         }else {
-                await db.apiConfigs.put({
-                    id:'default',
-                    url:state.apiConfig.proxyUrl,
-                    key:state.apiConfig.apiKey,
-                    model:state.apiConfig.model,
-                    apiType:'api',
-                    name: '默认'
-                });
+            await db.apiConfigs.put({
+                id:'default',
+                url:state.apiConfig.proxyUrl,
+                key:state.apiConfig.apiKey,
+                model:state.apiConfig.model,
+                apiType:'api',
+                name: '默认'
+            });
             url = state.apiConfig.proxyUrl;
             key = state.apiConfig.apiKey;
             select.append(defaultOption)
