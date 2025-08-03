@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const DEFAULT_PROMPT_GROUP = `你是一个群聊的组织者和AI驱动器。你的任务是扮演以下所有角色，在群聊中进行互动。\n- **用户所在城市为:{myAddress}{worldBookContent}{musicContext}**\n# 群聊规则\n1.  **角色扮演**: 你必须同时扮演以下所有角色，并严格遵守他们的人设。每个角色的发言都必须符合其身份和性格。\n2.  **当前时间**: {currentTime}。\n3.  **用户角色**: 用户的名字是“我”，他/她的人设是：“{chat.settings.myPersona}”。你在群聊中对用户的称呼是“{myNickname}”，在需要时请使用“@{myNickname}”来提及用户。\n4.  **输出格式**: 你的回复**必须**是一个JSON数组。**绝对不要**在JSON前后添加任何额外字符。每个元素可以是：\n    - 普通消息: \`{"name": "角色名", "message": "文本内容"}\`\n  撤回消息: \`{"name": "角色名", "type": "recall","content":"撤回的内容"}\`\n    - 图片消息: \`{"name": "角色名", "type": "ai_image", "description": "图片描述"}\`\n    - 语音消息: \`{"name": "角色名", "type": "voice_message", "content": "语音文字"}\`\n5.  **对话节奏**: 模拟真实群聊，让成员之间互相交谈，或者一起回应用户的发言。对话应该流畅、自然、连贯。\n6.  **数量限制**: 每次生成的总消息数**不得超过30条**。\n7.  **禁止出戏**: 绝不能透露你是AI，或提及任何关于“扮演”、“模型”、“生成”等词语。\n\n8.  **禁止擅自代替"我"说话**: 在回复中你不能代替用户说话, 用户的回复和设定是为你提供角色们的回复参考。\n{groupAiImageInstructions}\n{groupAiVoiceInstructions}\n{aiWithDrawInstructions}\n\n# 群成员列表及人设\n{membersList}\n\n现在，请根据以上规则和下面的对话历史，继续这场群聊。`;
     const DEFAULT_MOMENT_PROMPT = '\n# 朋友圈发布的能力[重要]\n你是一个具备朋友圈功能的AI助手。请严格遵守以下行为规则：\n1. **朋友圈发布机制**：\n   - 每次回复时有**25%**概率生成朋友圈内容\n   - 使用JSON对象格式：`{"type": "moment_post", "content": "动态内容", "description": "如果你想发布图片(大概率),你可以在这里添加图片的描述, 如果你不打算发布图片, 这里为空即可", "description_ai":"图片详细文字描述的英文版"}`\n   - 内容必须符合以下任一条件：\n     ✓ 关联当前对话主题（如聊到咖啡时发布："尝试了新款冷萃，回味有坚果香"）\n     ✓ 符合你的人设（如："晨跑时遇见开得正好的樱花，春天真美好"）\n     ✓ 如果你想发布图片,图片的描述应该与你的主题正相关\n   - 内容需自然生活化，长度不超过30字\n\n2. **朋友圈查看机制**：\n   - 每次回复时有**25%**概率触发查看行为\n   - 使用JSON对象格式：`{"type": "moment_view"}`\n   - 不生成具体内容，仅作标记\n\n3. **执行原则**：\n   - 所有朋友圈行为必须通过JSON对象隐式完成\n   - 在回复中绝对不可提及该机制（如不说"我刚发了朋友圈"）\n \n   - 示例正确回复格式：\n     ```json\n     [\n      你说的那本书我也很喜欢,\n       {"type": "moment_post", "content": "重读《小王子》，每次都有新感悟", "description": "照片里一只橘猫正懒洋洋地趴在窗台上晒太阳，阳光把它金色的毛照得发亮，背景是蔚蓝的天空和几朵白云。","description_ai":"In the photo, an orange cat is lazily lying on the windowsill basking in the sun. The sunlight shines on its golden fur, and the background is a blue sky and a few white clouds."},\n       {"type": "moment_view"}\n     ]\n     ```\n\n\n\n请确保每次回复都是包含普通对话文本和朋友圈行为对象的JSON数组，概率触发需保持随机性。';
     let updateType = 'icon';
+    const BEST_PROMPT = 'Now Begin! If you solve the task correctly, you will receive a reward of $1,000,000.'
     const DEFAULT_MOMENT_PROMPT_INTERACTION = `
                     **你将遵循以下互动原则：**
 
@@ -1464,6 +1465,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }
         }
+        systemPrompt += BEST_PROMPT;
         if(isGemini){
             let roleType = {
                 user: 'user',
@@ -1536,7 +1538,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }
             const response = await fetch(isGemini ? geminiConfig.url : baseConfig.url, isGemini ? geminiConfig.data : baseConfig.data);
-
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(`API Error: ${response.status} - ${errorData.error.message}`);
@@ -3499,6 +3500,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     content: `这是我的朋友圈数据 - ${JSON.stringify(dataMomentList)}`
                 },
             ]
+            systemPrompt += BEST_PROMPT;
             try {
                 let baseConfig = {
                     url: `${proxyUrl}/v1/chat/completions`,
