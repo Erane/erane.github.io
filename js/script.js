@@ -712,7 +712,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         } catch (error) {
             console.error("解析JSON时出错：", error);
-            return [content];
+            return [content ? content : 'AI返回了空数据'];
         }
 
         return [content];
@@ -3673,7 +3673,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resetForm();
                 }
             }
-
+            console.log(icon)
             // 配置参数
             const LONG_PRESS_DURATION = 2000; // 2秒长按时间
 
