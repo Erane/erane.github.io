@@ -712,7 +712,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         } catch (error) {
             console.error("解析JSON时出错：", error);
-            return [error];
+            return [content];
         }
 
         return [content];
@@ -1642,11 +1642,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                         timestamp: Date.now()
                     };
                 }else if (typeof msgData === 'object') {
-                    aiMessage = {
-                        role: 'assistant',
-                        timestamp: Date.now(),
-                        content:JSON.stringify(msgData)
-                    };
+                    if(msgData.message ){
+                        aiMessage = {
+                            role: 'assistant',
+                            timestamp: Date.now(),
+                            content:msgData.message
+                        };
+                    }else {
+                        aiMessage = {
+                            role: 'assistant',
+                            timestamp: Date.now(),
+                            content:JSON.stringify(msgData)
+                        };
+                    }
+
                 } else if (chat.isGroup) {
                     if (typeof msgData === 'object' && msgData.name && msgData.message) aiMessage = {
                         role: 'assistant',
