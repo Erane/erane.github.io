@@ -1545,9 +1545,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 throw new Error(`API Error: ${response.status} - ${errorData.error.message}`);
             }
             const data = await response.json();
-            messageTextContext.value = JSON.stringify(data);
+            // messageTextContext.value = JSON.stringify(data);
             const aiResponseContent = isGemini? data.candidates[0].content.parts[0].text : data.choices[0].message.content;
             let messagesArray =  parseAiResponse(aiResponseContent,isGemini);
+            console.log(messagesArray)
             // 提取撤回信息的内容
             messagesArray = removeRecalledContent(messagesArray, chat.isGroup);
             let notificationShown = false;
@@ -1641,27 +1642,31 @@ document.addEventListener('DOMContentLoaded', async () => {
                         receiverName: receiverName,
                         timestamp: Date.now()
                     };
-                }else if (typeof msgData === 'object') {
+                }else if (typeof msgData === 'object' && !chat.isGroup) {
                     if(msgData.message ){
                         aiMessage = {
                             role: 'assistant',
+                            senderName: senderName,
                             timestamp: Date.now(),
                             content:msgData.message
                         };
                     }else {
                         aiMessage = {
                             role: 'assistant',
+                            senderName: senderName,
                             timestamp: Date.now(),
                             content:JSON.stringify(msgData)
                         };
                     }
-
                 } else if (chat.isGroup) {
-                    if (typeof msgData === 'object' && msgData.name && msgData.message) aiMessage = {
-                        role: 'assistant',
-                        senderName: msgData.name,
-                        content: String(msgData.message),
-                        timestamp: Date.now()
+                    if (typeof msgData === 'object' && msgData.name && msgData.message){
+                        console.log(msgData.name,senderName)
+                        aiMessage = {
+                            role: 'assistant',
+                            senderName: msgData.name,
+                            content: String(msgData.message),
+                            timestamp: Date.now()
+                        }
                     }
                 } else {
                     aiMessage = {role: 'assistant', content: String(msgData), timestamp: Date.now()};
