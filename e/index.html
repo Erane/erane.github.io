@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>章鱼喷墨机</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" href="https://i.postimg.cc/kGYP6CQw/6.png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/nzP9sgxr/chan-125.png">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
 
@@ -2243,6 +2243,18 @@
                 quality = 0.8, maxWidth = 800, maxHeight = 800
             } = options;
 
+            // --- 新增：处理GIF动图 ---
+            // 如果文件是GIF，则不经过canvas压缩，直接返回原始文件数据以保留动画
+            if (file.type === 'image/gif') {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = error => reject(error);
+                });
+            }
+
+            // --- 对其他静态图片（如PNG, JPG）进行压缩 ---
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -2271,7 +2283,18 @@
                         canvas.width = width;
                         canvas.height = height;
                         const ctx = canvas.getContext('2d');
+
+                        // 对于有透明背景的PNG图片，先填充一个白色背景
+                        // 这样可以防止透明区域在转换成JPEG时变黑
+                        if (file.type === 'image/png') {
+                            ctx.fillStyle = '#FFFFFF'; // 白色背景
+                            ctx.fillRect(0, 0, width, height);
+                        }
+
                         ctx.drawImage(img, 0, 0, width, height);
+
+                        // --- 关键修正：将输出格式改为 'image/jpeg' ---
+                        // JPEG格式可以显著减小文件大小，避免浏览器处理超大Base64字符串时崩溃
                         const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
                         resolve(compressedDataUrl);
                     };
@@ -3184,6 +3207,14 @@
             });
             getReplyBtn.addEventListener('click', getAiReply);
             messageArea.addEventListener('click', (e) => {
+                // --- 修复开始: 增加关闭表情包面板的逻辑 ---
+                if (stickerModal.classList.contains('visible')) {
+                    stickerModal.classList.remove('visible');
+                    // 阻止事件继续传播，避免立即触发其他点击效果
+                    return;
+                }
+                // --- 修复结束 ---
+
                 if (e.target && e.target.id === 'load-more-btn') {
                     loadMoreMessages();
                 } else if (isInMultiSelectMode) {
@@ -3443,6 +3474,7 @@
         function createMessageBubbleElement(message) {
             const chat = (currentChatType === 'private') ? db.characters.find(c => c.id === currentChatId) : db.groups.find(g => g.id === currentChatId);
             const {role, content, timestamp, id, transferStatus, giftStatus, stickerData, senderId} = message;
+
             const timeSkipRegex = /\[system-display:([\s\S]+?)\]/;
             const inviteRegex = /\[(.*?)邀请(.*?)加入了群聊\]/;
             const renameRegex = /\[(.*?)修改群名为：(.*?)\]/;
