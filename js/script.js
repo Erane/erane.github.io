@@ -696,6 +696,230 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('main-date').textContent = dateString;
     }
 
+    function parseApiResponse(data) {
+        const result = [];
+        // 正则表达式，用于匹配HTML标签（包括可选的char属性）和图片链接
+        const regex = /(<([a-zA-Z0-9]+)(?:\s+char="([^"]+)")?.*?>[\s\S]*?<\/\2>)|(https?:\/\/[^\s]+?\.(?:jpg|jpeg|png|gif|webp))/gi;
+
+        let lastIndex = 0;
+        let match;
+
+        // 使用正则表达式切分字符串
+        while ((match = regex.exec(data)) !== null) {
+            // 1. 添加上一个匹配到当前匹配之间的文本
+            if (match.index > lastIndex) {
+                const text = data.substring(lastIndex, match.index).trim();
+                if (text) {
+                    // 尝试解析文本中的JSON对象
+                    tryToParseJson(text, result);
+                }
+            }
+
+            // 2. 处理当前匹配到的内容
+            if (match[1]) { // 如果是HTML内容
+                const htmlContent = match[1];
+                const char = match[3];
+                const htmlObject = {
+                    type: 'html',
+                    content: htmlContent,
+                };
+                if (char) {
+                    htmlObject.char = char;
+                }
+                result.push(htmlObject);
+            } else if (match[4]) { // 如果是图片链接
+                result.push(match[4]);
+            }
+
+            lastIndex = regex.lastIndex;
+        }
+
+        // 3. 添加最后一次匹配到字符串末尾的文本
+        if (lastIndex < data.length) {
+            const remainingText = data.substring(lastIndex).trim();
+            if (remainingText) {
+                tryToParseJson(remainingText, result);
+            }
+        }
+
+        return result;
+    }
+
+// 辅助函数，尝试将文本解析为JSON
+    function tryToParseJson(text, resultArray) {
+        // 匹配可能是JSON对象的字符串
+        const jsonRegex = /({[\s\S]*?})/g;
+        let lastIndex = 0;
+        let match;
+        let hasJson = false;
+
+        while((match = jsonRegex.exec(text)) !== null) {
+            hasJson = true;
+            // 添加JSON前的文本
+            const textBefore = text.substring(lastIndex, match.index).trim();
+            if(textBefore) {
+                resultArray.push(textBefore);
+            }
+
+            // 尝试解析并添加JSON对象
+            try {
+                resultArray.push(JSON.parse(match[1]));
+            } catch (e) {
+                // 如果解析失败，则作为普通文本添加
+                resultArray.push(match[1]);
+            }
+
+            lastIndex = jsonRegex.lastIndex;
+        }
+
+        // 如果没有找到JSON，或者JSON后面还有文本，则添加剩余的文本
+        if (!hasJson) {
+            resultArray.push(text);
+        } else if (lastIndex < text.length) {
+            const remainingText = text.substring(lastIndex).trim();
+            if(remainingText) {
+                resultArray.push(remainingText);
+            }
+        }
+    }
+    function extractImageMessages(data) {
+        // 匹配图片链接的正则（全局匹配，支持多个链接）
+        const imageRegex = /(https:.*?\.(jpg|jpeg|png|gif|webp)|data:image.*?)/gi;
+        const result = [];
+
+        data.forEach(item => {
+            // 处理包含message字段的对象
+            if (item.message) {
+                const originalMessage = item.message;
+                // 提取所有匹配的图片链接
+                const imageLinks = originalMessage.match(imageRegex) || [];
+                // 去除原始消息中的所有图片链接
+                const textWithoutImages = originalMessage.replace(imageRegex, '').trim();
+
+                // 若去除链接后仍有文本，保留原对象（更新message）
+                if (textWithoutImages) {
+                    result.push({
+                        ...item,
+                        message: textWithoutImages
+                    });
+                }
+
+                // 为每个图片链接创建新对象并插入数组
+                imageLinks.forEach(link => {
+                    // 清除链接前后可能的空白字符
+                    const cleanLink = link.trim();
+                    if (cleanLink) {
+                        result.push({
+                            name: item.name,
+                            message: cleanLink
+                        });
+                    }
+                });
+            } else {
+                // 不包含message的对象（如moment_post、moment_view）直接保留
+                result.push(item);
+            }
+        });
+
+        return result;
+    }
+
+    function parseApiData(dataString) {
+        // 确保输入是有效的字符串
+        if (typeof dataString !== 'string' || !dataString) {
+            return [];
+        }
+
+        const results = [];
+        // 正则表达式用于匹配 <orange>...</orange> 块。
+        // 关键点:
+        // 1. (?: char="([^"]+)")? - 一个可选的非捕获组，用于匹配 char 属性。
+        //    - ([^"]+) 是第一个捕获组，用于提取 char 的值。
+        // 2. ([\s\S]*?) - 第二个捕获组，非贪婪地匹配标签内的所有内容（包括换行符）。
+        // 3. /g 标志 - 表示全局搜索，以便找到所有匹配项。
+        const htmlRegex = /<orange(?: char="([^"]+)")?>([\s\S]*?)<\/orange>/g;
+
+        let lastIndex = 0;
+        let match;
+
+        // 使用 while 循环和 exec() 来遍历所有 HTML 匹配项
+        while ((match = htmlRegex.exec(dataString)) !== null) {
+            // 1. 捕获当前 HTML 块之前的所有文本
+            if (match.index > lastIndex) {
+                const textBefore = dataString.substring(lastIndex, match.index);
+                // 按一个或多个换行符分割，并过滤掉空字符串
+                textBefore.split(/\n+/).filter(part => part.trim() !== "").forEach(part => {
+                    results.push(part.trim());
+                });
+            }
+
+            // 2. 将提取到的 HTML 块作为一个对象添加到结果中
+            // 这样既保留了原始内容，也单独提取了 char 的值
+            results.push({
+                type: 'html',
+                content: match[0], // match[0] 是完整的匹配文本，即整个 <orange>...</orange>
+                char: match[1] || null // match[1] 是第一个捕获组（char的值），如果不存在则为 null
+            });
+
+            // 3. 更新 lastIndex，为下一次循环或处理剩余文本做准备
+            lastIndex = htmlRegex.lastIndex;
+        }
+
+        // 4. 捕获最后一个 HTML 块之后的所有剩余文本
+        if (lastIndex < dataString.length) {
+            const textAfter = dataString.substring(lastIndex);
+            textAfter.split(/\n+/).filter(part => part.trim() !== "").forEach(part => {
+                results.push(part.trim());
+            });
+        }
+
+        return results
+    }
+    function processData(data) {
+        // 正则表达式，用于匹配图片URL（https链接或data:image格式）
+        const imageUrlRegex = /(https:.*\.(jpg|jpeg|png|gif|webp)|data:image[^\s'"]+)/i;
+
+        // 使用 reduce 方法来构建新数组，可以灵活地将一个元素转换成多个
+        return data.reduce((acc, item) => {
+            // 1. 如果当前项不是字符串（例如，已经是对象），直接推入新数组
+            if (typeof item !== 'string') {
+                acc.push(item);
+                return acc;
+            }
+
+            // 2. 如果是字符串，尝试将其作为JSON对象处理
+            if (item.startsWith('{') && item.endsWith('}')) {
+                try {
+                    const parsedObject = JSON.parse(item);
+                    acc.push(parsedObject);
+                    return acc; // 处理完毕，返回并处理下一个item
+                } catch (e) {
+                    // 解析失败，则按普通字符串继续处理
+                }
+            }
+
+            // 3. 检查字符串中是否包含图片链接
+            const match = item.match(imageUrlRegex);
+
+            if (match) {
+                const url = match[0];
+                // 从原字符串中删除URL，并去除首尾空格
+                const text = item.replace(url, '').trim();
+
+                // 如果删除URL后还有剩余文本，则先推入文本
+                if (text) {
+                    acc.push(text);
+                }
+                // 然后推入URL
+                acc.push(url);
+            } else {
+                // 4. 如果不包含图片链接，直接推入原字符串
+                acc.push(item);
+            }
+
+            return acc;
+        }, []);
+    }
     function parseAiResponse(content,isGemini) {
         // 提取JSON内容（去除前后的```json标记）
         const jsonString = content
@@ -708,11 +932,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log("转换后的数组：", messagesArray);
             console.log("第一条消息：", messagesArray[0]);
             if(messagesArray.length > 0){
-                return messagesArray
+                return extractImageMessages(messagesArray)
             }
         } catch (error) {
             console.error("解析JSON时出错：", error);
-            return [content ? content : 'AI返回了空数据'];
+            if(content){
+                return processData(parseApiData(content))
+            }else {
+                return ['AI返回了空数据']
+            }
         }
 
         return [content];
@@ -1110,7 +1338,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             wrapper.innerHTML = `<span>${msg.content}</span>`;
             return wrapper;
         }
-
         const isUser = msg.role === 'user';
         const wrapper = document.createElement('div');
         wrapper.className = `message-wrapper ${isUser ? 'user' : 'ai'} ${msg.type === 'recall' ? 'recall-wrap' : ''}`;
@@ -1145,7 +1372,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             bubble.classList.add('is-ai-image');
             const altText = msg.type === 'user_photo' ? "用户描述的照片" : "AI生成的图片";
             contentHtml = `<img src="${msg.url ? msg.url : 'https://i.postimg.cc/KYr2qRCK/1.jpg'}" class="ai-generated-image" alt="${altText}" data-description="${msg.content}">`;
-        } else if (msg.type === 'recall') {
+        }
+        else if (msg.type === 'recall') {
             bubble.classList.add('is-recall-message');
             contentHtml = `<div class="recall-message-body" data-text="${msg.content}">${msg.senderName}撤回了一条消息, 消息内容是:[<span>${msg.content}]</span></div>`;
         } else if (msg.type === 'voice_message') {
@@ -1545,10 +1773,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 throw new Error(`API Error: ${response.status} - ${errorData.error.message}`);
             }
             const data = await response.json();
-            // messageTextContext.value = JSON.stringify(data);
+
+            messageTextContext.value = JSON.stringify(data);
             const aiResponseContent = isGemini? data.candidates[0].content.parts[0].text : data.choices[0].message.content;
             let messagesArray =  parseAiResponse(aiResponseContent,isGemini);
-            console.log(messagesArray)
             // 提取撤回信息的内容
             messagesArray = removeRecalledContent(messagesArray, chat.isGroup);
             let notificationShown = false;
@@ -1562,6 +1790,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                     aiMessage = {
                         role: 'assistant',
                         type: 'voice_message',
+                        content: msgData.content,
+                        senderName: senderName,
+                        timestamp: Date.now()
+                    };
+                }else if (typeof msgData === 'object' && msgData.type === 'html') {
+                    aiMessage = {
+                        role: 'assistant',
+                        type: 'html',
                         content: msgData.content,
                         senderName: senderName,
                         timestamp: Date.now()
@@ -1660,7 +1896,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 } else if (chat.isGroup) {
                     if (typeof msgData === 'object' && msgData.name && msgData.message){
-                        console.log(msgData.name,senderName)
                         aiMessage = {
                             role: 'assistant',
                             senderName: msgData.name,
@@ -2683,7 +2918,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 let geminiApi = {
                     method: 'get',
-                    url: `https://generativelanguage.googleapis.com/v1beta/models?key=${key}`,
+                    url: `https://generativelanguage.googleapis.com/v1beta/models?key=${getRandomValue(key)}`,
                 }
 
                 let response = await axios(isGemini ? geminiApi : baseConfigs);
@@ -3673,7 +3908,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resetForm();
                 }
             }
-            console.log(icon)
             // 配置参数
             const LONG_PRESS_DURATION = 2000; // 2秒长按时间
 
