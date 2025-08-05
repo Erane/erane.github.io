@@ -1131,6 +1131,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 lastMsgDisplay = lastMsgObj.meaning ? `[表情: ${lastMsgObj.meaning}]` : '[表情]';
             } else if (Array.isArray(lastMsgObj.content)) {
                 lastMsgDisplay = `[图片]`;
+            } else if (lastMsgObj.type === 'html') {
+                lastMsgDisplay = `[互动]`;
             } else {
                 lastMsgDisplay = String(lastMsgObj.content || '...').substring(0, 20);
             }
