@@ -3085,6 +3085,8 @@
                         const stickerRegex = /\[.*?的表情包：.*?\]|\[.*?发送的表情包：.*?\]/;
                         const giftRegex = /\[.*?送来的礼物：.*?\]|\[.*?向.*?送来了礼物：.*?\]/;
 
+
+
                         if (giftRegex.test(lastMsg.content)) {
                             lastMessageText = '[礼物]';
                         } else if (stickerRegex.test(lastMsg.content)) {
@@ -3097,6 +3099,8 @@
                             lastMessageText = '[转账]';
                         } else if (imageRecogRegex.test(lastMsg.content) || (lastMsg.parts && lastMsg.parts.some(p => p.type === 'image'))) {
                             lastMessageText = '[图片]';
+                        }else if ((lastMsg.parts && lastMsg.parts.some(p => p.type === 'html'))) {
+                            lastMessageText = '[互动]';
                         } else {
                             const textMatch = lastMsg.content.match(/\[.*?的消息：([\s\S]+)\]/);
                             let text = textMatch ? textMatch[1].trim() : lastMsg.content.trim();
@@ -3439,7 +3443,6 @@
         function createMessageBubbleElement(message) {
             const chat = (currentChatType === 'private') ? db.characters.find(c => c.id === currentChatId) : db.groups.find(g => g.id === currentChatId);
             const {role, content, timestamp, id, transferStatus, giftStatus, stickerData, senderId} = message;
-
             const timeSkipRegex = /\[system-display:([\s\S]+?)\]/;
             const inviteRegex = /\[(.*?)邀请(.*?)加入了群聊\]/;
             const renameRegex = /\[(.*?)修改群名为：(.*?)\]/;
@@ -3521,6 +3524,7 @@
             const groupGiftMatch = content.match(groupGiftRegex);
             const imageRecogMatch = content.match(imageRecogRegex);
             const textMatch = content.match(textRegex);
+
 
 
             if ((isSent && sentStickerMatch && stickerData) || (!isSent && receivedStickerMatch)) {
@@ -3634,6 +3638,10 @@
                     bubbleElement.style.backgroundColor = bubbleTheme.bg;
                     bubbleElement.style.color = bubbleTheme.text;
                 }
+            }else if(message && Array.isArray( message.parts) && message.parts[0].type === 'html'){
+                bubbleElement = document.createElement('div');
+                bubbleElement.className = `message-bubble ${isSent ? 'sent' : 'received'}`;
+                bubbleElement.innerHTML = message.parts[0].text;
             } else {
                 bubbleElement = document.createElement('div');
                 bubbleElement.className = `message-bubble ${isSent ? 'sent' : 'received'}`;
@@ -3643,7 +3651,6 @@
                     bubbleElement.style.color = bubbleTheme.text;
                 }
             }
-
             const nicknameHTML = (currentChatType === 'group' && !isSent && senderNickname) ? `<div class="group-nickname">${senderNickname}</div>` : '';
             bubbleRow.innerHTML = `<div class="message-info">${nicknameHTML}<img src="${avatarUrl}" class="message-avatar"><span class="message-time">${timeString}</span></div>`;
             if (bubbleElement) {
@@ -3657,12 +3664,12 @@
         async function addMessageBubble(message) {
             if (currentChatType === 'private') {
                 const character = db.characters.find(c => c.id === currentChatId);
-                const systemMessageRegex = /\[system:.*?\]|\[system-display:.*?\]/;
+                // const systemMessageRegex = /\[system:.*?\]|\[system-display:.*?\]/;
                 const updateStatusRegex = new RegExp(`\\[${character.realName}更新状态为：(.*?)\\]`);
                 const transferActionRegex = new RegExp(`\\[${character.realName}(接收|退回)${character.myName}的转账\\]`);
                 const giftReceivedRegex = new RegExp(`\\[${character.realName}已接收礼物\\]`);
-                if (systemMessageRegex.test(message.content)) { /* Do nothing for context messages */
-                }
+                // if (systemMessageRegex.test(message.content)) { /* Do nothing for context messages */
+                // }
                 if (message.content.match(updateStatusRegex)) {
                     character.status = message.content.match(updateStatusRegex)[1];
                     chatRoomStatusText.textContent = character.status;
@@ -3961,6 +3968,66 @@
             timeSkipModal.classList.remove('visible');
         }
 
+        function getMixedContent(responseData) {
+            // const mixedContent = [];
+            //
+            // // 提取消息及其位置
+            // const messageRegex = new RegExp(regex, "g");
+            // let messageMatch;
+            // while ((messageMatch = messageRegex.exec(responseData)) !== null) {
+            //     mixedContent.push({
+            //         type: 'text',
+            //         content: messageMatch[0],
+            //         index: messageMatch.index,
+            //     });
+            // }
+            //
+            // // 提取HTML及其位置
+            // const htmlRegex = /<orange(?:\s+char=["']([^"']*?)["'])?\s*>([\s\S]*?)<\/orange>/g
+            // let htmlMatch;
+            // while ((htmlMatch = htmlRegex.exec(responseData)) !== null) {
+            //     mixedContent.push({
+            //         type: 'html',
+            //         content: htmlMatch[2].trim(), // HTML内容在第二个捕获组
+            //         char: htmlMatch[1] || '', // char属性值，如果没有则为空字符串
+            //         index: htmlMatch.index,
+            //     });
+            // }
+            //
+            // // 按出现顺序排序
+            // mixedContent.sort((a, b) => a.index - b.index);
+            //
+            // return mixedContent;
+
+            // 最终结果数组
+            const results = [];
+            const regex = /<orange(?:\s+char="([^"]*)")?>([\s\S]*?)<\/orange>|(\[.*?\])/g;
+
+            let match;
+            // 使用 exec() 循环遍历所有匹配项，以确保顺序
+            while ((match = regex.exec(responseData)) !== null) {
+                // match[1] 是 char 的值, match[2] 是 <orange> 的内容
+                if (match[1] !== undefined || match[2] !== undefined) {
+                    results.push({
+                        type: 'html',
+                        // 如果 char 属性不存在, match[1] 会是 undefined, 我们将其设为 null
+                        char: match[1] || null,
+                        // match[2] 是 HTML 内容, trim() 用于移除首尾空白
+                        content: match[2].trim()
+                    });
+                }
+                // match[3] 是 [...] 的内容
+                else if (match[3]) {
+                    results.push({
+                        type: 'text',
+                        content: match[3]
+                    });
+                }
+            }
+
+            return results;
+        }
+
         // --- AI Interaction & Prompts ---
         function generatePrivateSystemPrompt(character) {
             const worldBooksBefore = (character.worldBookIds || []).map(id => db.worldBooks.find(wb => wb.id === id && wb.position === 'before')).filter(Boolean).map(wb => wb.content).join('\n');
@@ -4104,7 +4171,7 @@
                         let parts;
                         if (msg.parts && msg.parts.length > 0) {
                             parts = msg.parts.map(p => {
-                                if (p.type === 'text') {
+                                if (p.type === 'text' || p.type === 'html') {
                                     return {text: p.text};
                                 } else if (p.type === 'image') {
                                     const match = p.data.match(/^data:(image\/(.+));base64,(.*)$/);
@@ -4130,7 +4197,7 @@
                         let content;
                         if (msg.parts && msg.parts.length > 0) {
                             content = msg.parts.map(p => {
-                                if (p.type === 'text') {
+                                if (p.type === 'text' || p.type === 'html') {
                                     return {type: 'text', text: p.text};
                                 } else if (p.type === 'image') {
                                     return {type: 'image_url', image_url: {url: p.data}};
@@ -4203,18 +4270,20 @@
                 if (currentChatType === 'private') {
                     const character = chat;
                     const myName = character.myName;
+
                     const messageRegex = new RegExp(`\\[${character.realName}(?:的(?:消息|语音|转账|表情包)|发送的表情包|发来的照片\\/视频|送来的礼物)：[\\s\\S]+?\\]|\\[${character.realName}(?:接收|退回)${myName}的转账\\]|\\[${character.realName}已接收礼物\\]|\\[${character.realName}更新状态为：.*?\\]`, "g");
-                    const messages = fullResponse.match(messageRegex) || [];
+                    // const messages = fullResponse.match(messageRegex) || [];
+                    const messages = getMixedContent(fullResponse)
                     if (messages.length > 0) {
-                        messages.forEach(msgContent => {
+                        messages.forEach(item => {
                             const receivedTransferRegex = new RegExp(`\\[${character.realName}的转账：.*?元；备注：.*?\\]`);
                             const giftRegex = new RegExp(`\\[${character.realName}送来的礼物：.*?\\]`);
                             const message = {
                                 id: `msg_${Date.now()}_${Math.random()}`,
                                 role: 'assistant',
-                                content: msgContent.trim(),
-                                parts: [{type: 'text', text: msgContent.trim()}],
-                                timestamp: Date.now()
+                                content: item.content.trim(),
+                                parts: [{type: item.type, text: item.content.trim()}],
+                                timestamp: Date.now(),
                             };
                             if (receivedTransferRegex.test(message.content)) {
                                 message.transferStatus = 'pending';
@@ -4233,29 +4302,32 @@
                             timestamp: Date.now()
                         };
                         chat.history.push(simpleMessage);
-                        addMessageBubble(simpleMessage);
+                       await addMessageBubble(simpleMessage);
                     }
                 } else if (currentChatType === 'group') {
                     const group = chat;
                     const memberRealNames = group.members.map(m => m.realName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
                     const memberRegex = new RegExp(`\\[(${memberRealNames.join('|')})(?:的消息|的语音|发送的表情包|发来的照片\\/视频)：[\\s\\S]+?\\]`, "g");
-                    const messages = fullResponse.match(memberRegex) || [];
-
+                    // const messages = fullResponse.match(memberRegex) || [];
+                    const messages = getMixedContent(fullResponse)
+                    let r = /\[(.*?)((?:的消息|的语音|发送的表情包|发来的照片\/视频))：/
                     if (messages.length > 0) {
-                        messages.forEach(msgContent => {
-                            const nameMatch = msgContent.match(/\[(.*?)((?:的消息|的语音|发送的表情包|发来的照片\/视频))：/);
-                            if (nameMatch) {
-                                const senderName = nameMatch[1];
-                                const sender = group.members.find(m => m.realName === senderName);
+                        messages.forEach(item => {
+                            const nameMatch = item.content.match(r);
+                            if (nameMatch || item.char) {
+                                const senderName = item.char || (nameMatch[1]);
+                                const sender = group.members.find(m => (m.realName === senderName || m.groupNickname === senderName));
+                                console.log(sender)
                                 if (sender) {
                                     const message = {
                                         id: `msg_${Date.now()}_${Math.random()}`,
                                         role: 'assistant',
-                                        content: msgContent.trim(),
-                                        parts: [{type: 'text', text: msgContent.trim()}],
+                                        content: item.content.trim(),
+                                        parts: [{type: item.type, text: item.content.trim()}],
                                         timestamp: Date.now(),
                                         senderId: sender.id
                                     };
+                                    // console.log(message)
                                     group.history.push(message);
                                     addMessageBubble(message);
                                 }
@@ -4275,7 +4347,7 @@
                                 senderId: firstMember.id
                             };
                             group.history.push(simpleMessage);
-                            addMessageBubble(simpleMessage);
+                           await addMessageBubble(simpleMessage);
                         }
                     }
                 }
