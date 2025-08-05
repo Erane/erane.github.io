@@ -1605,7 +1605,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const sender = msg.role === 'user' ? (chat.settings.myNickname || '我') : msg.senderName;
                 let content;
                 if (msg.type === 'user_photo') content = `[${sender} 发送了一张描述的照片，内容是：'${msg.content}']`;
-                else if (msg.type === 'ai_image') content = `[${sender} 发送了一张图片]`;
+                else if (msg.type === 'ai_image') content = `[${sender} 发送了一张图片], 内容是：'${msg.content}'`;
                 else if (msg.type === 'voice_message') content = `[${sender} 发送了一条语音，内容是：'${msg.content}']`;
                 else if (msg.type === 'transfer') content = `[${msg.senderName}向${msg.receiverName}转账 ${msg.amount}元, 备注: ${msg.note}]`;
                 else if (msg.type === 'recall') content = `${sender}: [撤回了一条信息，内容是: '${msg.content}']`
