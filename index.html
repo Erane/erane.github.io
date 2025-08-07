@@ -13,6 +13,34 @@
         <link rel="stylesheet"  href="./resources/baseStyle.css">
         <link rel="stylesheet"  href="./resources/moment.css">
         <link rel="stylesheet" id="main-stylesheet"  href="./resources/style.css">
+    <style>
+        .popover {
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1050;
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            padding: 4px;
+            width: 120px;
+        }
+        .popover-btn {
+            background: none;
+            border: none;
+            padding: 8px 12px;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #333;
+        }
+        .popover-btn:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
     <script>
         var _hmt = _hmt || [];
         (function () {
@@ -28,11 +56,12 @@
 <div id="phone-frame">
     <div class="notch"></div>
     <div id="phone-screen">
-        <div class="tips-wrap" data-update="1.0.20">
-            <div class="tips-title">bug修复(2025-08-02)</div>
+        <div class="tips-wrap" data-update="1.0.22">
+            <div class="tips-title">新增功能(2025-08-04)</div>
             <div class="tips-content">
-                <p>调整了一些文件位置, 如果页面看起来怪怪的,请在API设置-内置主题, 来回切换一下就好</p>
-                <p>顺便gemini直连支持多个key,内置了轮询</p>
+                <p>增加了一键重Roll功能, 希望在AI出错的时候能降低你的烦恼</p>
+                <p>稍微加强针对AI返回格式的要求, 建议手动重置预设的内容以便更新修改的提示词</p>
+                <img src="./resources/tips.png">
             </div>
             <div class="more-info">
                 如果你在使用中遇到适配问题请在DC联系: toufu_17568
@@ -860,6 +889,10 @@
     <span class="chat-error-message-btn">关闭</span>
 </div>
 
+<div id="wait-reply-popover" class="popover">
+    <button id="reroll-btn" class="popover-btn">重ROLL</button>
+    <button id="wait-reply-action-btn" class="popover-btn">等待回复</button>
+</div>
 
 <audio id="audio-player" style="display:none;"></audio>
 

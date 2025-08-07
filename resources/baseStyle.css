@@ -1936,3 +1936,14 @@ body {
     padding: 5px;
     border-radius: 5px;
 }
+html .app-icon .icon-bg ,
+html .app-icon  .label
+{
+    user-select: none;
+    pointer-events: none;
+}
+html .app-row .app-icon {
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+}

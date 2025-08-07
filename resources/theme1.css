@@ -2369,15 +2369,7 @@ html .app-icon .icon-bg {
     top: 0;
 }
 
-html .app-icon .icon-bg ,
-html .app-icon  .label
-{
-    /*content: '🐻';*/
-    /*position: absolute;*/
-    /*font-size: 40px;*/
-    user-select: none;
-    pointer-events: none;
-}
+
 html .app-icon  .label{
    position: absolute;
     left: 0;
@@ -2397,11 +2389,7 @@ html .app-row:nth-of-type(1) {
 html .app-icon:not(:last-of-type) {
     margin-right: 15px;
 }
-html .app-row .app-icon {
 
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-}
 html .app-row:nth-of-type(1) .app-icon:nth-of-type(1) .icon-bg {
    background-image: url("https://i.postimg.cc/Y0bDjSzy/image.png");
 }
