@@ -1,1 +1,1 @@
-const PASSWORD = '4800cab0c065dcec9a12';
+const PASSWORD = '45df2358c1ab86e0a5b0';
