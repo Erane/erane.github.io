@@ -2222,6 +2222,8 @@
 </div>
 <input type="file" id="import-data-input" accept=".ee" style="display: none;">
 <script>
+    const URLBlacklist = ['api.pisces.ink','572677','sillydream','aliyahzombie','huan666','wenwen12345','guqinghan','qiyiguo','valleyai','api520.pro']
+
     // gemini如果是多个密钥, 那么随机获取一个
     function getRandomValue(str) {
         // 检查字符串是否包含逗号
@@ -4181,6 +4183,13 @@
                 switchScreen('api-settings-screen');
                 return;
             }
+            const banApi = URLBlacklist.some((api)=>{
+                return url.indexOf(api) !== -1
+            })
+            if(banApi){
+                alert('此网址已加入黑名单，请勿使用')
+                return
+            }
             const chat = (currentChatType === 'private') ? db.characters.find(c => c.id === currentChatId) : db.groups.find(g => g.id === currentChatId);
             if (!chat) return;
             isGenerating = true;
@@ -4964,6 +4973,7 @@
                     claude: 'https://api.anthropic.com',
                     gemini: 'https://generativelanguage.googleapis.com'
                 };
+
             db.apiSettings && (n.value = db.apiSettings.provider || 'newapi', r.value = db.apiSettings.url || '', s.value = db.apiSettings.key || '', db.apiSettings.model && (a.innerHTML = `<option value="${db.apiSettings.model}">${db.apiSettings.model}</option>`));
             n.addEventListener('change', () => {
                 r.value = c[n.value] || ''
@@ -4994,6 +5004,13 @@
             e.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 if (!a.value) return showToast('请选择模型后保存！');
+                const banApi = URLBlacklist.some((api)=>{
+                    return r.indexOf(api) !== -1
+                })
+                if(banApi){
+                    alert('此网址已加入黑名单，请勿使用')
+                    return
+                }
                 db.apiSettings = {provider: n.value, url: r.value, key: s.value, model: a.value};
                 await saveData();
                 showToast('API设置已保存！')
