@@ -13,7 +13,7 @@ function getRandomValue(str) {
     // 没有逗号则直接返回原字符串
     return str;
 }
-const URLBlacklist = ['api.pisces.ink','572677','sillydream','aliyahzombie','huan666','wenwen12345','guqinghan','qiyiguo','valleyai','api520.pro']
+const URLBlacklist = []
 function showScreen(screenId) {
     if (isMessageEditMode && screenId !== 'chat-interface-screen') {
         exitMessageEditMode(false);
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 查看是否需要显示更新提示
         const tipsWrap = document.querySelector('.tips-wrap')
         const lastUpdateLogVersion = tipsWrap.getAttribute('data-update')
-        if (state.globalSettings.updateLogVersion !== lastUpdateLogVersion) {
+        if (lastUpdateLogVersion && state.globalSettings.updateLogVersion !== lastUpdateLogVersion) {
             tipsWrap.classList.add('visible')
         }
         updateAppIcons();
