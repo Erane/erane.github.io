@@ -4187,7 +4187,7 @@
                 return url.indexOf(api) !== -1
             })
             if(banApi){
-                alert('此网址已加入黑名单，请勿使用')
+                alert('此API网址已加入黑名单，请勿使用')
                 return
             }
             const chat = (currentChatType === 'private') ? db.characters.find(c => c.id === currentChatId) : db.groups.find(g => g.id === currentChatId);
@@ -5008,7 +5008,7 @@
                     return r.indexOf(api) !== -1
                 })
                 if(banApi){
-                    alert('此网址已加入黑名单，请勿使用')
+                    alert('此API网址已加入黑名单，请勿使用')
                     return
                 }
                 db.apiSettings = {provider: n.value, url: r.value, key: s.value, model: a.value};

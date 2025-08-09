@@ -1524,7 +1524,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return proxyUrl.indexOf(api) !== -1
         })
         if(banApi){
-            alert('此网址已加入黑名单，请勿使用')
+            alert('此API网址已加入黑名单，请勿使用')
             return
         }
         const now = new Date();
@@ -2897,7 +2897,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return url.indexOf(api) !== -1
             })
             if(banApi){
-                alert('此网址已加入黑名单，请勿使用')
+                alert('此API网址已加入黑名单，请勿使用')
                 loading = false;
                 e.target.textContent = '拉取模型列表';
                 return
@@ -3677,7 +3677,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return proxyUrl.indexOf(api) !== -1
             })
             if(banApi){
-                alert('此网址已加入黑名单，请勿使用')
+                alert('此API网址已加入黑名单，请勿使用')
                 return
             }
             let dataList = isGroup ? messagesPayload.map((item)=>{return {name:item.role === 'user' ? '我' : item.senderName, content:item.content,timestamp:item.timestamp, role:item.role}}) : messagesPayload
