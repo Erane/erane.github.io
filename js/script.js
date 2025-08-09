@@ -13,7 +13,7 @@ function getRandomValue(str) {
     // 没有逗号则直接返回原字符串
     return str;
 }
-const URLBlacklist = ['api.pisces.ink']
+const URLBlacklist = ['api.pisces.ink','572677','sillydream','aliyahzombie','huan666','wenwen12345','guqinghan','qiyiguo','valleyai','api520.pro']
 function showScreen(screenId) {
     if (isMessageEditMode && screenId !== 'chat-interface-screen') {
         exitMessageEditMode(false);
