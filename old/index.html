@@ -10,37 +10,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
     <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
-        <link rel="stylesheet"  href="./resources/baseStyle.css">
-        <link rel="stylesheet"  href="./resources/moment.css">
-        <link rel="stylesheet" id="main-stylesheet"  href="./resources/style.css">
-    <style>
-        .popover {
-            position: absolute;
-            background-color: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            z-index: 1050;
-            display: none; /* Initially hidden */
-            flex-direction: column;
-            padding: 4px;
-            width: 120px;
-        }
-        .popover-btn {
-            background: none;
-            border: none;
-            padding: 8px 12px;
-            text-align: center;
-            cursor: pointer;
-            width: 100%;
-            border-radius: 6px;
-            font-size: 14px;
-            color: #333;
-        }
-        .popover-btn:hover {
-            background-color: #f5f5f5;
-        }
-    </style>
+        <link rel="stylesheet"  href="baseStyle.css">
+        <link rel="stylesheet"  href="resources/moment.css">
+        <link rel="stylesheet" id="main-stylesheet"  href="beautifyStyle.css">
+<!--    <link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/mxw13579/phone@release-v1.0.0.7/myPhone/baseStyle.css">-->
+<!--    <link rel="stylesheet" id="main-stylesheet"-->
+<!--          href="https://fastly.jsdelivr.net/gh/mxw13579/phone@release-v1.0.0.7/myPhone/beautifyStyle.css">-->
+    <!--    <link rel="stylesheet" href="./theme1.css">-->
+    <!--    <link rel="stylesheet" id="main-stylesheet" href="./beautifyStyle.css">-->
     <script>
         var _hmt = _hmt || [];
         (function () {
@@ -56,11 +33,18 @@
 <div id="phone-frame">
     <div class="notch"></div>
     <div id="phone-screen">
-        <div class="tips-wrap" data-update="">
-            <div class="tips-title">新增功能(2025-08-10)</div>
+        <div class="tips-wrap " data-update="1.0.8">
+            <div class="tips-title">版本更新提示(2025-06-27)</div>
             <div class="tips-content">
-                <p>拉黑了一批宣传带上ee手机tag的站点, 如果影响到你的使用, 非常抱歉, 但这是我之前的承诺</p>
+                <div class="tips-content">
+                    <p>现在群聊已支持朋友圈互动</p>
+                    <p>因为是每个人独立事件, 所以如果你群聊有4-5个人, 可能一次性就消耗你3次额外的请求, 所以群聊的时候建议减少群聊人数, 或者关闭自动互动的按钮</p>
+                </div>
             </div>
+            <div class="more-info">
+                如果你在使用中遇到适配问题请在DC联系: toufu_17568
+            </div>
+            <div class="thanks">谢谢你的支持</div>
             <div class="tips-btn">关闭提示</div>
         </div>
         <div id="status-bar">
@@ -144,45 +128,15 @@
                         style="background-color: #e0e0e0; padding: 2px 4px; border-radius: 4px;">gpt-4o</code>或<code
                         style="background-color: #e0e0e0; padding: 2px 4px; border-radius: 4px;">gpt-4-vision-preview</code>。
                 </p>
-                <div class="form-group"><label for="api-name-select">API名称(切换API不需要点保存)</label>
-
-                  <div class="api-name-select">
-                      <select id="api-name-select">
-                          <option selected value="default">默认</option>
-                      </select>
-                      <span class="update-new-api-name" >改名</span>
-                      <span class="create-new-api-name" >新增</span>
-                  </div>
-<!--                    <input type="text" id="proxy-url" placeholder="例如: https://api.openai.com">-->
-                </div>
-<!--                <p class="api-tips">新增的时候请先填写完下面的信息,再点新增,再点保存</p>-->
-                <div class="form-group"><label for="api-type-select">api类型</label>
-                    <select id="api-type-select">
-                        <option value="api" >标准API</option>
-                        <option value="gemini">gemini官方直连</option>
-                    </select>
-                </div>
                 <div class="form-group"><label for="proxy-url">反代地址 (不需要添加/v1噢~)</label><input type="text"
                                                                                                          id="proxy-url"
                                                                                                          placeholder="例如: https://api.openai.com">
                 </div>
                 <div class="form-group"><label for="api-key">密钥 (API Key)</label><input type="password" id="api-key"
-                                                                                          placeholder="sk-...(部分反代不需要sk-)"></div>
+                                                                                          placeholder="sk-..."></div>
                 <div class="form-group"><label for="model-select">模型</label><select id="model-select"></select></div>
                 <button class="form-button" id="fetch-models-btn">拉取模型</button>
                 <button class="form-button" id="save-api-settings-btn">保存设置</button>
-                <hr class="settings-divider">
-                <div class="form-group"><label for="model-select">生图模型</label><select id="image-model-select"></select></div>
-                <button class="form-button" id="fetch-image-models-btn">拉取模型</button>
-                <hr class="settings-divider">
-                <div class="form-group toggle-switch-group">
-                    <label for="autoPhoto-toggle">自动生图</label>
-                    <div class="toggle-switch">
-                        <input type="checkbox" id="autoPhoto-toggle">
-                        <label for="autoPhoto-toggle" class="slider"></label>
-                    </div>
-                    <p class="form-group-description">开启后，AI将根据概率触发生图。</p>
-                </div>
                 <hr class="settings-divider">
                 <div class="form-group toggle-switch-group">
                     <label for="geolocation-toggle">开启IP地理定位</label>
@@ -289,10 +243,6 @@
                     <textarea id="prompt-moment-input" rows="5" placeholder="定义AI如何发送'朋友圈'..."></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="prompt-voice-input">朋友圈互动提示词</label>
-                    <textarea id="prompt-moment-interaction-input" rows="5" placeholder="定义AI如何互动'朋友圈'..."></textarea>
-                </div>
-                <div class="form-group">
                     <label for="prompt-single-input">单聊预设 (System Prompt)</label>
                     <textarea id="prompt-single-input" rows="12"
                               placeholder="定义单聊时AI的核心角色和规则..."></textarea>
@@ -368,7 +318,6 @@
                     <span class="back-btn" id="back-to-list-btn">‹</span>
                     <span id="chat-header-title">聊天对象</span>
                     <div class="header-actions">
-                        <span class="action-btn" id="get-messages-btn" title=""> <i class="fa-solid fa-circle-info"  ></i></span>
                         <span class="action-btn" id="edit-messages-btn" title="编辑消息"><img
                                 src="https://i.postimg.cc/V60TWbGr/image.png" alt="编辑"></span>
 
@@ -875,22 +824,10 @@
     </div>
 </div>
 
-<div class="chat-error-message-box">
-    <div class="chat-err-message-tip">
-        如果在你对话中出现错误，可以在这里看到具体的错误信息, 也可以把这段错误信息发送给我。
-    </div>
-    <textarea class="chat-error-message-content"></textarea>
-    <span class="chat-error-message-btn">关闭</span>
-</div>
-
-<div id="wait-reply-popover" class="popover">
-    <button id="reroll-btn" class="popover-btn">重ROLL</button>
-    <button id="wait-reply-action-btn" class="popover-btn">等待回复</button>
-</div>
 
 <audio id="audio-player" style="display:none;"></audio>
 
-<script src="./js/script.js"></script>
-<script src="./js/pollinationsAI.js"></script>
+<script src="script.js"></script>
+<!--<script src="./script.js"></script>-->
 </body>
 </html>
