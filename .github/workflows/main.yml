@@ -3,7 +3,7 @@ name: 口令生成与部署
 on:
   # 定时触发，每天UTC 0点运行
   schedule:
-    - cron: '0 0 * * *'
+    
   # 也可以手动触发
   workflow_dispatch:
 
