@@ -3200,16 +3200,16 @@
             console.log('完整数据库对象:', db);
 
             // 启动性能监控和数据完整性检查
-            setTimeout(async () => {
-                dataStorage.getStorageInfo();
-
-                // 执行数据完整性验证
-                const validation = await validateDataIntegrity();
-                if (!validation.isValid) {
-                    console.warn('数据完整性检查发现问题:', validation.issues);
-                    // 可以选择显示警告或自动修复
-                }
-            }, 1000);
+            // setTimeout(async () => {
+            //     dataStorage.getStorageInfo();
+            //
+            //     // 执行数据完整性验证
+            //     const validation = await validateDataIntegrity();
+            //     if (!validation.isValid) {
+            //         console.warn('数据完整性检查发现问题:', validation.issues);
+            //         // 可以选择显示警告或自动修复
+            //     }
+            // }, 1000);
 
             return Promise.resolve();
         };
