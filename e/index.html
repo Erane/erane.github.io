@@ -2817,6 +2817,17 @@
                 }
             }
 
+            // 获取所有存储的键
+            async getAllKeys() {
+                try {
+                    const storageItems = await this.db.storage.toArray();
+                    return storageItems.map(item => item.key);
+                } catch (error) {
+                    console.error('获取所有键失败:', error);
+                    return [];
+                }
+            }
+
             // 获取存储信息
             async getStorageInfo() {
                 const startTime = Date.now();
@@ -2874,20 +2885,28 @@
             // 数据迁移方法（从旧版本迁移）
             async migrateFromOldStorage() {
                 const startTime = Date.now();
+                let oldDb = null;
+                let migrationSuccess = false;
+
                 try {
                     // 尝试从旧数据库获取数据
-                    const oldDb = new Dexie('章鱼喷墨机DB');
+                    oldDb = new Dexie('章鱼喷墨机DB');
                     oldDb.version(1).stores({
                         storage: 'key, value, timestamp'
                     });
 
+                    // 检查旧数据库是否存在数据
                     const oldData = await oldDb.storage.get('章鱼喷墨机');
                     if (oldData) {
+                        console.log('检测到旧数据库，开始迁移...');
                         const data = JSON.parse(oldData.value);
 
                         // 迁移基础数据
                         const { characters, groups, ...baseData } = data;
                         await this.saveData('章鱼喷墨机', baseData);
+
+                        let migratedCharacters = 0;
+                        let migratedGroups = 0;
 
                         // 迁移角色消息
                         if (characters) {
@@ -2899,6 +2918,7 @@
                                 const { history, ...charData } = char;
                                 charData.history = []; // 保持兼容性
                                 await this.saveData(`character_${char.id}`, charData);
+                                migratedCharacters++;
                             }
                         }
 
@@ -2912,12 +2932,74 @@
                                 const { history, ...groupData } = group;
                                 groupData.history = []; // 保持兼容性
                                 await this.saveData(`group_${group.id}`, groupData);
+                                migratedGroups++;
                             }
                         }
 
-                        console.log('数据迁移完成');
+                        migrationSuccess = true;
+                        console.log(`数据迁移完成: ${migratedCharacters}个角色, ${migratedGroups}个群组`);
+
+                        // 迁移成功后立即删除旧数据库
+                        try {
+                            console.log('开始删除旧数据库...');
+
+                            // 关闭数据库连接
+                            if (oldDb.isOpen()) {
+                                oldDb.close();
+                            }
+
+                            // 删除整个数据库
+                            await oldDb.delete();
+                            console.log('旧数据库删除成功');
+
+                            // 验证删除是否成功
+                            const deletedDb = new Dexie('章鱼喷墨机DB');
+                            try {
+                                deletedDb.version(1).stores({
+                                    storage: 'key, value, timestamp'
+                                });
+                                const testData = await deletedDb.storage.get('章鱼喷墨机');
+                                if (!testData) {
+                                    console.log('旧数据库删除验证成功');
+                                } else {
+                                    console.warn('旧数据库可能未完全删除');
+                                }
+                                deletedDb.close();
+                            } catch (verifyError) {
+                                // 如果无法访问，说明删除成功
+                                console.log('旧数据库删除验证成功（数据库不存在）');
+                            }
+
+                        } catch (deleteError) {
+                            console.error('删除旧数据库失败，但不影响主要功能:', deleteError);
+                            // 尝试清空数据而不是删除数据库
+                            try {
+                                if (!oldDb.isOpen()) {
+                                    await oldDb.open();
+                                }
+                                await oldDb.storage.clear();
+                                console.log('已清空旧数据库内容');
+                                oldDb.close();
+                            } catch (clearError) {
+                                console.error('清空旧数据库也失败:', clearError);
+                            }
+                        }
 
                         return true;
+                    } else {
+                        console.log('未发现旧数据库数据');
+                        // 即使没有数据，也尝试删除可能存在的空数据库
+                        try {
+                            if (oldDb.isOpen()) {
+                                oldDb.close();
+                            }
+                            await oldDb.delete();
+                            console.log('已删除空的旧数据库');
+                        } catch (deleteError) {
+                            // 删除失败可能是因为数据库不存在，这是正常的
+                            console.log('旧数据库不存在或已删除');
+                        }
+                        return false;
                     }
 
 
@@ -2925,7 +3007,23 @@
                 } catch (error) {
                     console.error('数据迁移失败:', error);
 
+                    // 即使迁移失败，也尝试清理旧数据库连接
+                    if (oldDb) {
+                        try {
+                            if (oldDb.isOpen()) {
+                                oldDb.close();
+                                console.log('已关闭旧数据库连接');
+                            }
+                        } catch (closeError) {
+                            console.error('关闭旧数据库连接失败:', closeError);
+                        }
+                    }
+
                     return false;
+                } finally {
+                    // 确保在任何情况下都记录迁移耗时
+                    const duration = Date.now() - startTime;
+                    console.log(`数据迁移操作完成，耗时: ${duration}ms, 成功: ${migrationSuccess}`);
                 }
             }
         }
@@ -2969,6 +3067,21 @@
                 }
             }
 
+            if(dbData.apiSettings){
+                await dataStorage.saveData('apiSettings', dbData.apiSettings);
+            }
+            if(dbData.customIcons){
+                await dataStorage.saveData('customIcons', dbData.customIcons);
+            }
+            if(dbData.fontUrl){
+                await dataStorage.saveData('fontUrl', dbData.fontUrl);
+            }
+            if(dbData.homeScreenMode){
+                await dataStorage.saveData('homeScreenMode', dbData.homeScreenMode);
+            }
+            if(dbData.wallpaper){
+                await dataStorage.saveData('wallpaper', dbData.wallpaper);
+            }
             return Promise.resolve();
         };
 
@@ -2979,8 +3092,32 @@
             // 检查localStorage中的旧数据
             const oldData = localStorage.getItem('gemini-chat-app-db');
             if (oldData) {
+                console.log('检测到localStorage中的旧数据，开始迁移...');
                 await saveData(JSON.parse(oldData));
                 localStorage.removeItem('gemini-chat-app-db');
+                console.log('localStorage旧数据迁移完成并已清理');
+            }
+
+            // 额外的安全检查：确保旧数据库完全清理
+            try {
+                const safetyCheckDb = new Dexie('章鱼喷墨机DB');
+                safetyCheckDb.version(1).stores({
+                    storage: 'key, value, timestamp'
+                });
+
+                const residualData = await safetyCheckDb.storage.get('章鱼喷墨机');
+                if (residualData) {
+                    console.warn('发现残留的旧数据库数据，执行强制清理...');
+                    await safetyCheckDb.storage.clear();
+                    safetyCheckDb.close();
+                    await safetyCheckDb.delete();
+                    console.log('残留旧数据库已强制清理');
+                } else {
+                    safetyCheckDb.close();
+                }
+            } catch (safetyError) {
+                // 如果无法访问旧数据库，说明已经被正确删除
+                console.log('旧数据库安全检查完成（数据库不存在）');
             }
 
             // 加载基础数据
@@ -2992,55 +3129,75 @@
             // 初始化默认值
             if (!db.apiSettings) db.apiSettings = {};
             if (!db.wallpaper) db.wallpaper = 'https://i.postimg.cc/W4Z9R9x4/ins-1.jpg';
-            if (!db.characters) db.characters = [];
-            if (!db.groups) db.groups = [];
             if (!db.myStickers) db.myStickers = [];
             if (!db.homeScreenMode) db.homeScreenMode = 'night';
             if (!db.worldBooks) db.worldBooks = [];
             if (!db.fontUrl) db.fontUrl = '';
             if (!db.customIcons) db.customIcons = {};
 
+            // 重建characters和groups列表
+            // 由于saveData时这两个字段被排除，需要从存储中重新构建
+            db.characters = [];
+            db.groups = [];
+
+            // 获取所有存储的键，找出角色和群组数据
+            const allKeys = await dataStorage.getAllKeys();
+            const characterKeys = allKeys.filter(key => key.startsWith('character_'));
+            const groupKeys = allKeys.filter(key => key.startsWith('group_'));
+
+            console.log(`发现 ${characterKeys.length} 个角色数据, ${groupKeys.length} 个群组数据`);
+
             // 加载角色数据
-            const characterPromises = db.characters.map(async (char) => {
-                const charData = await dataStorage.getData(`character_${char.id}`);
+            const characterPromises = characterKeys.map(async (key) => {
+                const charId = key.replace('character_', '');
+                const charData = await dataStorage.getData(key);
                 if (charData) {
-                    Object.assign(char, charData);
+                    // 按需加载消息历史
+                    charData.history = await dataStorage.getChatMessages(charId, 'private');
+
+                    // 设置默认值
+                    if (charData.isPinned === undefined) charData.isPinned = false;
+                    if (charData.status === undefined) charData.status = '在线';
+                    if (!charData.worldBookIds) charData.worldBookIds = [];
+                    if (charData.customBubbleCss === undefined) charData.customBubbleCss = '';
+                    if (charData.useCustomBubbleCss === undefined) charData.useCustomBubbleCss = false;
+
+                    return charData;
                 }
-
-                // 按需加载消息历史
-                char.history = await dataStorage.getChatMessages(char.id, 'private');
-
-                // 设置默认值
-                if (char.isPinned === undefined) char.isPinned = false;
-                if (char.status === undefined) char.status = '在线';
-                if (!char.worldBookIds) char.worldBookIds = [];
-                if (char.customBubbleCss === undefined) char.customBubbleCss = '';
-                if (char.useCustomBubbleCss === undefined) char.useCustomBubbleCss = false;
-
-                return char;
+                return null;
             });
 
             // 加载群组数据
-            const groupPromises = db.groups.map(async (group) => {
-                const groupData = await dataStorage.getData(`group_${group.id}`);
+            const groupPromises = groupKeys.map(async (key) => {
+                const groupId = key.replace('group_', '');
+                const groupData = await dataStorage.getData(key);
                 if (groupData) {
-                    Object.assign(group, groupData);
+                    // 按需加载消息历史
+                    groupData.history = await dataStorage.getChatMessages(groupId, 'group');
+
+                    // 设置默认值
+                    if (groupData.isPinned === undefined) groupData.isPinned = false;
+                    if (!groupData.worldBookIds) groupData.worldBookIds = [];
+                    if (groupData.customBubbleCss === undefined) groupData.customBubbleCss = '';
+                    if (groupData.useCustomBubbleCss === undefined) groupData.useCustomBubbleCss = false;
+
+                    return groupData;
                 }
-
-                // 按需加载消息历史
-                group.history = await dataStorage.getChatMessages(group.id, 'group');
-
-                // 设置默认值
-                if (group.isPinned === undefined) group.isPinned = false;
-                if (!group.worldBookIds) group.worldBookIds = [];
-                if (group.customBubbleCss === undefined) group.customBubbleCss = '';
-                if (group.useCustomBubbleCss === undefined) group.useCustomBubbleCss = false;
-
-                return group;
+                return null;
             });
 
             // 等待所有数据加载完成
-            await Promise.all([...characterPromises, ...groupPromises]);
+            const [loadedCharacters, loadedGroups] = await Promise.all([
+                Promise.all(characterPromises),
+                Promise.all(groupPromises)
+            ]);
+
+            // 过滤掉null值并赋值给db
+            db.characters = loadedCharacters.filter(char => char !== null);
+            db.groups = loadedGroups.filter(group => group !== null);
+
+            console.log(`成功加载 ${db.characters.length} 个角色, ${db.groups.length} 个群组`);
+            console.log('完整数据库对象:', db);
 
             // 启动性能监控和数据完整性检查
             setTimeout(async () => {
@@ -3195,7 +3352,7 @@
             setupChatSettings();
             setupApiSettingsApp();
             setupWallpaperApp();
-            setupStickerSystem();
+            await setupStickerSystem();
             setupVoiceMessageSystem();
             setupPhotoVideoSystem();
             setupImageRecognition();
@@ -3411,9 +3568,9 @@
 
                         if (importResult.success) {
                             showToast(`数据导入成功！${importResult.message} 应用即将刷新。`);
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 2000);
+                            // setTimeout(() => {
+                            //     window.location.reload();
+                            // }, 2000);
                         } else {
                             showToast(`导入失败: ${importResult.error}`);
                         }
@@ -5985,8 +6142,8 @@
                 db = {
                     apiSettings: data.apiSettings || {},
                     wallpaper: data.wallpaper || 'https://i.postimg.cc/W4Z9R9x4/ins-1.jpg',
-                    characters: [],
-                    groups: [],
+                    // characters: [],
+                    // groups: [],
                     myStickers: data.myStickers || [],
                     homeScreenMode: data.homeScreenMode || 'night',
                     worldBooks: data.worldBooks || [],
@@ -6014,7 +6171,7 @@
                         if (charData.customBubbleCss === undefined) charData.customBubbleCss = '';
                         if (charData.useCustomBubbleCss === undefined) charData.useCustomBubbleCss = false;
 
-                        db.characters.push(charData);
+                        // db.characters.push(charData);
                         await dataStorage.saveData(`character_${char.id}`, charData);
 
                         // 保存消息历史
@@ -6040,7 +6197,7 @@
                         if (groupData.customBubbleCss === undefined) groupData.customBubbleCss = '';
                         if (groupData.useCustomBubbleCss === undefined) groupData.useCustomBubbleCss = false;
 
-                        db.groups.push(groupData);
+                        // db.groups.push(groupData);
                         await dataStorage.saveData(`group_${group.id}`, groupData);
 
                         // 保存消息历史
@@ -6053,13 +6210,36 @@
                     }
                 }
 
+                for (const key in db){
+                    await dataStorage.saveData(key, db[key]);
+                }
+
+                // if(data.apiSettings){
+                //     await dataStorage.saveData('apiSettings', data.apiSettings);
+                // }
+                // if(data.customIcons){
+                //     await dataStorage.saveData('customIcons', data.customIcons);
+                // }
+                // if(data.fontUrl){
+                //     await dataStorage.saveData('fontUrl', data.fontUrl);
+                // }
+                // if(data.homeScreenMode){
+                //     await dataStorage.saveData('homeScreenMode', data.homeScreenMode);
+                // }
+                // if(data.wallpaper){
+                //     await dataStorage.saveData('wallpaper', data.wallpaper);
+                // }
+
+                // console.log(data)
+                // console.log(db)
+
                 // 保存基础数据
                 await dataStorage.saveData('章鱼喷墨机', db);
 
                 const duration = Date.now() - startTime;
                 const message = `导入完成: ${importStats.charactersCount}个角色, ${importStats.groupsCount}个群组, ${importStats.messagesCount}条消息 (耗时${duration}ms)`;
 
-                console.log(message);
+
 
                 return {
                     success: true,
