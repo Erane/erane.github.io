@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
     <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
-    <link rel="stylesheet"  href="./resources/baseStyle.css">
-    <link rel="stylesheet"  href="./resources/moment.css">
-    <link rel="stylesheet" id="main-stylesheet"  href="./resources/style.css">
+        <link rel="stylesheet"  href="./resources/baseStyle.css">
+        <link rel="stylesheet"  href="./resources/moment.css">
+        <link rel="stylesheet" id="main-stylesheet"  href="./resources/style.css">
     <style>
         .popover {
             position: absolute;
@@ -56,843 +56,841 @@
 <div id="phone-frame">
     <div class="notch"></div>
     <div id="phone-screen">
-        <div >
-            <div class="tips-wrap" data-update="1.0.23">
-                <div class="tips-title">新增功能(2025-08-10)</div>
-                <div class="tips-content">
-                    <p>拉黑了一批宣传带上ee手机tag的站点, 如果影响到你的使用, 非常抱歉, 但这是我之前的承诺</p>
-                </div>
-                <div class="tips-btn">关闭提示</div>
+        <div class="tips-wrap" data-update="">
+            <div class="tips-title">新增功能(2025-08-10)</div>
+            <div class="tips-content">
+                <p>拉黑了一批宣传带上ee手机tag的站点, 如果影响到你的使用, 非常抱歉, 但这是我之前的承诺</p>
             </div>
-            <div id="status-bar">
-                <span id="status-bar-time">12:00</span>
-                <div id="status-bar-battery" class="battery-container">
-                    <span class="battery-text">--%</span>
-                    <div class="battery-icon">
-                        <div class="battery-level"></div>
-                    </div>
+            <div class="tips-btn">关闭提示</div>
+        </div>
+        <div id="status-bar">
+            <span id="status-bar-time">12:00</span>
+            <div id="status-bar-battery" class="battery-container">
+                <span class="battery-text">--%</span>
+                <div class="battery-icon">
+                    <div class="battery-level"></div>
                 </div>
             </div>
-            <div id="notification-bar"><img id="notification-avatar" src="">
-                <div id="notification-content">
-                    <div class="name"></div>
-                    <div class="message"></div>
-                </div>
+        </div>
+        <div id="notification-bar"><img id="notification-avatar" src="">
+            <div id="notification-content">
+                <div class="name"></div>
+                <div class="message"></div>
             </div>
+        </div>
 
-            <div id="home-screen" class="screen active">
-                <div id="clock-container">
-                    <div id="main-time">12:00</div>
-                    <div id="main-date">星期一, 1月1日</div>
-                </div>
-                <div id="app-grid">
-                    <div class="app-row">
-                        <div class="app-icon world-book-icon" data-icon-name="world-book"  >
-                            <div class="icon-bg"><img src="https://i.postimg.cc/htP74QkL/1.jpg" alt="世界书"></div>
-                            <span class="label">世界书</span></div>
-                        <div class="app-icon preset-list-icon" data-icon-name="preset-list" >
-                            <div class="icon-bg"><img src="https://i.postimg.cc/MKfTfsmq/1.png" alt="预设设置"></div>
-                            <span class="label">预设设置</span></div>
-                        <div class="app-icon char-list-icon" data-icon-name="char-list"  >
-                            <div class="icon-bg"><img src="https://i.postimg.cc/yNL7tkqC/image.png"  alt="预设设置"></div>
-                            <span class="label">char人设</span></div>
-                    </div>
-                    <div class="app-row">
-                        <div class="app-icon chat-list-icon" data-icon-name="chat-list" >
-                            <div class="icon-bg"><img src="https://i.postimg.cc/gr2ndvPL/QQ.jpg" alt="QQ"></div>
-                            <span class="label">QQ</span></div>
-                        <div class="app-icon api-settings-icon" data-icon-name="api-settings"  >
-                            <div class="icon-bg"><img src="https://i.postimg.cc/wy631NyP/settings.jpg" alt="API设置"></div>
-                            <span class="label">API设置</span></div>
-                        <div class="app-icon wallpaper-icon" data-icon-name="wallpaper"  >
-                            <div class="icon-bg"><img src="https://i.postimg.cc/q6qRLdGx/photo.jpg" alt="壁纸"></div>
-                            <span class="label">壁纸</span></div>
-                    </div>
-                </div>
-
+        <div id="home-screen" class="screen active">
+            <div id="clock-container">
+                <div id="main-time">12:00</div>
+                <div id="main-date">星期一, 1月1日</div>
             </div>
-
-            <div id="world-book-screen" class="screen">
-                <div class="header"><span class="back-btn"
-                                          onclick="showScreen('home-screen')">‹</span><span>世界书</span><span
-                        class="action-btn" id="add-world-book-btn">+</span></div>
-                <div id="world-book-list"></div>
-            </div>
-            <div id="world-book-editor-screen" class="screen">
-                <div class="header">
-                    <span class="back-btn" onclick="showScreen('world-book-screen')">‹</span>
-                    <span id="world-book-editor-title">编辑世界书</span>
-                    <span class="save-btn" id="save-world-book-btn">保存</span>
+            <div id="app-grid">
+                <div class="app-row">
+                    <div class="app-icon world-book-icon" data-icon-name="world-book"  >
+                        <div class="icon-bg"><img src="https://i.postimg.cc/htP74QkL/1.jpg" alt="世界书"></div>
+                        <span class="label">世界书</span></div>
+                    <div class="app-icon preset-list-icon" data-icon-name="preset-list" >
+                        <div class="icon-bg"><img src="https://i.postimg.cc/MKfTfsmq/1.png" alt="预设设置"></div>
+                        <span class="label">预设设置</span></div>
+                    <div class="app-icon char-list-icon" data-icon-name="char-list"  >
+                        <div class="icon-bg"><img src="https://i.postimg.cc/yNL7tkqC/image.png"  alt="预设设置"></div>
+                        <span class="label">char人设</span></div>
                 </div>
-                <div class="form-container">
-                    <div class="form-group">
-                        <label for="world-book-name-input">书名</label>
-                        <input type="text" id="world-book-name-input" placeholder="请输入世界书的名称...">
-                    </div>
-                    <div class="form-group" style="height: 100%;">
-                        <label for="world-book-content-input">内容</label>
-                        <textarea id="world-book-content-input" placeholder="在此处输入详细的世界观设定..."></textarea>
-                    </div>
+                <div class="app-row">
+                    <div class="app-icon chat-list-icon" data-icon-name="chat-list" >
+                        <div class="icon-bg"><img src="https://i.postimg.cc/gr2ndvPL/QQ.jpg" alt="QQ"></div>
+                        <span class="label">QQ</span></div>
+                    <div class="app-icon api-settings-icon" data-icon-name="api-settings"  >
+                        <div class="icon-bg"><img src="https://i.postimg.cc/wy631NyP/settings.jpg" alt="API设置"></div>
+                        <span class="label">API设置</span></div>
+                    <div class="app-icon wallpaper-icon" data-icon-name="wallpaper"  >
+                        <div class="icon-bg"><img src="https://i.postimg.cc/q6qRLdGx/photo.jpg" alt="壁纸"></div>
+                        <span class="label">壁纸</span></div>
                 </div>
             </div>
 
-            <div id="api-settings-screen" class="screen">
-                <div class="header"><span class="back-btn" onclick="showScreen('home-screen')">‹</span><span>API 设置</span><span
-                        style="width: 30px;"></span></div>
-                <div class="form-container">
-                    <p style="font-size: 14px; color: #666; background-color: #f0f0f0; padding: 10px; border-radius: 8px;">
-                        提示: 若要使用“发送图片”功能, 请务必选择支持Vision(视觉)的模型, 如<code
-                            style="background-color: #e0e0e0; padding: 2px 4px; border-radius: 4px;">gpt-4o</code>或<code
-                            style="background-color: #e0e0e0; padding: 2px 4px; border-radius: 4px;">gpt-4-vision-preview</code>。
-                    </p>
-                    <div class="form-group"><label for="api-name-select">API名称(切换API不需要点保存)</label>
+        </div>
 
-                        <div class="api-name-select">
-                            <select id="api-name-select">
-                                <option selected value="default">默认</option>
-                            </select>
-                            <span class="update-new-api-name" >改名</span>
-                            <span class="create-new-api-name" >新增</span>
-                        </div>
-                        <!--                    <input type="text" id="proxy-url" placeholder="例如: https://api.openai.com">-->
-                    </div>
-                    <!--                <p class="api-tips">新增的时候请先填写完下面的信息,再点新增,再点保存</p>-->
-                    <div class="form-group"><label for="api-type-select">api类型</label>
-                        <select id="api-type-select">
-                            <option value="api" >标准API</option>
-                            <option value="gemini">gemini官方直连</option>
-                        </select>
-                    </div>
-                    <div class="form-group"><label for="proxy-url">反代地址 (不需要添加/v1噢~)</label><input type="text"
-                                                                                                             id="proxy-url"
-                                                                                                             placeholder="例如: https://api.openai.com">
-                    </div>
-                    <div class="form-group"><label for="api-key">密钥 (API Key)</label><input type="password" id="api-key"
-                                                                                              placeholder="sk-...(部分反代不需要sk-)"></div>
-                    <div class="form-group"><label for="model-select">模型</label><select id="model-select"></select></div>
-                    <button class="form-button" id="fetch-models-btn">拉取模型</button>
-                    <button class="form-button" id="save-api-settings-btn">保存设置</button>
-                    <hr class="settings-divider">
-                    <div class="form-group"><label for="model-select">生图模型</label><select id="image-model-select"></select></div>
-                    <button class="form-button" id="fetch-image-models-btn">拉取模型</button>
-                    <hr class="settings-divider">
-                    <div class="form-group toggle-switch-group">
-                        <label for="autoPhoto-toggle">自动生图</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="autoPhoto-toggle">
-                            <label for="autoPhoto-toggle" class="slider"></label>
-                        </div>
-                        <p class="form-group-description">开启后，AI将根据概率触发生图。</p>
-                    </div>
-                    <hr class="settings-divider">
-                    <div class="form-group toggle-switch-group">
-                        <label for="geolocation-toggle">开启IP地理定位</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="geolocation-toggle">
-                            <label for="geolocation-toggle" class="slider"></label>
-                        </div>
-                        <p class="form-group-description">开启后，AI将能获取您的大致地理位置
-                            (如城市)，以提供更具情景感的对话。位置信息仅在本地处理。</p>
-                    </div>
-                    <hr class="settings-divider">
-                    <div class="form-group toggle-switch-group">
-                        <label for="autoMoment-toggle">自动互动朋友圈</label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="autoMoment-toggle">
-                            <label for="autoMoment-toggle" class="slider"></label>
-                        </div>
-                        <p class="form-group-description">开启后，AI将根据概率触发(默认25%)，在朋友圈中互动。</p>
-                    </div>
-                    <hr class="settings-divider">
-                    <h3 class="data-management-title">主题与外观</h3>
-                    <p class="data-management-desc">
-                        通过内置主题库、远程主题库或直接的URL来自定义应用外观。所有主题设置都会被保存。</p>
-
-                    <!-- 内置主题和重置按钮 -->
-                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                        <button class="form-button form-button-secondary" id="open-builtin-themes-btn" style="flex: 1;">
-                            选择内置主题
-                        </button>
-                        <button class="form-button form-button-secondary" id="reset-remote-theme-btn" style="flex: 1;">
-                            重置为默认
-                        </button>
-                    </div>
-                    <!-- 远程主题库 -->
-                    <div class="form-group">
-                        <label for="remote-theme-library-url">远程主题库 URL (JSON)</label>
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" id="remote-theme-library-url" placeholder="https://.../themeList.json"
-                                   style="flex-grow: 1; margin-bottom: 0;">
-                            <button class="form-button form-button-secondary" id="load-remote-library-btn"
-                                    style="flex-shrink: 0; width: auto; padding: 0 15px; margin-top: 0;">加载
-                            </button>
-                        </div>
-                        <p class="form-group-description">模式一：输入一个远程主题库(JSON文件)的URL，加载后选择主题。</p>
-                    </div>
-
-                    <!-- 远程单主题 -->
-                    <div class="form-group">
-                        <label for="remote-theme-url">远程主题 CSS URL</label>
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" id="remote-theme-url" placeholder="https://.../theme.css"
-                                   style="flex-grow: 1; margin-bottom: 0;">
-                            <button class="form-button form-button-secondary" id="apply-remote-theme-btn"
-                                    style="flex-shrink: 0; width: auto; padding: 0 15px; margin-top: 0;">应用
-                            </button>
-                        </div>
-                        <p class="form-group-description">模式二：直接输入单个CSS文件的URL来立即替换样式。</p>
-                    </div>
-                    <hr class="settings-divider">
-                    <div class="data-management-section">
-                        <h3 class="data-management-title">数据管理</h3>
-                        <p class="data-management-desc">
-                            您可以导出所有聊天记录、设置和素材为单个文件进行备份，或从备份文件恢复数据。</p>
-                        <button class="form-button form-button-secondary" id="export-data-btn">导出数据</button>
-                        <button class="form-button form-button-secondary" id="import-data-trigger-btn">导入数据</button>
-                        <input type="file" id="import-data-input" accept=".phone" style="display: none;">
-                    </div>
+        <div id="world-book-screen" class="screen">
+            <div class="header"><span class="back-btn"
+                                      onclick="showScreen('home-screen')">‹</span><span>世界书</span><span
+                    class="action-btn" id="add-world-book-btn">+</span></div>
+            <div id="world-book-list"></div>
+        </div>
+        <div id="world-book-editor-screen" class="screen">
+            <div class="header">
+                <span class="back-btn" onclick="showScreen('world-book-screen')">‹</span>
+                <span id="world-book-editor-title">编辑世界书</span>
+                <span class="save-btn" id="save-world-book-btn">保存</span>
+            </div>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="world-book-name-input">书名</label>
+                    <input type="text" id="world-book-name-input" placeholder="请输入世界书的名称...">
+                </div>
+                <div class="form-group" style="height: 100%;">
+                    <label for="world-book-content-input">内容</label>
+                    <textarea id="world-book-content-input" placeholder="在此处输入详细的世界观设定..."></textarea>
                 </div>
             </div>
-            <div id="preset-editor-screen" class="screen">
-                <div class="header">
-                    <span class="back-btn" onclick="showScreen('preset-list-screen')">‹</span>
-                    <span id="preset-editor-title">编辑预设</span>
-                    <span class="save-btn" id="save-preset-btn">保存</span>
-                </div>
-                <div class="form-container">
-                    <div class="form-group">
-                        <label for="preset-name-input">预设名称</label>
-                        <input type="text" id="preset-name-input" placeholder="例如：默认AI, 写作助手...">
-                    </div>
-                    <div class="form-group">
-                        <label for="preset-remark-input">预设备注</label>
-                        <textarea id="preset-remark-input" rows="2" placeholder="简单描述这个预设的用途..."></textarea>
-                    </div>
-                    <hr class="settings-divider">
-                    <div class="form-group">
-                        <label for="prompt-image-input">发送图片提示词</label>
-                        <textarea id="prompt-image-input" rows="5" placeholder="定义AI如何发送'描述性图片'..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="prompt-voice-input">发送语音提示词</label>
-                        <textarea id="prompt-voice-input" rows="4" placeholder="定义AI如何发送'模拟语音'..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="prompt-transfer-input">转账提示词</label>
-                        <textarea id="prompt-transfer-input" rows="5" placeholder="定义AI如何进行'转账'..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="prompt-voice-input">撤回提示词</label>
-                        <textarea id="prompt-withDrawAl-input" rows="5" placeholder="定义AI如何发送'撤回消息'..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="prompt-voice-input">朋友圈发布提示词</label>
-                        <textarea id="prompt-moment-input" rows="5" placeholder="定义AI如何发送'朋友圈'..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="prompt-voice-input">朋友圈互动提示词</label>
-                        <textarea id="prompt-moment-interaction-input" rows="5" placeholder="定义AI如何互动'朋友圈'..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="prompt-single-input">单聊预设 (System Prompt)</label>
-                        <textarea id="prompt-single-input" rows="12"
-                                  placeholder="定义单聊时AI的核心角色和规则..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="prompt-group-input">群聊预设 (System Prompt)</label>
-                        <textarea id="prompt-group-input" rows="12"
-                                  placeholder="定义群聊时AI的核心角色和规则..."></textarea>
-                    </div>
+        </div>
 
+        <div id="api-settings-screen" class="screen">
+            <div class="header"><span class="back-btn" onclick="showScreen('home-screen')">‹</span><span>API 设置</span><span
+                    style="width: 30px;"></span></div>
+            <div class="form-container">
+                <p style="font-size: 14px; color: #666; background-color: #f0f0f0; padding: 10px; border-radius: 8px;">
+                    提示: 若要使用“发送图片”功能, 请务必选择支持Vision(视觉)的模型, 如<code
+                        style="background-color: #e0e0e0; padding: 2px 4px; border-radius: 4px;">gpt-4o</code>或<code
+                        style="background-color: #e0e0e0; padding: 2px 4px; border-radius: 4px;">gpt-4-vision-preview</code>。
+                </p>
+                <div class="form-group"><label for="api-name-select">API名称(切换API不需要点保存)</label>
+
+                  <div class="api-name-select">
+                      <select id="api-name-select">
+                          <option selected value="default">默认</option>
+                      </select>
+                      <span class="update-new-api-name" >改名</span>
+                      <span class="create-new-api-name" >新增</span>
+                  </div>
+<!--                    <input type="text" id="proxy-url" placeholder="例如: https://api.openai.com">-->
+                </div>
+<!--                <p class="api-tips">新增的时候请先填写完下面的信息,再点新增,再点保存</p>-->
+                <div class="form-group"><label for="api-type-select">api类型</label>
+                    <select id="api-type-select">
+                        <option value="api" >标准API</option>
+                        <option value="gemini">gemini官方直连</option>
+                    </select>
+                </div>
+                <div class="form-group"><label for="proxy-url">反代地址 (不需要添加/v1噢~)</label><input type="text"
+                                                                                                         id="proxy-url"
+                                                                                                         placeholder="例如: https://api.openai.com">
+                </div>
+                <div class="form-group"><label for="api-key">密钥 (API Key)</label><input type="password" id="api-key"
+                                                                                          placeholder="sk-...(部分反代不需要sk-)"></div>
+                <div class="form-group"><label for="model-select">模型</label><select id="model-select"></select></div>
+                <button class="form-button" id="fetch-models-btn">拉取模型</button>
+                <button class="form-button" id="save-api-settings-btn">保存设置</button>
+                <hr class="settings-divider">
+                <div class="form-group"><label for="model-select">生图模型</label><select id="image-model-select"></select></div>
+                <button class="form-button" id="fetch-image-models-btn">拉取模型</button>
+                <hr class="settings-divider">
+                <div class="form-group toggle-switch-group">
+                    <label for="autoPhoto-toggle">自动生图</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="autoPhoto-toggle">
+                        <label for="autoPhoto-toggle" class="slider"></label>
+                    </div>
+                    <p class="form-group-description">开启后，AI将根据概率触发生图。</p>
+                </div>
+                <hr class="settings-divider">
+                <div class="form-group toggle-switch-group">
+                    <label for="geolocation-toggle">开启IP地理定位</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="geolocation-toggle">
+                        <label for="geolocation-toggle" class="slider"></label>
+                    </div>
+                    <p class="form-group-description">开启后，AI将能获取您的大致地理位置
+                        (如城市)，以提供更具情景感的对话。位置信息仅在本地处理。</p>
+                </div>
+                <hr class="settings-divider">
+                <div class="form-group toggle-switch-group">
+                    <label for="autoMoment-toggle">自动互动朋友圈</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="autoMoment-toggle">
+                        <label for="autoMoment-toggle" class="slider"></label>
+                    </div>
+                    <p class="form-group-description">开启后，AI将根据概率触发(默认25%)，在朋友圈中互动。</p>
+                </div>
+                <hr class="settings-divider">
+                <h3 class="data-management-title">主题与外观</h3>
+                <p class="data-management-desc">
+                    通过内置主题库、远程主题库或直接的URL来自定义应用外观。所有主题设置都会被保存。</p>
+
+                <!-- 内置主题和重置按钮 -->
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <button class="form-button form-button-secondary" id="open-builtin-themes-btn" style="flex: 1;">
+                        选择内置主题
+                    </button>
+                    <button class="form-button form-button-secondary" id="reset-remote-theme-btn" style="flex: 1;">
+                        重置为默认
+                    </button>
+                </div>
+                <!-- 远程主题库 -->
+                <div class="form-group">
+                    <label for="remote-theme-library-url">远程主题库 URL (JSON)</label>
                     <div style="display: flex; gap: 10px;">
-                        <button class="form-button form-button-secondary" id="restore-preset-defaults-btn">恢复为默认值
-                        </button>
-                        <button class="form-button form-button-secondary" id="delete-preset-btn"
-                                style="background-color: #ffdddd; color: #d9534f;">删除此预设
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div id="char-list-screen" class="screen">
-                <div class="header">
-                    <span class="back-btn" onclick="showScreen('home-screen')">‹</span>
-                    <span id="char-editor-title">编辑人设</span>
-                    <span class="action-btn" id="add-char-btn">+</span>
-                </div>
-                <div id="char-list" class="char-list-container">
-                    <!--                <div class="chat-item">-->
-                    <!--                    <div class="pic"><img src="https://i.postimg.cc/VkQfgzGJ/1.jpg"></div>-->
-                    <!--                    <div class="info">-->
-                    <!--                        ChatGPT-->
-                    <!--                    </div>-->
-                    <!--                    <div class="action">-->
-                    <!--                        <span class="action-btn" title="删除"></span>-->
-                    <!--                    </div>-->
-                    <!--                </div>-->
-                </div>
-            </div>
-            <div id="preset-list-screen" class="screen">
-                <div class="header">
-                    <span class="back-btn" onclick="showScreen('home-screen')">‹</span>
-                    <span>预设管理</span>
-                    <span class="action-btn" id="add-preset-btn">+</span>
-                </div>
-                <div id="preset-list" class="list-container" style="padding:0;">
-                    <!-- 预设列表将由JS动态生成 -->
-                </div>
-            </div>
-            <div id="chat-list-screen" class="screen">
-                <div class="header"><span class="back-btn" onclick="showScreen('home-screen')">‹</span><span>消息</span>
-                    <div class="header-actions"><span class="action-btn" id="add-group-chat-btn" title="创建群聊"><svg
-                            width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path
-                            d="M17.5 17.5C19.1569 17.5 20.5 16.1569 20.5 14.5C20.5 12.8431 19.1569 11.5 17.5 11.5C15.8431 11.5 14.5 12.8431 14.5 14.5C14.5 16.1569 15.8431 17.5 17.5 17.5Z"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path
-                            d="M21 21L19 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round"/><path
-                            d="M8.5 11.5C10.1569 11.5 11.5 10.1569 11.5 8.5C11.5 6.84315 10.1569 5.5 8.5 5.5C6.84315 5.5 5.5 6.84315 5.5 8.5C5.5 10.1569 6.84315 11.5 8.5 11.5Z"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path
-                            d="M12.5 14.5H4.5C3.39543 14.5 2.5 15.3954 2.5 16.5V18.5H12.5" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span
-                            class="action-btn" id="add-chat-btn">+</span></div>
-                </div>
-                <div id="chat-list"></div>
-                <div class="bottom-nav">
-                    <div class="nav-item show-moment-modal" >
-                        <span>朋友圈</span>
-                    </div>
-                </div>
-            </div>
-
-            <div id="chat-interface-screen" class="screen">
-                <div class="header">
-                    <div class="default-controls">
-                        <span class="back-btn" id="back-to-list-btn">‹</span>
-                        <span id="chat-header-title">聊天对象</span>
-                        <div class="header-actions">
-                            <span class="action-btn" id="get-messages-btn" title=""> <i class="fa-solid fa-circle-info"  ></i></span>
-                            <span class="action-btn" id="edit-messages-btn" title="编辑消息"><img
-                                    src="https://i.postimg.cc/V60TWbGr/image.png" alt="编辑"></span>
-
-                            <span class="action-btn" id="listen-together-btn" title="一起听"><img
-                                    src="https://i.postimg.cc/8kYShvrJ/90-UI-2.png" alt="一起听"></span>
-                            <span class="action-btn" id="chat-settings-btn" title="聊天设置"><img
-                                    src="https://i.postimg.cc/wRDhh491/image.png" alt="设置"></span>
-                        </div>
-                    </div>
-                    <div class="selection-controls">
-                        <span id="selection-cancel-btn">取消</span>
-                        <span id="selection-count"></span>
-                        <span id="selection-delete-btn">删除</span>
-                    </div>
-                </div>
-                <div id="chat-messages">
-                    <div id="typing-indicator">对方正在输入...</div>
-                </div>
-
-                <div id="chat-input-area">
-                    <div id="chat-input-actions-top">
-                        <button id="open-sticker-panel-btn" class="chat-action-icon-btn action-button" title="表情面板">+
-                        </button>
-                        <button id="send-photo-btn" class="chat-action-icon-btn action-button" title="发送照片">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                                <circle cx="12" cy="13" r="4"/>
-                            </svg>
-                        </button>
-                        <button id="upload-image-btn" class="chat-action-icon-btn action-button" title="上传图片">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                 style="color: var(--text-primary);">
-                                <path d="M21 3.5H3C2.44772 3.5 2 3.94772 2 4.5V19.5C2 20.0523 2.44772 20.5 3 20.5H21C21.5523 20.5 22 20.0523 22 19.5V4.5C22 3.94772 21.5523 3.5 21 3.5Z"
-                                      stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                      stroke-linejoin="round"/>
-                                <path d="M16.5 13.5C17.6046 13.5 18.5 12.6046 18.5 11.5C18.5 10.3954 17.6046 9.5 16.5 9.5C15.3954 9.5 14.5 10.3954 14.5 11.5C14.5 12.6046 15.3954 13.5 16.5 13.5Z"
-                                      stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                      stroke-linejoin="round"/>
-                                <path d="M22 14.5L18 10.5L10.3333 18.5M12.5 16L9 12.5L2 19.5" stroke="currentColor"
-                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                        <button id="transfer-btn" class="chat-action-icon-btn action-button" title="转账">￥</button>
-                        <button id="voice-message-btn" class="chat-action-icon-btn action-button" title="发送语音">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                                <path d="M12 19v4"/>
-                                <path d="M8 23h8"/>
-                            </svg>
+                        <input type="text" id="remote-theme-library-url" placeholder="https://.../themeList.json"
+                               style="flex-grow: 1; margin-bottom: 0;">
+                        <button class="form-button form-button-secondary" id="load-remote-library-btn"
+                                style="flex-shrink: 0; width: auto; padding: 0 15px; margin-top: 0;">加载
                         </button>
                     </div>
-                    <div id="chat-input-main-row">
-                        <textarea id="chat-input" rows="1" placeholder="输入消息..."></textarea>
-                        <div id="input-actions-wrapper">
-                            <button id="wait-reply-btn" title="等待回复"><img src="https://i.postimg.cc/qzdckrGy/image.png"
-                                                                              alt="等待回复"></button>
-                            <button id="send-btn" class="action-button">发送</button>
-                        </div>
-                    </div>
+                    <p class="form-group-description">模式一：输入一个远程主题库(JSON文件)的URL，加载后选择主题。</p>
                 </div>
 
-                <div id="sticker-panel">
-                    <div id="sticker-panel-header">
-                        <span class="panel-btn" id="close-sticker-panel-btn">取消</span>
-                        <span class="title">我的表情</span>
-                        <div style="display: flex; gap: 10px;">
-                            <span class="panel-btn" id="add-sticker-btn">添加</span>
-                            <span class="panel-btn" id="upload-sticker-btn">上传</span>
-                        </div>
+                <!-- 远程单主题 -->
+                <div class="form-group">
+                    <label for="remote-theme-url">远程主题 CSS URL</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="remote-theme-url" placeholder="https://.../theme.css"
+                               style="flex-grow: 1; margin-bottom: 0;">
+                        <button class="form-button form-button-secondary" id="apply-remote-theme-btn"
+                                style="flex-shrink: 0; width: auto; padding: 0 15px; margin-top: 0;">应用
+                        </button>
                     </div>
-                    <div id="sticker-grid"></div>
+                    <p class="form-group-description">模式二：直接输入单个CSS文件的URL来立即替换样式。</p>
                 </div>
-                <input type="file" id="sticker-upload-input" accept="image/*" style="display: none;">
-                <input type="file" id="image-upload-input" accept="image/*" style="display: none;">
-
-                <div id="music-player-overlay">
-                    <div class="music-player-window">
-                        <span id="music-playlist-btn">☰</span>
-                        <div id="music-time-counter">已经一起听了0.0小时</div>
-                        <div id="music-player-song-title">请添加歌曲</div>
-                        <div id="music-player-artist">...</div>
-                        <div class="music-controls">
-                            <button id="music-prev-btn">◀</button>
-                            <button id="music-play-pause-btn" class="play-pause-btn">▶</button>
-                            <button id="music-next-btn">▶</button>
-                            <button id="music-mode-btn">顺序</button>
-                        </div>
-                        <div class="music-bottom-actions">
-                            <button id="music-exit-btn">退出一起听</button>
-                            <button id="music-return-btn">返回聊天</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="music-playlist-panel">
-                    <div class="playlist-header">
-                        <span class="panel-btn" id="close-playlist-btn">返回</span>
-                        <span>播放列表</span>
-                        <div>
-                            <span class="panel-btn" id="add-song-local-btn">本地</span>
-                            <span class="panel-btn" id="add-song-url-btn">URL</span>
-                        </div>
-                    </div>
-                    <div class="playlist-body" id="playlist-body"></div>
-                </div>
-                <input type="file" id="local-song-upload-input" accept="audio/*" multiple style="display: none;">
-
-            </div>
-
-            <div id="wallpaper-screen" class="screen">
-                <div class="header"><span class="back-btn" onclick="showScreen('home-screen')">‹</span><span>壁纸设置</span><span
-                        style="width: 30px;"></span></div>
-                <div class="form-container">
-                    <div id="wallpaper-preview">点击下方上传</div>
-                    <button class="form-button" onclick="document.getElementById('wallpaper-upload-input').click();">
-                        上传壁纸
-                    </button>
-                    <input type="file" id="wallpaper-upload-input" accept="image/*">
-                    <button class="form-button" id="save-wallpaper-btn">保存并应用</button>
+                <hr class="settings-divider">
+                <div class="data-management-section">
+                    <h3 class="data-management-title">数据管理</h3>
+                    <p class="data-management-desc">
+                        您可以导出所有聊天记录、设置和素材为单个文件进行备份，或从备份文件恢复数据。</p>
+                    <button class="form-button form-button-secondary" id="export-data-btn">导出数据</button>
+                    <button class="form-button form-button-secondary" id="import-data-trigger-btn">导入数据</button>
+                    <input type="file" id="import-data-input" accept=".phone" style="display: none;">
                 </div>
             </div>
         </div>
-    </div>
+        <div id="preset-editor-screen" class="screen">
+            <div class="header">
+                <span class="back-btn" onclick="showScreen('preset-list-screen')">‹</span>
+                <span id="preset-editor-title">编辑预设</span>
+                <span class="save-btn" id="save-preset-btn">保存</span>
+            </div>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="preset-name-input">预设名称</label>
+                    <input type="text" id="preset-name-input" placeholder="例如：默认AI, 写作助手...">
+                </div>
+                <div class="form-group">
+                    <label for="preset-remark-input">预设备注</label>
+                    <textarea id="preset-remark-input" rows="2" placeholder="简单描述这个预设的用途..."></textarea>
+                </div>
+                <hr class="settings-divider">
+                <div class="form-group">
+                    <label for="prompt-image-input">发送图片提示词</label>
+                    <textarea id="prompt-image-input" rows="5" placeholder="定义AI如何发送'描述性图片'..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prompt-voice-input">发送语音提示词</label>
+                    <textarea id="prompt-voice-input" rows="4" placeholder="定义AI如何发送'模拟语音'..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prompt-transfer-input">转账提示词</label>
+                    <textarea id="prompt-transfer-input" rows="5" placeholder="定义AI如何进行'转账'..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prompt-voice-input">撤回提示词</label>
+                    <textarea id="prompt-withDrawAl-input" rows="5" placeholder="定义AI如何发送'撤回消息'..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prompt-voice-input">朋友圈发布提示词</label>
+                    <textarea id="prompt-moment-input" rows="5" placeholder="定义AI如何发送'朋友圈'..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prompt-voice-input">朋友圈互动提示词</label>
+                    <textarea id="prompt-moment-interaction-input" rows="5" placeholder="定义AI如何互动'朋友圈'..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prompt-single-input">单聊预设 (System Prompt)</label>
+                    <textarea id="prompt-single-input" rows="12"
+                              placeholder="定义单聊时AI的核心角色和规则..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prompt-group-input">群聊预设 (System Prompt)</label>
+                    <textarea id="prompt-group-input" rows="12"
+                              placeholder="定义群聊时AI的核心角色和规则..."></textarea>
+                </div>
 
-    <div id="chat-settings-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><span>聊天设置</span></div>
-            <div class="modal-body">
-                <div class="form-group select-char" id="select-char" ><label for="chat-select-input">导入人设</label><select id="chat-select-input">
-                </select></div>
-                <div class="form-group" id="chat-name-group"><label for="chat-name-input">备注名 / 群名</label><input
-                        type="text" id="chat-name-input"></div>
-                <div class="form-group" id="my-group-nickname-group"><label for="my-group-nickname-input">我的群昵称</label><input
-                        type="text" id="my-group-nickname-input"></div>
-                <div class="form-group" id="group-avatar-group"><label>群头像</label>
-                    <div class="avatar-upload"><img id="group-avatar-preview">
-                        <button onclick="document.getElementById('group-avatar-input').click()">上传群头像</button>
-                        <input type="file" id="group-avatar-input" accept="image/*"></div>
-                </div>
-                <div class="form-group" id="world-book-link-group">
-                    <label>关联世界书 (可多选)</label>
-                    <div class="custom-multiselect">
-                        <div class="select-box">
-                            <span class="selected-options-text">-- 点击选择 --</span>
-                            <span class="arrow-down">▼</span>
-                        </div>
-                        <div id="world-book-checkboxes-container" class="checkboxes-container">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" id="ai-persona-group">
-                    <label for="ai-persona">对方人设 (AI Persona)</label>
-                    <textarea id="ai-persona" rows="3"></textarea>
-                    <div class="form-group" style="margin-top: 15px; margin-bottom: 0;">
-                        <label for="ai-pat-suffix-input">拍一拍后缀</label>
-                        <input type="text" id="ai-pat-suffix-input" placeholder="例如：的脑袋瓜">
-                    </div>
-                </div>
-
-                <div class="form-group" id="ai-avatar-group"><label>对方头像</label>
-                    <div class="avatar-upload"><img id="ai-avatar-preview">
-                        <button onclick="document.getElementById('ai-avatar-input').click()">上传对方头像</button>
-                        <input type="file" id="ai-avatar-input" accept="image/*"></div>
-                </div>
-                <div class="form-group" id="my-persona-group">
-                    <label for="my-persona">我的人设 (My Persona)</label>
-                    <textarea id="my-persona" rows="3"></textarea>
-                    <div class="form-group" style="margin-top: 15px; margin-bottom: 0;">
-                        <label for="my-pat-suffix-input">拍一拍后缀</label>
-                        <input type="text" id="my-pat-suffix-input" placeholder="例如：的肩膀">
-                    </div>
-                </div>
-
-                <div class="form-group" id="my-avatar-group"><label>我的头像</label>
-                    <div class="avatar-upload"><img id="my-avatar-preview">
-                        <button onclick="document.getElementById('my-avatar-input').click()">上传我的头像</button>
-                        <button id="open-persona-library-btn">预设</button>
-                        <input type="file" id="my-avatar-input" accept="image/*"></div>
-                </div>
-                <div class="form-group" id="group-members-group">
-                    <label>群成员人设</label>
-                    <div id="group-members-settings"></div>
-                    <button id="add-group-member-btn" class="form-button form-button-secondary"
-                            style="margin-top: 10px; width: auto; padding: 8px 15px;">新增成员
+                <div style="display: flex; gap: 10px;">
+                    <button class="form-button form-button-secondary" id="restore-preset-defaults-btn">恢复为默认值
+                    </button>
+                    <button class="form-button form-button-secondary" id="delete-preset-btn"
+                            style="background-color: #ffdddd; color: #d9534f;">删除此预设
                     </button>
                 </div>
-
-                <div class="form-group"><label for="max-memory">上下文记忆条数</label><input type="number" id="max-memory"
-                                                                                             value="10"></div>
-                <div class="form-group"><label>聊天气泡主题
-                    <button id="reset-theme-btn" type="button">重置</button>
-                </label>
-                    <div class="theme-selector"><label><input type="radio" name="theme-select" value="default"
-                                                              id="theme-default"> 默认</label><label><input type="radio"
-                                                                                                            name="theme-select"
-                                                                                                            value="pink_blue">
-                        粉蓝</label><label><input type="radio" name="theme-select" value="blue_white">
-                        蓝白</label><label><input type="radio" name="theme-select" value="purple_yellow">
-                        紫黄</label><label><input type="radio" name="theme-select" value="black_white">
-                        黑白</label><label><input type="radio" name="theme-select" value="yellow_white"> 黄白</label><label><input
-                            type="radio" name="theme-select" value="red_black"> 红黑</label><label><input type="radio"
-                                                                                                          name="theme-select"
-                                                                                                          value="blue_yellow">
-                        蓝黄</label><label><input type="radio" name="theme-select" value="pink_yellow">
-                        粉黄</label><label><input type="radio" name="theme-select" value="pink_purple">
-                        粉紫</label><label><input type="radio" name="theme-select" value="gray_white">
-                        灰白</label><label><input type="radio" name="theme-select" value="blue_green">
-                        蓝绿</label><label><input type="radio" name="theme-select" value="pink_white">
-                        粉白</label><label><input type="radio" name="theme-select" value="pink_black">
-                        粉黑</label><label><input type="radio" name="theme-select" value="pink_green">
-                        粉绿</label><label><input type="radio" name="theme-select" value="green_black"> 绿黑</label></div>
-                </div>
-                <div class="form-group">
-                    <label>聊天背景</label>
-                    <div class="bg-upload-container">
-                        <button type="button" class="form-button-secondary"
-                                style="width: auto; padding: 8px 12px; margin-top: 0;"
-                                onclick="document.getElementById('bg-input').click()">上传背景图
-                        </button>
-                        <button type="button" id="remove-bg-btn">移除背景</button>
-                    </div>
-                    <img id="bg-preview" class="bg-preview-img">
-                    <input type="file" id="bg-input" accept="image/*" style="display: none;">
-                </div>
-                <hr style="margin: 25px 0; border: none; border-top: 1px solid #eee;">
-                <button class="form-button form-button-secondary" id="clear-chat-btn">清空聊天记录</button>
-            </div>
-            <div class="modal-footer">
-                <button class="cancel" id="cancel-chat-settings-btn">取消</button>
-                <button class="save" id="save-chat-settings-btn">保存</button>
             </div>
         </div>
-    </div>
-
-    <div id="persona-library-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><span>我的人设库</span>
-                <button id="add-persona-preset-btn" class="action-button">添加</button>
+        <div id="char-list-screen" class="screen">
+            <div class="header">
+                <span class="back-btn" onclick="showScreen('home-screen')">‹</span>
+                <span id="char-editor-title">编辑人设</span>
+                <span class="action-btn" id="add-char-btn">+</span>
             </div>
-            <div class="modal-body">
-                <div id="persona-library-grid"></div>
-            </div>
-            <div class="modal-footer">
-                <button class="cancel" id="close-persona-library-btn">关闭</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="persona-editor-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><span id="persona-editor-title">添加人设预设</span></div>
-            <div class="modal-body">
-                <div class="form-group"><label>预设头像</label>
-                    <div class="avatar-upload"><img id="preset-avatar-preview">
-                        <button onclick="document.getElementById('preset-avatar-input').click()">上传头像</button>
-                        <input type="file" id="preset-avatar-input" accept="image/*"></div>
-                </div>
-                <div class="form-group"><label for="preset-persona-input">预设人设</label><textarea
-                        id="preset-persona-input" rows="4" placeholder="在此输入这个人设的详细设定..."></textarea></div>
-            </div>
-            <div class="modal-footer">
-                <button class="cancel" id="cancel-persona-editor-btn">取消</button>
-                <button class="save" id="save-persona-preset-btn">保存</button>
+            <div id="char-list" class="char-list-container">
+<!--                <div class="chat-item">-->
+<!--                    <div class="pic"><img src="https://i.postimg.cc/VkQfgzGJ/1.jpg"></div>-->
+<!--                    <div class="info">-->
+<!--                        ChatGPT-->
+<!--                    </div>-->
+<!--                    <div class="action">-->
+<!--                        <span class="action-btn" title="删除"></span>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
-    </div>
+        <div id="preset-list-screen" class="screen">
+            <div class="header">
+                <span class="back-btn" onclick="showScreen('home-screen')">‹</span>
+                <span>预设管理</span>
+                <span class="action-btn" id="add-preset-btn">+</span>
+            </div>
+            <div id="preset-list" class="list-container" style="padding:0;">
+                <!-- 预设列表将由JS动态生成 -->
+            </div>
+        </div>
+        <div id="chat-list-screen" class="screen">
+            <div class="header"><span class="back-btn" onclick="showScreen('home-screen')">‹</span><span>消息</span>
+                <div class="header-actions"><span class="action-btn" id="add-group-chat-btn" title="创建群聊"><svg
+                        width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path
+                        d="M17.5 17.5C19.1569 17.5 20.5 16.1569 20.5 14.5C20.5 12.8431 19.1569 11.5 17.5 11.5C15.8431 11.5 14.5 12.8431 14.5 14.5C14.5 16.1569 15.8431 17.5 17.5 17.5Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path
+                        d="M21 21L19 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"/><path
+                        d="M8.5 11.5C10.1569 11.5 11.5 10.1569 11.5 8.5C11.5 6.84315 10.1569 5.5 8.5 5.5C6.84315 5.5 5.5 6.84315 5.5 8.5C5.5 10.1569 6.84315 11.5 8.5 11.5Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path
+                        d="M12.5 14.5H4.5C3.39543 14.5 2.5 15.3954 2.5 16.5V18.5H12.5" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span
+                        class="action-btn" id="add-chat-btn">+</span></div>
+            </div>
+            <div id="chat-list"></div>
+            <div class="bottom-nav">
+                <div class="nav-item show-moment-modal" >
+                    <span>朋友圈</span>
+                </div>
+            </div>
+        </div>
 
-    <div id="member-settings-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><span>编辑群成员</span></div>
-            <div class="modal-body">
-                <div class="form-group " id="select-char-group" >
-                    <label for="chat-select-group-input">导入人设</label><select id="chat-select-group-input">
-                </select></div>
-                <div class="form-group">
-                    <label for="member-name-input">名字</label>
-                    <input type="text" id="member-name-input">
-                </div>
-                <div class="form-group">
-                    <label for="member-persona-input">人设</label>
-                    <textarea id="member-persona-input" rows="4"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="member-pat-suffix-input">拍一拍后缀</label>
-                    <input type="text" id="member-pat-suffix-input" placeholder="例如：的后背">
-                </div>
-                <div class="form-group">
-                    <label>头像</label>
-                    <div class="avatar-upload">
-                        <img id="member-avatar-preview">
-                        <button onclick="document.getElementById('member-avatar-input').click()">上传头像</button>
-                        <input type="file" id="member-avatar-input" accept="image/*">
+        <div id="chat-interface-screen" class="screen">
+            <div class="header">
+                <div class="default-controls">
+                    <span class="back-btn" id="back-to-list-btn">‹</span>
+                    <span id="chat-header-title">聊天对象</span>
+                    <div class="header-actions">
+                        <span class="action-btn" id="get-messages-btn" title=""> <i class="fa-solid fa-circle-info"  ></i></span>
+                        <span class="action-btn" id="edit-messages-btn" title="编辑消息"><img
+                                src="https://i.postimg.cc/V60TWbGr/image.png" alt="编辑"></span>
+
+                        <span class="action-btn" id="listen-together-btn" title="一起听"><img
+                                src="https://i.postimg.cc/8kYShvrJ/90-UI-2.png" alt="一起听"></span>
+                        <span class="action-btn" id="chat-settings-btn" title="聊天设置"><img
+                                src="https://i.postimg.cc/wRDhh491/image.png" alt="设置"></span>
                     </div>
                 </div>
+                <div class="selection-controls">
+                    <span id="selection-cancel-btn">取消</span>
+                    <span id="selection-count"></span>
+                    <span id="selection-delete-btn">删除</span>
+                </div>
+            </div>
+            <div id="chat-messages">
+                <div id="typing-indicator">对方正在输入...</div>
             </div>
 
-            <div class="modal-footer">
-                <button class="cancel" id="cancel-member-settings-btn">取消</button>
-                <button class="save" id="save-member-settings-btn">保存</button>
-            </div>
-        </div>
-    </div>
-    <div id="char-settings-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><span>char人设</span></div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="member-name-input">名字</label>
-                    <input type="text" id="char-name-input" placeholder="char名字">
+            <div id="chat-input-area">
+                <div id="chat-input-actions-top">
+                    <button id="open-sticker-panel-btn" class="chat-action-icon-btn action-button" title="表情面板">+
+                    </button>
+                    <button id="send-photo-btn" class="chat-action-icon-btn action-button" title="发送照片">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                    </button>
+                    <button id="upload-image-btn" class="chat-action-icon-btn action-button" title="上传图片">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                             style="color: var(--text-primary);">
+                            <path d="M21 3.5H3C2.44772 3.5 2 3.94772 2 4.5V19.5C2 20.0523 2.44772 20.5 3 20.5H21C21.5523 20.5 22 20.0523 22 19.5V4.5C22 3.94772 21.5523 3.5 21 3.5Z"
+                                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M16.5 13.5C17.6046 13.5 18.5 12.6046 18.5 11.5C18.5 10.3954 17.6046 9.5 16.5 9.5C15.3954 9.5 14.5 10.3954 14.5 11.5C14.5 12.6046 15.3954 13.5 16.5 13.5Z"
+                                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M22 14.5L18 10.5L10.3333 18.5M12.5 16L9 12.5L2 19.5" stroke="currentColor"
+                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button id="transfer-btn" class="chat-action-icon-btn action-button" title="转账">￥</button>
+                    <button id="voice-message-btn" class="chat-action-icon-btn action-button" title="发送语音">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            <path d="M12 19v4"/>
+                            <path d="M8 23h8"/>
+                        </svg>
+                    </button>
                 </div>
-                <div class="form-group">
-                    <label for="member-persona-input">人设</label>
-                    <textarea id="char-persona-input" rows="4" placeholder="char人设"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="member-pat-suffix-input">拍一拍后缀</label>
-                    <input type="text" id="char-pat-suffix-input" placeholder="例如：的后背">
-                </div>
-                <div class="form-group">
-                    <label>头像</label>
-                    <div class="avatar-upload">
-                        <img id="char-avatar-preview" src="https://i.postimg.cc/VkQfgzGJ/1.jpg">
-                        <button onclick="document.getElementById('char-avatar-input').click()">上传头像</button>
-                        <input type="file" id="char-avatar-input" accept="image/*">
+                <div id="chat-input-main-row">
+                    <textarea id="chat-input" rows="1" placeholder="输入消息..."></textarea>
+                    <div id="input-actions-wrapper">
+                        <button id="wait-reply-btn" title="等待回复"><img src="https://i.postimg.cc/qzdckrGy/image.png"
+                                                                          alt="等待回复"></button>
+                        <button id="send-btn" class="action-button">发送</button>
                     </div>
                 </div>
             </div>
 
-            <div class="modal-footer">
-                <button class="cancel" id="cancel-char-settings-btn">取消</button>
-                <button class="save" id="save-char-settings-btn">保存</button>
+            <div id="sticker-panel">
+                <div id="sticker-panel-header">
+                    <span class="panel-btn" id="close-sticker-panel-btn">取消</span>
+                    <span class="title">我的表情</span>
+                    <div style="display: flex; gap: 10px;">
+                        <span class="panel-btn" id="add-sticker-btn">添加</span>
+                        <span class="panel-btn" id="upload-sticker-btn">上传</span>
+                    </div>
+                </div>
+                <div id="sticker-grid"></div>
             </div>
-        </div>
-    </div>
-    <div id="theme-list-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><span id="theme-list-modal-title">选择主题</span></div>
-            <div class="modal-body" id="theme-list-container">
-                <!-- Theme items will be injected here by JavaScript -->
-            </div>
-            <div class="modal-footer">
-                <button class="cancel" id="cancel-theme-selection-btn">取消</button>
-                <button class="save" id="confirm-theme-selection-btn">确认</button>
-            </div>
-        </div>
-    </div>
+            <input type="file" id="sticker-upload-input" accept="image/*" style="display: none;">
+            <input type="file" id="image-upload-input" accept="image/*" style="display: none;">
 
-    <div id="custom-modal-overlay">
-        <div id="custom-modal">
-            <div class="custom-modal-header" id="custom-modal-title"></div>
-            <div class="custom-modal-body" id="custom-modal-body"></div>
-            <div class="custom-modal-footer">
-                <button id="custom-modal-cancel">取消</button>
-                <button id="custom-modal-confirm" class="confirm-btn">确定</button>
+            <div id="music-player-overlay">
+                <div class="music-player-window">
+                    <span id="music-playlist-btn">☰</span>
+                    <div id="music-time-counter">已经一起听了0.0小时</div>
+                    <div id="music-player-song-title">请添加歌曲</div>
+                    <div id="music-player-artist">...</div>
+                    <div class="music-controls">
+                        <button id="music-prev-btn">◀</button>
+                        <button id="music-play-pause-btn" class="play-pause-btn">▶</button>
+                        <button id="music-next-btn">▶</button>
+                        <button id="music-mode-btn">顺序</button>
+                    </div>
+                    <div class="music-bottom-actions">
+                        <button id="music-exit-btn">退出一起听</button>
+                        <button id="music-return-btn">返回聊天</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="music-playlist-panel">
+                <div class="playlist-header">
+                    <span class="panel-btn" id="close-playlist-btn">返回</span>
+                    <span>播放列表</span>
+                    <div>
+                        <span class="panel-btn" id="add-song-local-btn">本地</span>
+                        <span class="panel-btn" id="add-song-url-btn">URL</span>
+                    </div>
+                </div>
+                <div class="playlist-body" id="playlist-body"></div>
+            </div>
+            <input type="file" id="local-song-upload-input" accept="audio/*" multiple style="display: none;">
+
+        </div>
+
+        <div id="wallpaper-screen" class="screen">
+            <div class="header"><span class="back-btn" onclick="showScreen('home-screen')">‹</span><span>壁纸设置</span><span
+                    style="width: 30px;"></span></div>
+            <div class="form-container">
+                <div id="wallpaper-preview">点击下方上传</div>
+                <button class="form-button" onclick="document.getElementById('wallpaper-upload-input').click();">
+                    上传壁纸
+                </button>
+                <input type="file" id="wallpaper-upload-input" accept="image/*">
+                <button class="form-button" id="save-wallpaper-btn">保存并应用</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div id="preset-actions-modal" class="modal">
-        <div id="" class="custom-modal" style="width: 250px;">
-            <div class="custom-modal-footer">
-                <button id="preset-action-edit">编辑预设</button>
-                <button id="preset-action-delete" class="btn-danger">删除预设</button>
-                <button id="preset-action-cancel" style="margin-top: 8px; border-radius: 8px; background-color: #f0f0f0;">
-                    取消
+<div id="chat-settings-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><span>聊天设置</span></div>
+        <div class="modal-body">
+            <div class="form-group select-char" id="select-char" ><label for="chat-select-input">导入人设</label><select id="chat-select-input">
+            </select></div>
+            <div class="form-group" id="chat-name-group"><label for="chat-name-input">备注名 / 群名</label><input
+                    type="text" id="chat-name-input"></div>
+            <div class="form-group" id="my-group-nickname-group"><label for="my-group-nickname-input">我的群昵称</label><input
+                    type="text" id="my-group-nickname-input"></div>
+            <div class="form-group" id="group-avatar-group"><label>群头像</label>
+                <div class="avatar-upload"><img id="group-avatar-preview">
+                    <button onclick="document.getElementById('group-avatar-input').click()">上传群头像</button>
+                    <input type="file" id="group-avatar-input" accept="image/*"></div>
+            </div>
+            <div class="form-group" id="world-book-link-group">
+                <label>关联世界书 (可多选)</label>
+                <div class="custom-multiselect">
+                    <div class="select-box">
+                        <span class="selected-options-text">-- 点击选择 --</span>
+                        <span class="arrow-down">▼</span>
+                    </div>
+                    <div id="world-book-checkboxes-container" class="checkboxes-container">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" id="ai-persona-group">
+                <label for="ai-persona">对方人设 (AI Persona)</label>
+                <textarea id="ai-persona" rows="3"></textarea>
+                <div class="form-group" style="margin-top: 15px; margin-bottom: 0;">
+                    <label for="ai-pat-suffix-input">拍一拍后缀</label>
+                    <input type="text" id="ai-pat-suffix-input" placeholder="例如：的脑袋瓜">
+                </div>
+            </div>
+
+            <div class="form-group" id="ai-avatar-group"><label>对方头像</label>
+                <div class="avatar-upload"><img id="ai-avatar-preview">
+                    <button onclick="document.getElementById('ai-avatar-input').click()">上传对方头像</button>
+                    <input type="file" id="ai-avatar-input" accept="image/*"></div>
+            </div>
+            <div class="form-group" id="my-persona-group">
+                <label for="my-persona">我的人设 (My Persona)</label>
+                <textarea id="my-persona" rows="3"></textarea>
+                <div class="form-group" style="margin-top: 15px; margin-bottom: 0;">
+                    <label for="my-pat-suffix-input">拍一拍后缀</label>
+                    <input type="text" id="my-pat-suffix-input" placeholder="例如：的肩膀">
+                </div>
+            </div>
+
+            <div class="form-group" id="my-avatar-group"><label>我的头像</label>
+                <div class="avatar-upload"><img id="my-avatar-preview">
+                    <button onclick="document.getElementById('my-avatar-input').click()">上传我的头像</button>
+                    <button id="open-persona-library-btn">预设</button>
+                    <input type="file" id="my-avatar-input" accept="image/*"></div>
+            </div>
+            <div class="form-group" id="group-members-group">
+                <label>群成员人设</label>
+                <div id="group-members-settings"></div>
+                <button id="add-group-member-btn" class="form-button form-button-secondary"
+                        style="margin-top: 10px; width: auto; padding: 8px 15px;">新增成员
                 </button>
             </div>
-        </div>
-    </div>
 
-    <div id="transfer-modal">
-        <div class="transfer-content">
-            <div class="transfer-header">给Ta一个惊喜！</div>
-            <div class="transfer-input-group">
-                <label for="transfer-amount">转账金额</label>
-                <input type="number" id="transfer-amount" placeholder="0.00" min="0" max="9999" step="0.01">
+            <div class="form-group"><label for="max-memory">上下文记忆条数</label><input type="number" id="max-memory"
+                                                                                         value="10"></div>
+            <div class="form-group"><label>聊天气泡主题
+                <button id="reset-theme-btn" type="button">重置</button>
+            </label>
+                <div class="theme-selector"><label><input type="radio" name="theme-select" value="default"
+                                                          id="theme-default"> 默认</label><label><input type="radio"
+                                                                                                        name="theme-select"
+                                                                                                        value="pink_blue">
+                    粉蓝</label><label><input type="radio" name="theme-select" value="blue_white">
+                    蓝白</label><label><input type="radio" name="theme-select" value="purple_yellow">
+                    紫黄</label><label><input type="radio" name="theme-select" value="black_white">
+                    黑白</label><label><input type="radio" name="theme-select" value="yellow_white"> 黄白</label><label><input
+                        type="radio" name="theme-select" value="red_black"> 红黑</label><label><input type="radio"
+                                                                                                      name="theme-select"
+                                                                                                      value="blue_yellow">
+                    蓝黄</label><label><input type="radio" name="theme-select" value="pink_yellow">
+                    粉黄</label><label><input type="radio" name="theme-select" value="pink_purple">
+                    粉紫</label><label><input type="radio" name="theme-select" value="gray_white">
+                    灰白</label><label><input type="radio" name="theme-select" value="blue_green">
+                    蓝绿</label><label><input type="radio" name="theme-select" value="pink_white">
+                    粉白</label><label><input type="radio" name="theme-select" value="pink_black">
+                    粉黑</label><label><input type="radio" name="theme-select" value="pink_green">
+                    粉绿</label><label><input type="radio" name="theme-select" value="green_black"> 绿黑</label></div>
             </div>
-            <div class="transfer-input-group">
-                <label for="transfer-note">备注 (可选)</label>
-                <input type="text" id="transfer-note" placeholder="留下你的小心思~" maxlength="20">
-            </div>
-            <div class="transfer-actions">
-                <button id="transfer-cancel-btn">取消</button>
-                <button id="transfer-confirm-btn">确认转账</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="battery-alert-modal">
-        <div class="battery-alert-content">
-            <img id="battery-alert-image" src="">
-            <p id="battery-alert-text"></p>
-        </div>
-    </div>
-
-    <div class="icon-modal-overlay" id="modalOverlay">
-        <div class="icon-modal">
-            <div class="modal-tabs">
-                <button class="tab-btn active" data-tab="local">本地上传</button>
-                <button class="tab-btn" data-tab="url">网络链接</button>
-            </div>
-            <div class="tab-content">
-                <div class="moment-post" >
-                    <textarea id="moment-post-input" placeholder="这一刻的想法"></textarea>
+            <div class="form-group">
+                <label>聊天背景</label>
+                <div class="bg-upload-container">
+                    <button type="button" class="form-button-secondary"
+                            style="width: auto; padding: 8px 12px; margin-top: 0;"
+                            onclick="document.getElementById('bg-input').click()">上传背景图
+                    </button>
+                    <button type="button" id="remove-bg-btn">移除背景</button>
                 </div>
-                <p class="optional">--------可选---------</p>
-                <!-- 本地上传面板 -->
-                <div class="tab-pane active" id="local-tab">
-                    <div class="upload-area" id="uploadArea">
-                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
-                        <p class="upload-text">点击</p>
-                        <button class="upload-btn">
-                            <i class="fas fa-folder-open"></i> 选择图片
-                        </button>
-                        <input type="file" class="file-input" id="fileInput" accept="image/*">
+                <img id="bg-preview" class="bg-preview-img">
+                <input type="file" id="bg-input" accept="image/*" style="display: none;">
+            </div>
+            <hr style="margin: 25px 0; border: none; border-top: 1px solid #eee;">
+            <button class="form-button form-button-secondary" id="clear-chat-btn">清空聊天记录</button>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel" id="cancel-chat-settings-btn">取消</button>
+            <button class="save" id="save-chat-settings-btn">保存</button>
+        </div>
+    </div>
+</div>
+
+<div id="persona-library-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><span>我的人设库</span>
+            <button id="add-persona-preset-btn" class="action-button">添加</button>
+        </div>
+        <div class="modal-body">
+            <div id="persona-library-grid"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel" id="close-persona-library-btn">关闭</button>
+        </div>
+    </div>
+</div>
+
+<div id="persona-editor-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><span id="persona-editor-title">添加人设预设</span></div>
+        <div class="modal-body">
+            <div class="form-group"><label>预设头像</label>
+                <div class="avatar-upload"><img id="preset-avatar-preview">
+                    <button onclick="document.getElementById('preset-avatar-input').click()">上传头像</button>
+                    <input type="file" id="preset-avatar-input" accept="image/*"></div>
+            </div>
+            <div class="form-group"><label for="preset-persona-input">预设人设</label><textarea
+                    id="preset-persona-input" rows="4" placeholder="在此输入这个人设的详细设定..."></textarea></div>
+        </div>
+        <div class="modal-footer">
+            <button class="cancel" id="cancel-persona-editor-btn">取消</button>
+            <button class="save" id="save-persona-preset-btn">保存</button>
+        </div>
+    </div>
+</div>
+
+<div id="member-settings-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><span>编辑群成员</span></div>
+        <div class="modal-body">
+            <div class="form-group " id="select-char-group" >
+                <label for="chat-select-group-input">导入人设</label><select id="chat-select-group-input">
+            </select></div>
+            <div class="form-group">
+                <label for="member-name-input">名字</label>
+                <input type="text" id="member-name-input">
+            </div>
+            <div class="form-group">
+                <label for="member-persona-input">人设</label>
+                <textarea id="member-persona-input" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="member-pat-suffix-input">拍一拍后缀</label>
+                <input type="text" id="member-pat-suffix-input" placeholder="例如：的后背">
+            </div>
+            <div class="form-group">
+                <label>头像</label>
+                <div class="avatar-upload">
+                    <img id="member-avatar-preview">
+                    <button onclick="document.getElementById('member-avatar-input').click()">上传头像</button>
+                    <input type="file" id="member-avatar-input" accept="image/*">
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="cancel" id="cancel-member-settings-btn">取消</button>
+            <button class="save" id="save-member-settings-btn">保存</button>
+        </div>
+    </div>
+</div>
+<div id="char-settings-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><span>char人设</span></div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="member-name-input">名字</label>
+                <input type="text" id="char-name-input" placeholder="char名字">
+            </div>
+            <div class="form-group">
+                <label for="member-persona-input">人设</label>
+                <textarea id="char-persona-input" rows="4" placeholder="char人设"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="member-pat-suffix-input">拍一拍后缀</label>
+                <input type="text" id="char-pat-suffix-input" placeholder="例如：的后背">
+            </div>
+            <div class="form-group">
+                <label>头像</label>
+                <div class="avatar-upload">
+                    <img id="char-avatar-preview" src="https://i.postimg.cc/VkQfgzGJ/1.jpg">
+                    <button onclick="document.getElementById('char-avatar-input').click()">上传头像</button>
+                    <input type="file" id="char-avatar-input" accept="image/*">
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="cancel" id="cancel-char-settings-btn">取消</button>
+            <button class="save" id="save-char-settings-btn">保存</button>
+        </div>
+    </div>
+</div>
+<div id="theme-list-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><span id="theme-list-modal-title">选择主题</span></div>
+        <div class="modal-body" id="theme-list-container">
+            <!-- Theme items will be injected here by JavaScript -->
+        </div>
+        <div class="modal-footer">
+            <button class="cancel" id="cancel-theme-selection-btn">取消</button>
+            <button class="save" id="confirm-theme-selection-btn">确认</button>
+        </div>
+    </div>
+</div>
+
+<div id="custom-modal-overlay">
+    <div id="custom-modal">
+        <div class="custom-modal-header" id="custom-modal-title"></div>
+        <div class="custom-modal-body" id="custom-modal-body"></div>
+        <div class="custom-modal-footer">
+            <button id="custom-modal-cancel">取消</button>
+            <button id="custom-modal-confirm" class="confirm-btn">确定</button>
+        </div>
+    </div>
+</div>
+
+<div id="preset-actions-modal" class="modal">
+    <div id="" class="custom-modal" style="width: 250px;">
+        <div class="custom-modal-footer">
+            <button id="preset-action-edit">编辑预设</button>
+            <button id="preset-action-delete" class="btn-danger">删除预设</button>
+            <button id="preset-action-cancel" style="margin-top: 8px; border-radius: 8px; background-color: #f0f0f0;">
+                取消
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="transfer-modal">
+    <div class="transfer-content">
+        <div class="transfer-header">给Ta一个惊喜！</div>
+        <div class="transfer-input-group">
+            <label for="transfer-amount">转账金额</label>
+            <input type="number" id="transfer-amount" placeholder="0.00" min="0" max="9999" step="0.01">
+        </div>
+        <div class="transfer-input-group">
+            <label for="transfer-note">备注 (可选)</label>
+            <input type="text" id="transfer-note" placeholder="留下你的小心思~" maxlength="20">
+        </div>
+        <div class="transfer-actions">
+            <button id="transfer-cancel-btn">取消</button>
+            <button id="transfer-confirm-btn">确认转账</button>
+        </div>
+    </div>
+</div>
+
+<div id="battery-alert-modal">
+    <div class="battery-alert-content">
+        <img id="battery-alert-image" src="">
+        <p id="battery-alert-text"></p>
+    </div>
+</div>
+
+<div class="icon-modal-overlay" id="modalOverlay">
+    <div class="icon-modal">
+        <div class="modal-tabs">
+            <button class="tab-btn active" data-tab="local">本地上传</button>
+            <button class="tab-btn" data-tab="url">网络链接</button>
+        </div>
+        <div class="tab-content">
+            <div class="moment-post" >
+                <textarea id="moment-post-input" placeholder="这一刻的想法"></textarea>
+            </div>
+            <p class="optional">--------可选---------</p>
+            <!-- 本地上传面板 -->
+            <div class="tab-pane active" id="local-tab">
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <p class="upload-text">点击</p>
+                    <button class="upload-btn">
+                        <i class="fas fa-folder-open"></i> 选择图片
+                    </button>
+                    <input type="file" class="file-input" id="fileInput" accept="image/*">
+                </div>
+
+                <div class="preview-container" id="localPreviewContainer">
+                    <h3 class="preview-title">图片预览</h3>
+                    <div class="preview-area">
+                        <img class="preview-image" id="localPreviewImage" alt="预览图片">
+                        <p class="preview-placeholder" id="localPreviewPlaceholder">图片将在此处显示</p>
                     </div>
 
-                    <div class="preview-container" id="localPreviewContainer">
-                        <h3 class="preview-title">图片预览</h3>
-                        <div class="preview-area">
-                            <img class="preview-image" id="localPreviewImage" alt="预览图片">
-                            <p class="preview-placeholder" id="localPreviewPlaceholder">图片将在此处显示</p>
-                        </div>
-
-                        <div class="base64-info" id="base64Info">
-                            <div class="base64-title">Base64编码 (前100字符):</div>
-                            <div class="base64-content" id="base64Content"></div>
-                        </div>
+                    <div class="base64-info" id="base64Info">
+                        <div class="base64-title">Base64编码 (前100字符):</div>
+                        <div class="base64-content" id="base64Content"></div>
                     </div>
                 </div>
+            </div>
 
-                <!-- 网络链接面板 -->
-                <div class="tab-pane" id="url-tab">
-                    <div class="url-input-container">
-                        <input type="url" class="url-input" id="urlInput" placeholder="输入图片URL (如: https://example.com/image.jpg)">
-                        <button class="load-btn" id="loadUrlBtn">加载</button>
+            <!-- 网络链接面板 -->
+            <div class="tab-pane" id="url-tab">
+                <div class="url-input-container">
+                    <input type="url" class="url-input" id="urlInput" placeholder="输入图片URL (如: https://example.com/image.jpg)">
+                    <button class="load-btn" id="loadUrlBtn">加载</button>
+                </div>
+
+                <div class="preview-container" id="urlPreviewContainer">
+                    <h3 class="preview-title">图片预览</h3>
+                    <div class="preview-area">
+                        <img class="preview-image" id="urlPreviewImage" alt="预览图片">
+                        <p class="preview-placeholder" id="urlPreviewPlaceholder">加载的图片将在此处显示</p>
                     </div>
+                </div>
+            </div>
 
-                    <div class="preview-container" id="urlPreviewContainer">
-                        <h3 class="preview-title">图片预览</h3>
-                        <div class="preview-area">
-                            <img class="preview-image" id="urlPreviewImage" alt="预览图片">
-                            <p class="preview-placeholder" id="urlPreviewPlaceholder">加载的图片将在此处显示</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="loading" id="loadingIndicator">
+                <div class="loading-spinner"></div>
+                <p class="loading-text" id="loadingText">处理中，请稍候...</p>
+            </div>
 
-                <div class="loading" id="loadingIndicator">
-                    <div class="loading-spinner"></div>
-                    <p class="loading-text" id="loadingText">处理中，请稍候...</p>
-                </div>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="image-describe" >
+                <input id="image-describe-input" placeholder="图片描述" />
+            </div>
+            <div class="name-describe" >
+                <input id="name-describe-input" placeholder="你在朋友圈的名字" />
+            </div>
 
-                <div class="error-message" id="errorMessage"></div>
-                <div class="image-describe" >
-                    <input id="image-describe-input" placeholder="图片描述" />
-                </div>
-                <div class="name-describe" >
-                    <input id="name-describe-input" placeholder="你在朋友圈的名字" />
-                </div>
-
-                <div class="action-buttons">
-                    <button class="modal-btn cancel-btn" id="cancelBtn">取消</button>
-                    <button class="modal-btn confirm-btn" id="confirmBtn" disabled>确认上传</button>
-                </div>
+            <div class="action-buttons">
+                <button class="modal-btn cancel-btn" id="cancelBtn">取消</button>
+                <button class="modal-btn confirm-btn" id="confirmBtn" disabled>确认上传</button>
             </div>
         </div>
     </div>
+</div>
 
 
-    <div class="moment-modal">
-        <!-- 顶部导航栏 -->
-        <div class="moment-top-bar">
-            <div class="moment-back-btn close-moment-modal">
-                <i class="fas fa-arrow-left"></i>
-            </div>
-            <div class="moment-title">朋友圈</div>
-            <div class="icons">
-                <!--            <i class="fas fa-camera"></i>-->
-            </div>
+<div class="moment-modal">
+    <!-- 顶部导航栏 -->
+    <div class="moment-top-bar">
+        <div class="moment-back-btn close-moment-modal">
+            <i class="fas fa-arrow-left"></i>
         </div>
-
-        <!-- 朋友圈封面 -->
-        <div class="moment-cover-container">
-            <div class="moment-cover-img"></div>
-            <span class="moment-user-name"></span>
-            <div class="moment-avatar-container">
-                <div class="moment-avatar-img"></div>
-            </div>
-        </div>
-
-        <!-- 内容区域 -->
-        <div class="moment-content-area">
-            <div class="moment-list">
-
-            </div>
-        </div>
-
-        <!-- 相机按钮 -->
-        <div class="moment-camera-btn">
-            <i class="fas fa-camera"></i>
+        <div class="moment-title">朋友圈</div>
+        <div class="icons">
+<!--            <i class="fas fa-camera"></i>-->
         </div>
     </div>
 
-    <div class="chat-error-message-box">
-        <div class="chat-err-message-tip">
-            如果在你对话中出现错误，可以在这里看到具体的错误信息, 也可以把这段错误信息发送给我。
+    <!-- 朋友圈封面 -->
+    <div class="moment-cover-container">
+        <div class="moment-cover-img"></div>
+        <span class="moment-user-name"></span>
+        <div class="moment-avatar-container">
+            <div class="moment-avatar-img"></div>
         </div>
-        <textarea class="chat-error-message-content"></textarea>
-        <span class="chat-error-message-btn">关闭</span>
     </div>
 
-    <div id="wait-reply-popover" class="popover">
-        <button id="reroll-btn" class="popover-btn">重ROLL</button>
-        <button id="wait-reply-action-btn" class="popover-btn">等待回复</button>
+    <!-- 内容区域 -->
+    <div class="moment-content-area">
+        <div class="moment-list">
+
+        </div>
     </div>
 
-    <audio id="audio-player" style="display:none;"></audio>
+    <!-- 相机按钮 -->
+    <div class="moment-camera-btn">
+        <i class="fas fa-camera"></i>
+    </div>
+</div>
 
-    <script src="./js/script.js"></script>
-    <script src="./js/pollinationsAI.js"></script>
+<div class="chat-error-message-box">
+    <div class="chat-err-message-tip">
+        如果在你对话中出现错误，可以在这里看到具体的错误信息, 也可以把这段错误信息发送给我。
+    </div>
+    <textarea class="chat-error-message-content"></textarea>
+    <span class="chat-error-message-btn">关闭</span>
+</div>
+
+<div id="wait-reply-popover" class="popover">
+    <button id="reroll-btn" class="popover-btn">重ROLL</button>
+    <button id="wait-reply-action-btn" class="popover-btn">等待回复</button>
+</div>
+
+<audio id="audio-player" style="display:none;"></audio>
+
+<script src="./js/script.js"></script>
+<script src="./js/pollinationsAI.js"></script>
 </body>
 </html>
-
