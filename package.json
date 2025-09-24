@@ -12,6 +12,8 @@
   },
   "private": true,
   "dependencies": {
-    "jsdom": "^26.1.0"
+    "ai": "^5.0.48",
+    "jsdom": "^26.1.0",
+    "vite-plugin-pwa": "^1.0.3"
   }
 }

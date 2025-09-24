@@ -1,1 +1,0 @@
-import{a}from"./main-6gUdAlng.js";const t=()=>{const t=a();return{goBack:async(a="/")=>{try{if(window.history.length>1)return void(await t.back());const i=window.history.state;if(i&&i.back)return void(await t.back());await t.push(a)}catch(i){await t.push(a)}}}};export{t as u};
