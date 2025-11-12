@@ -1,0 +1,1 @@
+import{_ as s}from"./index-DYu93b0_.js";import{I as a,R as e,M as t}from"./vendor-DlOPgpOm.js";const o={class:"text"},m={name:"messageText"},r=s(Object.assign(m,{props:{message:String},setup:s=>(m,r)=>(e(),a("div",o,t(s.message),1))}),[["__scopeId","data-v-a37368a1"]]);export{r as default};

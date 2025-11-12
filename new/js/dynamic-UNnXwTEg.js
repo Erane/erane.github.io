@@ -1,0 +1,1 @@
+import{_ as n}from"./index-DYu93b0_.js";import{I as r,R as a}from"./vendor-DlOPgpOm.js";const e=n({name:"dynamic"},[["render",function(n,e,o,d,i,m){return a(),r("div",null,"dynamic")}]]);export{e as default};
