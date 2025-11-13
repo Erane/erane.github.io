@@ -1,1 +1,0 @@
-import{_ as n}from"./index-NfsXKTSu.js";import{O as r,J as a}from"./vendor-CARRphkd.js";const e=n({name:"dynamic"},[["render",function(n,e,o,d,i,m){return a(),r("div",null,"dynamic")}]]);export{e as default};
