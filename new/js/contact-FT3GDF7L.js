@@ -1,0 +1,1 @@
+import{_ as n}from"./index-NfsXKTSu.js";import{O as t,J as o}from"./vendor-CARRphkd.js";const r=n({name:"contact"},[["render",function(n,r,a,e,s,c){return o(),t("div",null,"contact")}]]);export{r as default};

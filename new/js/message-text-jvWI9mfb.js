@@ -1,0 +1,1 @@
+import{_ as s}from"./index-NfsXKTSu.js";import{O as a,J as e,S as t}from"./vendor-CARRphkd.js";const o={class:"text"},m={name:"messageText"},r=s(Object.assign(m,{props:{message:String},setup:s=>(m,r)=>(e(),a("div",o,t(s.message),1))}),[["__scopeId","data-v-a37368a1"]]);export{r as default};

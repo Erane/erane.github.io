@@ -1,1 +1,0 @@
-import{_ as n}from"./index-S5qNomyT.js";import{I as t,R as o}from"./vendor-DlOPgpOm.js";const r=n({name:"contact"},[["render",function(n,r,a,e,s,c){return o(),t("div",null,"contact")}]]);export{r as default};
