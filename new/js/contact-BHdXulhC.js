@@ -1,1 +1,0 @@
-import{_ as n}from"./index-BKA-TczY.js";import{I as t,R as o}from"./vendor-B0m88YOK.js";const r=n({name:"contact"},[["render",function(n,r,a,e,s,c){return o(),t("div",null,"contact")}]]);export{r as default};

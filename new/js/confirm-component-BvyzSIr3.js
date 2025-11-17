@@ -1,0 +1,1 @@
+import{I as t,R as e,M as s}from"./vendor-DlOPgpOm.js";const n={name:"ConfirmComponent"},o=Object.assign(n,{props:{text:{type:String,default:""}},setup:n=>(o,a)=>(e(),t("div",null,s(n.text),1))});export{o as default};
