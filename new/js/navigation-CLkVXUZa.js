@@ -1,0 +1,1 @@
+import{u as t}from"./index-BKA-TczY.js";const a=()=>{const a=t();return{goBack:async(t="/")=>{try{if(window.history.length>1)return void(await a.back());const i=window.history.state;if(i&&i.back)return void(await a.back());await a.push(t)}catch(i){await a.push(t)}}}};export{a as u};
