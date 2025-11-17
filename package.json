@@ -1,0 +1,19 @@
+{
+  "name": "erane.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Erane/erane.github.io.git"
+  },
+  "private": true,
+  "dependencies": {
+    "ai": "^5.0.48",
+    "jsdom": "^26.1.0",
+    "vite-plugin-pwa": "^1.0.3"
+  }
+}

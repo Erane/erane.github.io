@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>toufu小手机</title>
+    <script type="text/javascript">
+      // GitHub Pages SPA 路由重定向解决方案
+      // 将当前路径信息存储到 sessionStorage，然后重定向到根路径
+      // 这样可以让 Vue Router 正确处理路由
+
+      var pathSegmentsToKeep = 1 // GitHub Pages 子目录层级数 (/new/ = 1)
+
+      var l = window.location
+      var redirect =
+        l.protocol +
+        '//' +
+        l.hostname +
+        (l.port ? ':' + l.port : '') +
+        l.pathname
+          .split('/')
+          .slice(0, 1 + pathSegmentsToKeep)
+          .join('/') +
+        '/?/' +
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+
+      window.location.replace(redirect)
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p>请启用 JavaScript 以正常访问此应用。</p>
+    </noscript>
+  </body>
+</html>
